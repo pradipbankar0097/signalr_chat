@@ -45,7 +45,7 @@ namespace SignalRChat
                 while (sdr.Read())
                 {
                     List<string> temp = new List<string>();
-                    for(int i = 0; i < sdr.FieldCount; i++)
+                    for (int i = 0; i < sdr.FieldCount; i++)
                     {
                         temp.Add(sdr[i].ToString());
                     }
@@ -56,11 +56,37 @@ namespace SignalRChat
             con.Close();
             return RetVal;
         }
-        public List<List<string>> GetAllFromColumn(string Query, params string [] ColumnName)
+        public List<List<string>> GetAllMessage(string Query)
         {
             List<List<string>> RetVal = new List<List<string>>();
 
-           
+            using (cmd = new MySqlCommand(Query, con))
+            {
+                con.Open();
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    List<string> ls = new List<string>();
+
+                    for (int i = 0; i < sdr.FieldCount; i++)
+                    {
+                        //temp.Add(sdr[i].ToString());
+                        // tempstr=sdr[]
+                        ls.Add(sdr[i].ToString());
+                    }
+
+                    RetVal.Add(ls);
+                }
+            }
+            sdr.Close();
+            con.Close();
+            return RetVal;
+        }
+        public List<List<string>> GetAllFromColumn(string Query, params string[] ColumnName)
+        {
+            List<List<string>> RetVal = new List<List<string>>();
+
+
             using (cmd = new MySqlCommand(Query, con))
             {
                 con.Open();
@@ -68,7 +94,7 @@ namespace SignalRChat
                 while (sdr.Read())
                 {
 
-                    List<string> temp = new List<string>() ;
+                    List<string> temp = new List<string>();
                     temp.Add(sdr[ColumnName[0]].ToString());
                     //temp.Add(sdr[ColumnName[ColumnName.Length-1]].ToString());
                     RetVal.Add(temp);
@@ -117,6 +143,7 @@ namespace SignalRChat
 
 
         }
+
 
     }
 }

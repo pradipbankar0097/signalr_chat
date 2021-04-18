@@ -21,17 +21,17 @@ namespace SignalRChat
         public string UserDepartment = "admin";
         public string UserImage = "/images/DP/dummy.png";
         protected string UploadFolderPath = "~/Uploads/";
-      
+
         private string fromUser = "";
         public string UserEmail = "";
 
         public List<List<string>> RegisteredUsers = new List<List<string>>();
         ConnClass conc = new ConnClass();
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             string GetRegisteredUsersQuery = "select UserName from tbl_users";
-            string []ColumnName =  { "UserName","EnrollNo"};
+            string[] ColumnName = { "UserName", "EnrollNo" };
             RegisteredUsers = conc.GetAllFromColumn(GetRegisteredUsersQuery, ColumnName);
 
             if (Session["UserName"] != null)

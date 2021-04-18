@@ -82,20 +82,21 @@
                     $("#txtMessage").val('');
                 }
             });
-            //click event on resgistered user name
             $('.rusers').click(function () {
                 var i;
+
                 var ide = this.children;
                 for (i = 0; i < ide.length; i++) {
                     var num = ide.item(i).addEventListener('click', function () {
-                        var num = this.id;
-                        console.log(num);
-                        chatHub.server.loadPrivateChat(num);
+                        var toEnrollNo = this.id;
+                        console.log(toEnrollNo);
+                        $('#spanUser').val = toEnrollNo;
+                        chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
                     });
-                   
+
                 }
-                
-                 
+
+
 
             });
 
@@ -127,7 +128,7 @@
     <div class="container front-container1">
       <div class="row chat-top">
         <div class="col-sm-4 border-right border-secondary">
-          <img src="images/p3.jpg" alt="" class="profile-image rounded-circle"/>
+          <img src="images/p3.jpg" alt="" class="profile-image rounded-circle float-left"/>
           <span class="float-right mt-2">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -144,12 +145,13 @@
                 d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
             </svg>
           </span>
+             <span id="spanUser"style="margin-top:0.5rem" class="ml-2 float-left">Rahul Kumar</span>
 
 
         </div>
         <div class="col-sm-8">
           <img src="images/p2.jpg" alt="" class="profile-image rounded-circle">
-          <span id="spanUser" class="ml-2">Rahul Kumar</span>
+          <span id="spanUser1" class="ml-2">Rahul Kumar</span>
           <span class="float-right mt-2">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
