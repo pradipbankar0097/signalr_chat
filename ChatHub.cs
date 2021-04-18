@@ -15,13 +15,15 @@ namespace SignalRChat
     {
         static List<Users> ConnectedUsers = new List<Users>();
         static List<Messages> CurrentMessage = new List<Messages>();
+
         public List<List<string>> RegisteredUsers = new List<List<string>>();
+        public List<List<string>> Chat = new List<List<string>>();
         ConnClass ConnC = new ConnClass();
 
         public void Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
         {
             var id = Context.ConnectionId;
-            
+
 
 
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
@@ -29,18 +31,18 @@ namespace SignalRChat
                 string UserImg = GetUserImage(userName);
                 string logintime = DateTime.Now.ToString();
 
-                ConnectedUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime,Badge=userBadge,EnrollNo=userEnrollNo,Department= userDepartment,Email=userEmail});
-                
-               //send to caller
-               Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);
+                ConnectedUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
+
+                //send to caller
+                Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);
                 string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo FROM tbl_users";
-                string[] ColumnName =  {"UserName","EnrollNo" };
+
                 RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
 
                 Clients.Caller.loadRegisteredUsers(RegisteredUsers);
 
                 // send to all except caller client
-             //       Clients.AllExcept(id).onNewUserConnected(id, userName, UserImg, logintime);
+                //       Clients.AllExcept(id).onNewUserConnected(id, userName, UserImg, logintime);
             }
         }
 
@@ -100,34 +102,34 @@ namespace SignalRChat
             return base.OnDisconnected(stopCalled);
         }
 
-        public void CreateTableFor(string table_name,string fromUserEN,string toUserEN)
+        public void CreateTableFor(string table_name, string fromUserEN, string toUserEN)
         {
-            
+
             string CreateTableQuery = "CREATE TABLE " + table_name + "(time varchar(30), message varchar(20),c" + fromUserEN + " boolean,c" + toUserEN + " boolean)";
 
             ConnC.ExecuteQuery(CreateTableQuery);
-            
-            
+
+
         }
 
-        public void AddMessageTo(string table_name,string message,string fromUserEN,string toUserEN)
+        public void AddMessageTo(string table_name, string message, string fromUserEN, string toUserEN)
         {
-           
+
             try
             {
-                                   
+
                 string AddMessageQuery = "insert into " + table_name + "(time,message,c" + fromUserEN + ",c" + toUserEN + ") values('" + DateTime.Now.ToString() + "','" + message + "','" + 0 + "','" + 1 + "')";
 
                 ConnC.ExecuteQuery(AddMessageQuery);
-                
-                
-                
+
+
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 ConnC.con.Close();
-                CreateTableFor(table_name,fromUserEN,toUserEN);
-                AddMessageTo(table_name,message,fromUserEN,toUserEN);
+                CreateTableFor(table_name, fromUserEN, toUserEN);
+                AddMessageTo(table_name, message, fromUserEN, toUserEN);
             }
         }
 
@@ -138,12 +140,12 @@ namespace SignalRChat
 
             var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
             var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
-            
+
             string fromUserEnrollNo = fromUser.EnrollNo;
             string toUserEnrollNo = toUser.EnrollNo;
 
-            
-         
+
+
 
             //tablename for this conversation
             string table_name;
@@ -151,15 +153,15 @@ namespace SignalRChat
             {
                 table_name = fromUser.TableNameFor[toUser.EnrollNo];
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
                 string[] arr = new string[] { fromUserEnrollNo, toUserEnrollNo };
                 Array.Sort(arr);
-                fromUser.TableNameFor.Add(toUser.EnrollNo,"f"+arr[0]+"to"+arr[1]);
+                fromUser.TableNameFor.Add(toUser.EnrollNo, "f" + arr[0] + "to" + arr[1]);
                 table_name = fromUser.TableNameFor[toUser.EnrollNo];
             }
-            AddMessageTo(table_name,message,fromUserEnrollNo,toUserEnrollNo);
+            AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
             if (toUser != null && fromUser != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();
@@ -172,9 +174,15 @@ namespace SignalRChat
             }
 
         }
-        public void LoadPrivateChat(string EnrollNo)
+        public void LoadPrivateChat(string toEnrollNo, string fromEnrollNo)
         {
-            //I want all of their previous message here
+
+
+            string GetRegisteredUsersQuery = "SELECT * FROM " + "f" + fromEnrollNo + "to" + toEnrollNo;
+
+            Chat = ConnC.GetAllMessage(GetRegisteredUsersQuery);
+            Clients.Caller.loadChat(Chat);
+
         }
     }
 }
