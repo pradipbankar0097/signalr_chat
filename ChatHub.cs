@@ -17,7 +17,7 @@ namespace SignalRChat
         static List<Messages> CurrentMessage = new List<Messages>();
 
         public List<List<string>> RegisteredUsers = new List<List<string>>();
-        public List<List<string>> Chat = new List<List<string>>();
+        
         ConnClass ConnC = new ConnClass();
 
         public void Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
@@ -176,12 +176,30 @@ namespace SignalRChat
         }
         public void LoadPrivateChat(string toEnrollNo, string fromEnrollNo)
         {
+            List<List<string>> Chat = new List<List<string>>();
+            ConnClass Conn = new ConnClass();
 
+            try
+            {
+                string GetRegisteredUsersQuery = "SELECT * FROM " + "f" + fromEnrollNo + "to" + toEnrollNo;
 
-            string GetRegisteredUsersQuery = "SELECT * FROM " + "f" + fromEnrollNo + "to" + toEnrollNo;
-
-            Chat = ConnC.GetAllMessage(GetRegisteredUsersQuery);
-            Clients.Caller.loadChat(Chat);
+                Chat = Conn.GetAllMessage(GetRegisteredUsersQuery);
+              
+                Clients.Caller.loadChat(Chat);
+                
+              
+            }
+            catch(MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                
+            }
+            finally
+            {
+               
+                
+            }
+           
 
         }
     }

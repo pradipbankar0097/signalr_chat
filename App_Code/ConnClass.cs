@@ -56,27 +56,31 @@ namespace SignalRChat
             con.Close();
             return RetVal;
         }
-        public List<List<string>> GetAllMessage(string Query)
+        public List<List<string>> GetAllMessage(string Query) 
         {
             List<List<string>> RetVal = new List<List<string>>();
 
             using (cmd = new MySqlCommand(Query, con))
             {
                 con.Open();
-                sdr = cmd.ExecuteReader();
-                while (sdr.Read())
-                {
-                    List<string> ls = new List<string>();
-
-                    for (int i = 0; i < sdr.FieldCount; i++)
+                
+                
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
                     {
-                        //temp.Add(sdr[i].ToString());
-                        // tempstr=sdr[]
-                        ls.Add(sdr[i].ToString());
-                    }
+                        List<string> ls = new List<string>();
 
-                    RetVal.Add(ls);
-                }
+                        for (int i = 0; i < sdr.FieldCount; i++)
+                        {
+                            //temp.Add(sdr[i].ToString());
+                            // tempstr=sdr[]
+                            ls.Add(sdr[i].ToString());
+                        }
+
+                        RetVal.Add(ls);
+                    }
+                
+               
             }
             sdr.Close();
             con.Close();

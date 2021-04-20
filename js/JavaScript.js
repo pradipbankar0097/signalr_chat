@@ -126,6 +126,18 @@ function registerClientMethods(chatHub) {
         var TimeSide = 'right'; 
         for (i = 0; i < messages.length; i++) {
             console.log(messages[i][1] + messages[i][2]);
+            
+
+            if (messages[i][2]=='True') {
+                var Side = 'left';
+                var TimeSide = 'right';
+
+            }
+            else {
+                var Side = 'right';
+                var TimeSide = 'left';
+
+            }
               var divChat = '<div class="direct-chat-msg ' + Side + '">' +
         '<div class="direct-chat-info clearfix">' +
         // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
@@ -133,7 +145,7 @@ function registerClientMethods(chatHub) {
         '</div>' +
 
         // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-        ' <div class="direct-chat-text" >' + messages[i][1] + '</div> </div>';
+        ' <div class="direct-chat-text float"'+Side+'" style="display:inline">' + messages[i][1] + '</div> </div>';
          $('#msgarea').append(divChat);
         }
 
