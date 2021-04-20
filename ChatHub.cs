@@ -111,7 +111,12 @@ namespace SignalRChat
 
 
         }
-
+        public static string ValidTableNameFor(string fromUserEnrollNo,string toUserEnrollNo) 
+        {
+            string[] arr = new string[] { fromUserEnrollNo, toUserEnrollNo };
+            Array.Sort(arr);
+            return "f" + arr[0] + "to" + arr[1];
+        }
         public void AddMessageTo(string table_name, string message, string fromUserEN, string toUserEN)
         {
 
@@ -181,7 +186,8 @@ namespace SignalRChat
 
             try
             {
-                string GetRegisteredUsersQuery = "SELECT * FROM " + "f" + fromEnrollNo + "to" + toEnrollNo;
+                string table_name = ValidTableNameFor(toEnrollNo, fromEnrollNo);
+                string GetRegisteredUsersQuery = "SELECT * FROM " +table_name;
 
                 Chat = Conn.GetAllMessage(GetRegisteredUsersQuery);
               
