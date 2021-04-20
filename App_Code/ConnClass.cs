@@ -34,7 +34,21 @@ namespace SignalRChat
             return check;
 
         }
-
+        public List<string> GetRow(string Query )
+        {
+            List<string> RetVal = new List<string>();
+            cmd = new MySqlCommand(Query, con);
+            sdr = cmd.ExecuteReader();
+            if(sdr.Read())
+            {
+                for (int i = 0; i < sdr.FieldCount; i++)
+                {
+                    RetVal.Add(sdr[i].ToString());
+                }
+                
+            }
+            return RetVal;
+        }
         public List<List<string>> GetAllData(string Query)
         {
             List<List<string>> RetVal = new List<List<string>>();
