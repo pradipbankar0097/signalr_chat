@@ -16,12 +16,17 @@ namespace SignalRChat
         }
         protected void btnRegister_ServerClick(object sender, EventArgs e)
         {
-            string Query = "insert into tbl_Users(UserName,Badge,EnrollNo,Department,Email,Password)Values('"+txtName.Value+ "','" + Badge.Text + "','" + EnrollNo.Value + "','" + Department.Text + "','" + txtEmail.Value+"','"+txtPassword.Value+"')";
+            string Query = "insert into tbl_Users(UserName,Badge,EnrollNo,Department,Year,Email,Password)Values('"+txtName.Value+ "','" + Badge.Text + "','" + EnrollNo.Value + "','" + Department.Text + "','"+year.Text+"','" + txtEmail.Value+"','"+txtPassword.Value+"')";
             string ExistQ = "select * from tbl_Users where Email='"+txtEmail.Value+"'";
             if (!ConnC.IsExist(ExistQ))
             {
                 if (ConnC.ExecuteQuery(Query))
                 {
+                    string CreateTableQuery = "create table groupsof_"+EnrollNo.Value+"(GroupID varchar(40))";
+                    string InsertGroupQuery = "insert into " + "groupsof_" + EnrollNo.Value + "(GroupID) values('" + year.Text + Department.Text + "')";
+                    ConnC.ExecuteQuery(CreateTableQuery);
+                    ConnC.ExecuteQuery(InsertGroupQuery);
+                    ConnClass.AddToGroup(year.Text + Department.Text, EnrollNo.Value);
                     ScriptManager.RegisterStartupScript(this, GetType(), "Message", "alert('Congratulations!! You have successfully registered..');", true);
                     //Session["UserName"] = txtName.Value;
                     //Session["Email"] = txtEmail.Value;

@@ -17,6 +17,7 @@ namespace SignalRChat
         public MySqlDataReader sdr;
         public DataSet ds = new DataSet();
         public MySqlConnection con = new MySqlConnection(@"Server=localhost;Database=temp;Uid=root;Pwd=");
+        public static MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
 
         public bool IsExist(string Query)
         {
@@ -33,6 +34,15 @@ namespace SignalRChat
             con.Close();
             return check;
 
+        }
+        public static bool AddToGroup(string group, string enrollno)
+        {
+            bool done = false;
+            groups_db.Open();
+            MySqlCommand cmd = new MySqlCommand("insert into " + group + "(MemberEnrollNo) values('" + enrollno + "')",groups_db);
+            cmd.ExecuteNonQuery();
+            groups_db.Close();
+            return done;
         }
         public List<string> GetRow(string Query )
         {

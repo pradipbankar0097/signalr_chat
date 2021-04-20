@@ -50,11 +50,20 @@
               <asp:ListItem>Science</asp:ListItem>
           </asp:DropDownList>
       </div>
+       <div class="form-group has-feedback">
+        Year : 
+           <asp:DropDownList ID="year" runat="server">
+               <asp:ListItem>FE</asp:ListItem>
+               <asp:ListItem>SE</asp:ListItem>
+               <asp:ListItem>TE</asp:ListItem>
+               <asp:ListItem>BE</asp:ListItem>
+           </asp:DropDownList>
+      <div class="form-group has-feedback">
       <div class="form-group has-feedback">
         <input id="EnrollNo" type="text" class="form-control" placeholder="Enrollment No" required="" runat="server">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
-      <div class="form-group has-feedback">
+     
         <input id="txtEmail" type="email" class="form-control" placeholder="Email" required="required" runat="server">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
