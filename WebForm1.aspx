@@ -47,6 +47,7 @@
             var enrollno = '<%# this.UserEnrollNo %>';
             var department = '<%# this.UserDepartment %>';
             var email = '<%# this.UserEmail %>';
+            var loaded = [];
 
 
             if (name.length > 0) {
@@ -88,10 +89,15 @@
                 var ide = this.children;
                 for (i = 0; i < ide.length; i++) {
                     var num = ide.item(i).addEventListener('click', function () {
+                        
                         var toEnrollNo = this.id;
-                        console.log(toEnrollNo);
-                        $('#spanUser').val = toEnrollNo;
-                        chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
+                        
+                        if (jQuery.inArray(toEnrollNo, loaded)==-1) {
+                            console.log(toEnrollNo);
+                            $('#spanUser').val = toEnrollNo;
+                            chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
+                            loaded.push(toEnrollNo);
+                        }
                     });
 
                 }
