@@ -26,7 +26,7 @@ namespace SignalRChat
                     string InsertGroupQuery = "insert into " + "groupsof_" + EnrollNo.Value + "(GroupID) values('" + year.Text + Department.Text + "')";
                     ConnC.ExecuteQuery(CreateTableQuery);
                     ConnC.ExecuteQuery(InsertGroupQuery);
-                    ConnClass.AddToGroup(year.Text + Department.Text, EnrollNo.Value);
+                    ConnC.AddToGroup(year.Text + Department.Text, EnrollNo.Value);
                     ScriptManager.RegisterStartupScript(this, GetType(), "Message", "alert('Congratulations!! You have successfully registered..');", true);
                     //Session["UserName"] = txtName.Value;
                     //Session["Email"] = txtEmail.Value;

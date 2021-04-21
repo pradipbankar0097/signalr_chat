@@ -17,7 +17,7 @@ namespace SignalRChat
         static List<Messages> CurrentMessage = new List<Messages>();
 
         public List<List<string>> RegisteredUsers = new List<List<string>>();
-        
+        public List<List<string>> RegisterdGroups = new List<List<string>>();
         ConnClass ConnC = new ConnClass();
 
         public void Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
@@ -36,13 +36,15 @@ namespace SignalRChat
                 //send to caller
                 Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);
                 string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo FROM tbl_users";
-
+                string GetRegisteredGroupsQuery = "select * from tbl_groups";
                 RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
+               RegisterdGroups = ConnC.GetAllGroups(GetRegisteredGroupsQuery);
 
                 Clients.Caller.loadRegisteredUsers(RegisteredUsers);
+                Clients.Caller.loadRegisteredGroups(RegisterdGroups);
 
                 // send to all except caller client
-                //       Clients.AllExcept(id).onNewUserConnected(id, userName, UserImg, logintime);
+                //     Clients.AllExcept(id).onNewUserConnected(id, userName, UserImg, logintime);
             }
         }
 
@@ -187,9 +189,9 @@ namespace SignalRChat
             try
             {
                 string table_name = ValidTableNameFor(toEnrollNo, fromEnrollNo);
-                string GetRegisteredUsersQuery = "SELECT * FROM " +table_name;
+                string GetPrevoiuschat = "SELECT * FROM " +table_name;
 
-                Chat = Conn.GetAllMessage(GetRegisteredUsersQuery);
+                Chat = Conn.GetAllMessage(GetPrevoiuschat);
               
                 Clients.Caller.loadChat(Chat);
                 

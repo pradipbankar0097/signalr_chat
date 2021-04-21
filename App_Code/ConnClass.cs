@@ -16,8 +16,8 @@ namespace SignalRChat
         public MySqlDataAdapter sda;
         public MySqlDataReader sdr;
         public DataSet ds = new DataSet();
-        public MySqlConnection con = new MySqlConnection(@"Server=localhost;Database=temp;Uid=root;Pwd=");
-        public static MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
+        public MySqlConnection con = new MySqlConnection(@"server=localhost;user id=root;database=temp;allowuservariables=True");
+        public MySqlConnection groups_db = new MySqlConnection(@"server=localhost;user id=root;database=groups_db");
 
         public bool IsExist(string Query)
         {
@@ -35,11 +35,11 @@ namespace SignalRChat
             return check;
 
         }
-        public static bool AddToGroup(string group, string enrollno)
+        public  bool AddToGroup(string group, string enrollno)
         {
             bool done = false;
             groups_db.Open();
-            MySqlCommand cmd = new MySqlCommand("insert into " + group + "(MemberEnrollNo) values('" + enrollno + "')",groups_db);
+            MySqlCommand cmd = new MySqlCommand("insert into " + group + "(MemberEnrollNo) values('" + enrollno + "')", groups_db);
             cmd.ExecuteNonQuery();
             groups_db.Close();
             return done;
@@ -56,6 +56,43 @@ namespace SignalRChat
                     RetVal.Add(sdr[i].ToString());
                 }
                 
+            }
+            return RetVal;
+        }
+
+        public List<List<string>> GetAllGroups(string Query)
+        {
+            List<List<string>> RetVal = new List<List<string>>();
+            try
+            {
+                
+                using (cmd = new MySqlCommand(Query, groups_db))
+                {
+                    groups_db.Open();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        List<string> temp = new List<string>();
+                        for (int i = 0; i < sdr.FieldCount; i++)
+                        {
+                            temp.Add(sdr[i].ToString());
+                        }
+                        RetVal.Add(temp);
+                    }
+                }
+            }
+            catch(MySql.Data.Types.MySqlConversionException ex)
+            {
+                Console.WriteLine("kuch nhi hota bhai chalne de");
+
+            }
+            finally
+            {
+                sdr.Close();
+                con.Close();
+               
+
+
             }
             return RetVal;
         }

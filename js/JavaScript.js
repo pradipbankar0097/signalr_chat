@@ -1,4 +1,7 @@
-﻿$(function () {
+﻿var usersCache;
+var groupsCache;
+
+$(function () {
     var chatHub = $.connection.chatHub;
     registerClientMethods(chatHub);
     // Start Hub
@@ -50,6 +53,7 @@ function AddMessage(userName, message, time, userimg) {
     console.log("suuuuuuuuuccccesss");
 
 };
+
 function registerClientMethods(chatHub) {
 
     // Calls when user successfully logged in
@@ -71,27 +75,44 @@ function registerClientMethods(chatHub) {
             AddMessage(messages[i].UserName, messages[i].Message, messages[i].Time, messages[i].UserImage);
 
         }
-    }
+    };
     chatHub.client.loadRegisteredUsers = function (users) {
+        usersCache = users; 
         var i;
         var add;
         var add1;
         var add2;
 
-        for (i = 0; i < users.length; i++) {
-            add = ' <tr id="' + users[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+        for (i = 0; i < usersCache.length; i++) {
+            add = ' <tr id="' + usersCache[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
 
-            add1 = '<td>' + users[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+            add1 = '<td>' + usersCache[i][0] + ' <br /> <small>achi chal rahi</small></td>';
 
             add2 = '<td><small>11:55 PM</small></td></tr>';
             $('#registered_users').append(add + add1 + add2);
-        }
+              }
+        };
+    //chatHub.client.loadRegisteredGroups = function (groups) {
+    //    groupsCache = groups;
+    //        var i;
+    //        var add;
+    //        var add1;
+    //        var add2;
 
-    }
+    //        for (i = 0; i < users.length; i++) {
+    //            add = ' <tr id="' + users[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+
+    //            add1 = '<td>' + users[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+
+    //            add2 = '<td><small>11:55 PM</small></td></tr>';
+    //            $('#registered_users').append(add + add1 + add2);
+    //        }
+
+    //    };
     // On New User Connected
     chatHub.client.onNewUserConnected = function (id, name, UserImage, loginDate) {
         AddUser(chatHub, id, name, UserImage, loginDate);
-    }
+    };
 
     // On User Disconnected
     chatHub.client.onUserDisconnected = function (id, userName) {
@@ -108,7 +129,7 @@ function registerClientMethods(chatHub) {
         $('#divusers').prepend(disc);
         $(disc).fadeIn(200).delay(2000).fadeOut(200);
 
-    }
+    };
 
 
 
@@ -121,14 +142,16 @@ function registerClientMethods(chatHub) {
 
     /////////////////////////////////////////////////////////////
     chatHub.client.loadChat = function (messages) {
+        $('#msgarea').html('');
         var i;
+
         var Side = 'left';
-        var TimeSide = 'right'; 
+        var TimeSide = 'right';
         for (i = 0; i < messages.length; i++) {
             console.log(messages[i][1] + messages[i][2]);
-            
 
-            if (messages[i][2]=='True') {
+
+            if (messages[i][2] == 'True') {
                 var Side = 'left';
                 var TimeSide = 'right';
 
@@ -138,18 +161,18 @@ function registerClientMethods(chatHub) {
                 var TimeSide = 'left';
 
             }
-              var divChat = '<div class="direct-chat-msg ' + Side + '">' +
-        '<div class="direct-chat-info clearfix">' +
-        // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-        '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
-        '</div>' +
+            var divChat = '<div class="direct-chat-msg ' + Side + '">' +
+                '<div class="direct-chat-info clearfix">' +
+                // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
+                '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
+                '</div>' +
 
-        // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-        ' <div class="direct-chat-text float"'+Side+'" style="display:inline">' + messages[i][1] + '</div> </div>';
-         $('#msgarea').append(divChat);
+                // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
+                ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+            $('#msgarea').append(divChat);
         }
 
-    }
+    };
     /////////////////////////////////////////////////////////////
 
 
@@ -183,7 +206,7 @@ function registerClientMethods(chatHub) {
             IntervalVal = setInterval("ShowTitleAlert('SignalR Chat App', '" + Notification + "')", 800);
 
         }
-    }
+    };
 
 
     chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message, userimg, CurrentDateTime) {
@@ -230,6 +253,6 @@ function registerClientMethods(chatHub) {
         $('#' + ctrId).find('#divMessage').slimScroll({
             height: ScrollHeight
         });
-    }
+    };
 
 };
