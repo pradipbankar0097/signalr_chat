@@ -17,8 +17,33 @@ namespace SignalRChat
         public MySqlDataReader sdr;
         public DataSet ds = new DataSet();
         public MySqlConnection con = new MySqlConnection(@"Server=localhost;Database=temp;Uid=root;Pwd=");
-        public static MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
+        public MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
 
+        public bool CreateGroup(string GroupName, string CreatorEnrollNo)
+        {
+            bool done = false;
+            string dt = DateTime.Now.ToString().Replace('-', '_').Replace(':', '_').Replace(' ', '_');
+            string GroupID = CreatorEnrollNo + dt;
+            string Query = "insert into groupsof_" + CreatorEnrollNo + "(GroupID) values(" + GroupID + ")";
+            con.Open();
+            cmd = new MySqlCommand(Query, con);
+            cmd.ExecuteNonQuery();
+            con.Close();
+            groups_db.Open();
+            Query = @"insert into tbl_groups(GroupID,GroupName,CreatedBy,CreatedOn) values('{GroupID}','{GroupName}','{CreatorEnrollNo}','{DateTime.Now.ToString()}')";
+            cmd = new MySqlCommand(Query,groups_db);
+            cmd.ExecuteNonQuery();
+            Query = @"create table {GroupID}(MemberEnrollNo varchar(20))";
+            cmd = new MySqlCommand(Query, groups_db);
+            cmd.ExecuteNonQuery();
+            Query = @"insert into {GroupID}(MemberEnrollNo) values('{CreatorEnrollNo}')";
+            cmd = new MySqlCommand(Query, groups_db);
+            cmd.ExecuteNonQuery();
+
+            groups_db.Close();
+            done = true;
+            return done;
+        }
         public bool IsExist(string Query)
         {
             bool check = false;
@@ -35,13 +60,23 @@ namespace SignalRChat
             return check;
 
         }
-        public static bool AddToGroup(string group, string enrollno)
+        public bool AddToGroup(string group, string enrollno)
         {
             bool done = false;
-            groups_db.Open();
-            MySqlCommand cmd = new MySqlCommand("insert into " + group + "(MemberEnrollNo) values('" + enrollno + "')",groups_db);
-            cmd.ExecuteNonQuery();
-            groups_db.Close();
+            try 
+            { 
+                groups_db.Open();
+                cmd = new MySqlCommand("insert into " + group + "(MemberEnrollNo) values('" + enrollno + "')",groups_db);
+                cmd.ExecuteNonQuery();
+                
+                done = true;
+                groups_db.Close();
+            
+            }
+            catch (Exception ee)
+            {
+
+            }
             return done;
         }
         public List<string> GetRow(string Query )
