@@ -115,6 +115,38 @@ namespace SignalRChat
             con.Close();
             return RetVal;
         }
+        public List<List<string>> GetAllGroups(string Query)
+        {
+            List<List<string>> RetVal = new List<List<string>>();
+            try
+            {
+                using (cmd = new MySqlCommand(Query, groups_db))
+                {
+                    groups_db.Open();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        List<string> temp = new List<string>();
+                        for (int i = 0; i < sdr.FieldCount; i++)
+                        {
+                            temp.Add(sdr[i].ToString());
+                        }
+                        RetVal.Add(temp);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+            sdr.Close();
+            con.Close();
+            }
+           
+            return RetVal;
+        }
         public List<List<string>> GetAllMessage(string Query) 
         {
             List<List<string>> RetVal = new List<List<string>>();
