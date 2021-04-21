@@ -94,6 +94,22 @@ namespace SignalRChat
             }
             return RetVal;
         }
+        //public List<string> GetAllGroups(string Query )
+        //{
+        //    List<string> RetVal = new List<string>();
+        //    groups_db.Open();
+        //    cmd = new MySqlCommand(Query, groups_db);
+        //    sdr = cmd.ExecuteReader(); 
+        //    if(sdr.Read())
+        //    {
+        //        for (int i = 0; i < sdr.FieldCount; i++)
+        //        {
+        //            RetVal.Add(sdr[i].ToString());
+        //        }
+                
+        //    }
+        //    return RetVal;
+        //}
         public List<List<string>> GetAllData(string Query)
         {
             List<List<string>> RetVal = new List<List<string>>();
@@ -129,22 +145,24 @@ namespace SignalRChat
                         List<string> temp = new List<string>();
                         for (int i = 0; i < sdr.FieldCount; i++)
                         {
-                            temp.Add(sdr[i].ToString());
+                            if(true)temp.Add(sdr[i].ToString());
+                           
+
                         }
                         RetVal.Add(temp);
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
             finally
             {
-            sdr.Close();
-            con.Close();
+                sdr.Close();
+                con.Close();
             }
-           
+
             return RetVal;
         }
         public List<List<string>> GetAllMessage(string Query) 

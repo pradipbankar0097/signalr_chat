@@ -24,7 +24,7 @@
     <script src="Scripts/jQuery-3.2.1.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="Scripts/date.format.js"></script>
-
+a
     <!--EmojiOneArea -->
     <link href="Content/emojionearea.min.css" rel="stylesheet" />
     <script src="Scripts/emojionearea.js"></script>
@@ -41,14 +41,13 @@
     <script type="text/javascript">
 
         function registerEvents(chatHub) {
-
+        $(document).ready(function () { 
             var name = '<%# this.UserName %>';
             var badge = '<%# this.UserBadge %>';
             var enrollno = '<%# this.UserEnrollNo %>';
             var department = '<%# this.UserDepartment %>';
             var email = '<%# this.UserEmail %>';
-            var loaded = [];
-
+         
 
             if (name.length > 0) {
                 chatHub.server.connect(name, badge, enrollno, department, email);
@@ -83,16 +82,34 @@
                     $("#txtMessage").val('');
                 }
             });
+            $('#classmates').click(function () {
+                console.log("c");
+                chatHub.server.loadRegisteredUsers();
+
+            });
+            $('#teachers').click(function () {
+                console.log("t");
+                chatHub.server.loadRegisteredTeachers();
+
+            });
+            $('#groups').click(function () {
+                console.log("g");
+                chatHub.server.loadRegisteredGroups();
+
+            });
+
+
+            
             $('.rusers').click(function () {
                 var i;
 
                 var ide = this.children;
                 for (i = 0; i < ide.length; i++) {
-                    var num = ide.item(i).addEventListener('click', function () {
+                    var num = ide.item(i).addEventListener('mouseup', function () {
                         
                         var toEnrollNo = this.id;
                         
-                        if (jQuery.inArray(toEnrollNo, loaded)==-1) {
+                        if (true) {
                             console.log(toEnrollNo);
                             $('#spanUser').val = toEnrollNo;
                             chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
@@ -116,7 +133,10 @@
                 }
             });
 
-                    };
+        });
+
+
+};
     </script>
    
 </head>
@@ -134,9 +154,9 @@
     <div class="container front-container1">
       <div class="row ">
           <ul class="nav navbar-nav panel">
-                        <li><a runat="server" href="#">Classmates</a></li>
-                        <li><a runat="server" href="#">Teachers</a></li>
-                        <li><a runat="server" href="#">Groups</a></li>
+                        <li><a id="classmates" runat="server" href="#">Classmates</a></li>
+                        <li><a id="teachers" runat="server" href="#">Teachers</a></li>
+                        <li><a id="groups" runat="server" href="#">Groups</a></li>
                         
            </ul>
       </div>  
@@ -186,89 +206,8 @@
         <div class="col-sm-4 contacts">
           <div class="contact-table-scroll">
             <table class="table table-hover">
-              <tbody id="registered_users" class="rusers">
-                 <%-- <% foreach (string a in this.RegisteredUsers)
-                      { %>
-                  <tr>
-                  <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle"/></td>
-                  <td><% =a %> <br/> <small>achi chal rahi</small></td>
-                    
-                  <td><small>11:55 PM</small></td>
-                  
-                </tr>
-                    <% } %>--%>
-                <%--<tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Jack <br> <small>Bye tata</small></td>
-                  <td><small>10:09 PM</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p4.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Bullywood Mafia <br> <small>Drg Drg Drg</small></td>
-                  <td><small>Monday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Sumit Jha<br> <small>Corona ho gaya kya</small></td>
-                  <td><small>9/22/20</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p6.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>News Channel <br> <small>Bekar news only</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <!-- start -->
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Ali <br> <small>Hello</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p5.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Afreen <br> <small>Nahi main nahi janti</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Geeky Shows <br> <small>PPT nahi mila</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Sofia <br> <small>God Bless You</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Kunal <br> <small>Nikl lo</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Kunal <br> <small>Nikl lo</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Kunal <br> <small>Nikl lo</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Kunal <br> <small>Nikl lo</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Kunal <br> <small>Nikl lo</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>
-                <tr>
-                  <td><img src="images/p1.jpg" alt="" class="profile-image rounded-circle"></td>
-                  <td>Kunal <br> <small>Nikl lo</small></td>
-                  <td><small>Sunday</small></td>
-                </tr>--%>
-                <!-- end -->
+              <tbody id="listarea" class="rusers">
+                <%--user/groups list are loaded here dyanmically--%>
               </tbody>
             </table>
           </div>
@@ -276,106 +215,7 @@
         </div>
         <div class="col-sm-8 message-area">
           <div id="msgarea" class="message-table-scroll">
-            <%--<table  class="table">
-              <tbody>
-                <tr>
-                  <td>
-                    <p class="bg-primary p-2 mt-2 mr-5 shadow-sm text-white float-left rounded">Hello Rahul</p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:20 PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-success p-2 mt-2 mr-5 shadow-sm text-white float-right rounded">Hello Sonam How are You
-                    </p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:21 PM</small></p>
-                  </td>
-                </tr>
-                <!-- start -->
-                <tr>
-                  <td>
-                    <p class="bg-primary rounded p-2 mt-2 mr-5 shadow-sm text-white float-left">Main achi hu tum kaise
-                      ho</p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:21
-                        PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-primary rounded p-2 mt-2 mr-5 shadow-sm text-white float-left">Suna hai tumhari Job
-                      chali gayi ya chhod di tumne</p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:22
-                        PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-success rounded p-2 mt-2 mr-5 shadow-sm text-white float-right">Haan Lockdown ki wajah
-                      se company me kuch problem ho rahi thi so kuch logo ko resign dene ko kaha gaya tha.. meri
-                      condition thodi thik hai to maine socha koi aur majbur ho kar nikle usse acha main hi nikl jata hu
-                      kisi jarurt wale ki job bach jayegi
-                    </p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:24
-                        PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-primary rounded p-2 mt-2 mr-5 shadow-sm text-white float-left">acha</p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:24
-                        PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-success rounded p-2 mt-2 mr-5 shadow-sm text-white float-right">Haan</p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:25
-                        PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-success rounded p-2 mt-2 mr-5 shadow-sm text-white float-right">aur tumhari job kaisi
-                      chali rahi</p>
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-3 shadow-sm"><small>11:26
-                        PM</small></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p class="bg-primary rounded p-2 mt-2 mr-5 shadow-sm text-white float-left">achi chal rahi</p>
-                      <br />
-                      <br />
-                      <br />
-                      <br />
-                     
-                      <asp:ScriptManager ID="ScriptManager1" runat="server">
-                      </asp:ScriptManager>
-                     
-                  </td>
-                  <td>
-                    <p class="p-1 mt-2 mr-5 shadow-sm"><small>11:26 PM</small></p>
-                  </td>
-                </tr>
-                <!-- end -->
-              </tbody>
-            </table>--%>
+           <%--messages are added here dyanmically--%>
            </div>
           <div class="row message-box p-3">
             <div class="col-sm-2 mt-2">

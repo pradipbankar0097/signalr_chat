@@ -1,6 +1,4 @@
-﻿var usersCache;
-var groupsCache;
-
+﻿
 $(function () {
     var chatHub = $.connection.chatHub;
     registerClientMethods(chatHub);
@@ -20,14 +18,13 @@ function AddMessage(userName, message, time, userimg) {
     console.log("Add Message Called");
 
     var CurrUser = $('#hdUserName').val();
-    var Side = 'left';
-    var TimeSide = 'right';
+   
 
-    //if (CurrUser == userName) {
-    //    Side = 'left';
-    //    TimeSide = 'right';
+    if (CurrUser == userName) {
+        Side = 'left';
+        TimeSide = 'right';
 
-    //}
+    }
 
     // var divChat = '<div class="bg-primary p-2 mt-2 mr-5 shadow-sm text-white float-right rounded ">'+message+'</div>';
 
@@ -77,38 +74,53 @@ function registerClientMethods(chatHub) {
         }
     };
     chatHub.client.loadRegisteredUsers = function (users) {
-        usersCache = users; 
         var i;
         var add;
         var add1;
         var add2;
+        $('#listarea').html('');
+        for (i = 0; i < users.length; i++) {
+            add = ' <tr id="' + users[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
 
-        for (i = 0; i < usersCache.length; i++) {
-            add = ' <tr id="' + usersCache[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
-
-            add1 = '<td>' + usersCache[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+            add1 = '<td>' + users[i][0] + ' <br /> <small>achi chal rahi</small></td>';
 
             add2 = '<td><small>11:55 PM</small></td></tr>';
-            $('#registered_users').append(add + add1 + add2);
+            $('#listarea').append(add + add1 + add2);
               }
         };
-    //chatHub.client.loadRegisteredGroups = function (groups) {
-    //    groupsCache = groups;
-    //        var i;
-    //        var add;
-    //        var add1;
-    //        var add2;
+    chatHub.client.loadRegisteredGroups = function (groups) {
 
-    //        for (i = 0; i < users.length; i++) {
-    //            add = ' <tr id="' + users[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+            var i;
+            var add;
+            var add1;
+            var add2;
+        $('#listarea').html('');
+        console.log(groups);
+        for (i = 0; i < groups.length; i++) {
+            add = ' <tr id="' + groups[i][0] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
 
-    //            add1 = '<td>' + users[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+            add1 = '<td>' + groups[i][1] + ' <br /> <small>&nbsp;</small></td>';
 
-    //            add2 = '<td><small>11:55 PM</small></td></tr>';
-    //            $('#registered_users').append(add + add1 + add2);
-    //        }
+                add2 = '<td><small>11:55 PM</small></td></tr>';
+                $('#listarea').append(add + add1 + add2);
+            }
 
-    //    };
+    };
+    chatHub.client.loadRegisteredTeachers = function (teachers) {
+        var i;
+        var add;
+        var add1;
+        var add2;
+        $('#listarea').html('');
+        for (i = 0; i < teachers.length; i++) {
+            add = ' <tr id="' + teachers[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+
+            add1 = '<td>' + teachers[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+
+            add2 = '<td><small>11:55 PM</small></td></tr>';
+            $('#listarea').append(add + add1 + add2);
+        }
+    };
     // On New User Connected
     chatHub.client.onNewUserConnected = function (id, name, UserImage, loginDate) {
         AddUser(chatHub, id, name, UserImage, loginDate);
@@ -132,16 +144,7 @@ function registerClientMethods(chatHub) {
     };
 
 
-
-
-
-
-
-
-
-
-    /////////////////////////////////////////////////////////////
-    chatHub.client.loadChat = function (messages) {
+    chatHub.client.loadChat = function (messages,f) {
         $('#msgarea').html('');
         var i;
 
@@ -150,7 +153,7 @@ function registerClientMethods(chatHub) {
         for (i = 0; i < messages.length; i++) {
             console.log(messages[i][1] + messages[i][2]);
 
-
+            if(f)
             if (messages[i][2] == 'True') {
                 var Side = 'left';
                 var TimeSide = 'right';
@@ -160,7 +163,22 @@ function registerClientMethods(chatHub) {
                 var Side = 'right';
                 var TimeSide = 'left';
 
-            }
+                }
+            else
+                if (messages[i][2] == 'True') {
+                    var Side = 'right';
+                    var TimeSide = 'left';
+
+                }
+                else {
+                    var Side = 'left';
+                    var TimeSide = 'right';
+                }
+
+
+
+
+
             var divChat = '<div class="direct-chat-msg ' + Side + '">' +
                 '<div class="direct-chat-info clearfix">' +
                 // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
@@ -173,19 +191,7 @@ function registerClientMethods(chatHub) {
         }
 
     };
-    /////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
+   
 
 
     chatHub.client.messageReceived = function (userName, message, time, userimg) {
