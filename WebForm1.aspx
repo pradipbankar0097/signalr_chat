@@ -93,8 +93,8 @@ a
 
             });
             $('#groups').click(function () {
-                console.log("g");
-                chatHub.server.loadRegisteredGroups();
+                console.log("groups");
+                chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
 
             });
 

@@ -51,6 +51,16 @@ namespace SignalRChat
             RegisterdGroups = ConnC.GetAllGroups(GetRegisteredGroupsQuery);
             Clients.Caller.loadRegisteredGroups(RegisterdGroups);
         }
+        public void loadRegisteredGroups(string enrollno)
+        {
+            foreach(string groupid in ConnC.GetFullColumn("select GroupId from groupsof_"+enrollno.ToLower(),ConnC.con))
+            {
+                string GetRegisteredGroupsQuery = "SELECT * from tbl_groups where GroupID='"+groupid+"'";
+                RegisterdGroups.Add(ConnC.GetAllGroups(GetRegisteredGroupsQuery)[0]);
+            }
+            
+            Clients.Caller.loadRegisteredGroups(RegisterdGroups);
+        }
         public void loadRegisteredTeachers()
         {
 

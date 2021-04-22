@@ -236,6 +236,23 @@ namespace SignalRChat
 
         }
 
+        public List<string> GetFullColumn(string Query,MySqlConnection con1)
+        {
+            List<string> RetVal = new List<string>();
+            using (cmd = new MySqlCommand(Query, con1))
+            {
+                con1.Open();
+                sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    RetVal.Add(sdr[0].ToString());
+                }
+            }
+            sdr.Close();
+            con1.Close();
+            return RetVal;
+        }
+
         public string GetColumnVal(string Query, string ColumnName)
         {
             string RetVal = "";
