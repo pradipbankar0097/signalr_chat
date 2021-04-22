@@ -112,6 +112,7 @@ function registerClientMethods(chatHub) {
         var add1;
         var add2;
         $('#listarea').html('');
+       
         for (i = 0; i < teachers.length; i++) {
             add = ' <tr id="' + teachers[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
 
@@ -121,6 +122,23 @@ function registerClientMethods(chatHub) {
             $('#listarea').append(add + add1 + add2);
         }
     };
+
+
+    chatHub.client.updateNotification = function (Notifications) {
+
+        var i;
+        console.log(Notifications);
+        for (i = 0; i < Notifications.length; i++) {
+
+            $('#ntf').append($( Notifications[i][0] + '(' + Notifications[i][1] + ')'));
+        }
+       
+    };
+    chatHub.client.nCreated = function () {
+        console.log("notification created");
+        alert("New Notification created successfully!!!");
+    };
+
     // On New User Connected
     chatHub.client.onNewUserConnected = function (id, name, UserImage, loginDate) {
         AddUser(chatHub, id, name, UserImage, loginDate);
@@ -260,5 +278,6 @@ function registerClientMethods(chatHub) {
             height: ScrollHeight
         });
     };
+
 
 };

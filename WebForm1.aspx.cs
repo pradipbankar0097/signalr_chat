@@ -10,6 +10,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SD = System.Drawing;
 using System.Web.UI.HtmlControls;
+using System.Data;
+
 
 namespace SignalRChat
 {
@@ -51,5 +53,7 @@ namespace SignalRChat
 
             this.Header.DataBind();
         }
+
+
     }
 }

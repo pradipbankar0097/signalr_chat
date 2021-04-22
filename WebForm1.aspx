@@ -13,6 +13,7 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/StyleSheet1.css"/>
+   
 
     <title>WhatsApp Web</title>
      <link href="Content/bootstrap.css" rel="stylesheet" />
@@ -24,7 +25,7 @@
     <script src="Scripts/jQuery-3.2.1.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="Scripts/date.format.js"></script>
-a
+
     <!--EmojiOneArea -->
     <link href="Content/emojionearea.min.css" rel="stylesheet" />
     <script src="Scripts/emojionearea.js"></script>
@@ -123,8 +124,19 @@ a
 
             });
 
+            //NOTIFICAIONS
+            $('#notification').click(function () {
+                console.log("n");
+                chatHub.server.showNotification();
+            });
 
-            
+            $('#createNoti').click(function () {
+                console.log("Create Notification called.");
+                chatHub.server.createNotification();
+            });
+
+
+
 
             // Send Message on Enter Button
             $("#txtMessage").keypress(function (e) {
@@ -157,9 +169,16 @@ a
                         <li><a id="classmates" runat="server" href="#">Classmates</a></li>
                         <li><a id="teachers" runat="server" href="#">Teachers</a></li>
                         <li><a id="groups" runat="server" href="#">Groups</a></li>
-                        
-           </ul>
-      </div>  
+                       <li><a id="notification" runat="server" href="#">Notifications</a></li>
+                       <input id="createNoti" type="button" value="button" />
+            </ul>
+          <table>
+              <tbody id="ntf">
+
+              </tbody>
+              </table>
+                
+          </div>  
       <div class="row chat-top">
         <div class="col-sm-4 border-right border-secondary">
           <img src="images/p3.jpg" alt="" class="profile-image rounded-circle float-left"/>
@@ -184,7 +203,7 @@ a
 
         </div>
         <div class="col-sm-8">
-          <img src="images/p2.jpg" alt="" class="profile-image rounded-circle">
+          <img src="images/p2.jpg" alt="" class="profile-image rounded-circle"/>
           <span id="spanUser1" class="ml-2">Rahul Kumar</span>
           <span class="float-right mt-2">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"

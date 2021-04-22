@@ -16,6 +16,7 @@ namespace SignalRChat
         static List<Users> ConnectedUsers = new List<Users>();
         static List<Messages> CurrentMessage = new List<Messages>();
 
+        public List<List<string>> Notifications = new List<List<string>>();
         public List<List<string>> RegisteredUsers = new List<List<string>>();
         public List<List<string>> RegisterdGroups = new List < List<string> >();
         ConnClass ConnC = new ConnClass();
@@ -55,6 +56,28 @@ namespace SignalRChat
         {
 
         }
+
+        public void ShowNotification()
+        {
+           string GetNotificationQuery = "select * from notify";
+            Console.Write("Method called.1");
+            Notifications = ConnC.GetAllDataFromDB(GetNotificationQuery);
+            //Console.Write("Method called.1");
+            //int count  = ConnC.GetRowNo(GetNotificationQuery);
+            Clients.All.UpdateNotification(Notifications);
+
+        }
+        public void CreateNotification()
+        {
+            string author = "admin";
+            string Message = "First Notification";
+            
+            int GON = 1;
+            bool a = ConnC.CreateNotif(author, Message,GON);
+            Console.Write("Method called.");
+            Clients.All.NCreated();
+        }
+
         public void SendMessageToAll(string userName, string message, string time)
         {
             string UserImg = GetUserImage(userName);
