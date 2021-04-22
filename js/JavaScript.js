@@ -78,6 +78,7 @@ function registerClientMethods(chatHub) {
         var add;
         var add1;
         var add2;
+        console.log(users);
         $('#listarea').html('');
         for (i = 0; i < users.length; i++) {
             add = ' <tr id="' + users[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
@@ -144,8 +145,10 @@ function registerClientMethods(chatHub) {
     };
 
 
-    chatHub.client.loadChat = function (messages,f) {
+    chatHub.client.loadChat = function (messages,f,toenroll) {
         $('#msgarea').html('');
+        console.log(toenroll);
+        $('#reciever').append('<Text>'+toenroll+'</Text>');
         var i;
 
         var Side = 'left';
@@ -193,7 +196,12 @@ function registerClientMethods(chatHub) {
     };
    
 
+    chatHub.client.alertMe = function (str) {
+        alert(str);
 
+
+
+    };
     chatHub.client.messageReceived = function (userName, message, time, userimg) {
 
         AddMessage(userName, message, time, userimg);

@@ -55,6 +55,7 @@ namespace SignalRChat
         {
 
         }
+        
         public void SendMessageToAll(string userName, string message, string time)
         {
             string UserImg = GetUserImage(userName);
@@ -96,6 +97,26 @@ namespace SignalRChat
             { }
             return RetimgName;
         }
+        public string GetUserName(string enroll)
+        {
+            loadRegisteredUsers();
+            string rstr="";
+            for(int i=0;i<RegisteredUsers.Count;i++)
+            {
+                for(int j=0;j<RegisteredUsers[i].Count;j++)
+                {
+                    if(enroll.Equals(RegisteredUsers[i][j]))
+                    {
+                        // Clients.All.alertMe(RegisteredUsers[i]);
+                        rstr = RegisteredUsers[i][0];
+                    }
+                }
+
+            }
+            return rstr;
+           
+        }
+        
 
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
@@ -141,6 +162,7 @@ namespace SignalRChat
                 AddMessageTo(table_name, message, fromUserEN, toUserEN);
             }
         }
+        
 
         public void SendPrivateMessage(string toUserId, string message)
         {
@@ -180,7 +202,7 @@ namespace SignalRChat
 
                 // send to caller user
                 Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
-            }
+            } 
 
         }
         public void LoadPrivateChat(string toEnrollNo, string fromEnrollNo)
@@ -205,8 +227,10 @@ namespace SignalRChat
                 string GetPrevoiuschat = "SELECT * FROM " +new_table_name;
 
                 Chat = Conn.GetAllMessage(GetPrevoiuschat);
+                string enroll = GetUserName(toEnrollNo);
               
-                Clients.Caller.loadChat(Chat,check);
+                Clients.Caller.loadChat(Chat,check,enroll);
+
                 
               
             }
