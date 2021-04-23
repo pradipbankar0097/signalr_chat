@@ -148,7 +148,7 @@ function registerClientMethods(chatHub) {
     chatHub.client.loadChat = function (messages,f,toenroll) {
         $('#msgarea').html('');
         console.log(toenroll);
-        $('#reciever').append('<Text>'+toenroll+'</Text>');
+        $('#reciever').html('<Text>' + toenroll + '</Text>');
         var i;
 
         var Side = 'left';

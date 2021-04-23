@@ -24,7 +24,7 @@
     <script src="Scripts/jQuery-3.2.1.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="Scripts/date.format.js"></script>
-a
+
     <!--EmojiOneArea -->
     <link href="Content/emojionearea.min.css" rel="stylesheet" />
     <script src="Scripts/emojionearea.js"></script>
