@@ -16,6 +16,7 @@ namespace SignalRChat
         static List<Users> ConnectedUsers = new List<Users>();
         static List<Messages> CurrentMessage = new List<Messages>();
 
+        public List<List<string>> Notifications = new List<List<string>>();
         public List<List<string>> RegisteredUsers = new List<List<string>>();
         public List<List<string>> RegisterdGroups = new List < List<string> >();
         ConnClass ConnC = new ConnClass();
@@ -51,21 +52,32 @@ namespace SignalRChat
             RegisterdGroups = ConnC.GetAllGroups(GetRegisteredGroupsQuery);
             Clients.Caller.loadRegisteredGroups(RegisterdGroups);
         }
-        public void loadRegisteredGroups(string enrollno)
-        {
-            foreach(string groupid in ConnC.GetFullColumn("select GroupId from groupsof_"+enrollno.ToLower(),ConnC.con))
-            {
-                string GetRegisteredGroupsQuery = "SELECT * from tbl_groups where GroupID='"+groupid+"'";
-                RegisterdGroups.Add(ConnC.GetAllGroups(GetRegisteredGroupsQuery)[0]);
-            }
-            
-            Clients.Caller.loadRegisteredGroups(RegisterdGroups);
-        }
         public void loadRegisteredTeachers()
         {
 
         }
-        
+
+        public void ShowNotification()
+        {
+           string GetNotificationQuery = "select * from notify";
+            Console.Write("Method called.1");
+            Notifications = ConnC.GetAllDataFromDB(GetNotificationQuery);
+            //Console.Write("Method called.1");
+            //int count  = ConnC.GetRowNo(GetNotificationQuery);
+            Clients.All.UpdateNotification(Notifications);
+
+        }
+        public void CreateNotification()
+        {
+            string author = "admin";
+            string Message = "First Notification";
+            
+            int GON = 1;
+            bool a = ConnC.CreateNotif(author, Message,GON);
+            Console.Write("Method called.");
+            Clients.All.NCreated();
+        }
+
         public void SendMessageToAll(string userName, string message, string time)
         {
             string UserImg = GetUserImage(userName);
@@ -107,26 +119,6 @@ namespace SignalRChat
             { }
             return RetimgName;
         }
-        public string GetUserName(string enroll)
-        {
-            loadRegisteredUsers();
-            string rstr="";
-            for(int i=0;i<RegisteredUsers.Count;i++)
-            {
-                for(int j=0;j<RegisteredUsers[i].Count;j++)
-                {
-                    if(enroll.Equals(RegisteredUsers[i][j]))
-                    {
-                        // Clients.All.alertMe(RegisteredUsers[i]);
-                        rstr = RegisteredUsers[i][0];
-                    }
-                }
-
-            }
-            return rstr;
-           
-        }
-        
 
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
@@ -172,6 +164,7 @@ namespace SignalRChat
                 AddMessageTo(table_name, message, fromUserEN, toUserEN);
             }
         }
+
         public void CallAddMessegeTo(string message, Users fromUser,Users toUser)
         {
 
@@ -215,7 +208,7 @@ namespace SignalRChat
 
                 // send to caller user
                 Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
-            } 
+            }
 
         }
         public void LoadPrivateChat(string toEnrollNo, string fromEnrollNo)
@@ -240,10 +233,8 @@ namespace SignalRChat
                 string GetPrevoiuschat = "SELECT * FROM " +new_table_name;
 
                 Chat = Conn.GetAllMessage(GetPrevoiuschat);
-                string enroll = GetUserName(toEnrollNo);
               
-                Clients.Caller.loadChat(Chat,check,enroll);
-
+                Clients.Caller.loadChat(Chat,check);
                 
               
             }
