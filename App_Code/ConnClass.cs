@@ -18,7 +18,7 @@ namespace SignalRChat
         public DataSet ds = new DataSet();
         public MySqlConnection con = new MySqlConnection(@"Server=localhost;Database=temp;Uid=root;Pwd=");
         public MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
-        
+        public MySqlConnection ntf = new MySqlConnection(@"");
         public bool CreateGroup(string GroupName, string CreatorEnrollNo)
         {
             bool done = false;

@@ -103,6 +103,25 @@ namespace SignalRChat
         {
             CurrentMessage.Clear();
         }
+        public string GetUserName(string enroll)
+        {
+            loadRegisteredUsers();
+            string rstr = "";
+            for (int i = 0; i < RegisteredUsers.Count; i++)
+            {
+                for (int j = 0; j < RegisteredUsers[i].Count; j++)
+                {
+                    if (enroll.Equals(RegisteredUsers[i][j]))
+                    {
+                        // Clients.All.alertMe(RegisteredUsers[i]);
+                        rstr = RegisteredUsers[i][0];
+                    }
+                }
+
+            }
+            return rstr;
+
+        }
 
         public string GetUserImage(string username)
         {
@@ -234,7 +253,7 @@ namespace SignalRChat
 
                 Chat = Conn.GetAllMessage(GetPrevoiuschat);
               
-                Clients.Caller.loadChat(Chat,check);
+                Clients.Caller.loadChat(Chat,check, GetUserName(toEnrollNo));
                 
               
             }

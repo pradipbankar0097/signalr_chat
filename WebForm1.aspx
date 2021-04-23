@@ -204,7 +204,7 @@
         </div>
         <div class="col-sm-8">
           <img src="images/p2.jpg" alt="" class="profile-image rounded-circle"/>
-          <span id="spanUser1" class="ml-2">Rahul Kumar</span>
+          <span id="spanUser1" class="ml-2"></span>
           <span class="float-right mt-2">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
