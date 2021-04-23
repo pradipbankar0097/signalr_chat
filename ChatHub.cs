@@ -57,14 +57,14 @@ namespace SignalRChat
 
         }
 
-        public void ShowNotification()
+        public void showNotification()
         {
            string GetNotificationQuery = "select * from notify";
             Console.Write("Method called.1");
-            Notifications = ConnC.GetAllDataFromDB(GetNotificationQuery);
+            Notifications = ConnC.GetAllDataFromDB(GetNotificationQuery, ConnC.ntf);
             //Console.Write("Method called.1");
             //int count  = ConnC.GetRowNo(GetNotificationQuery);
-            Clients.All.UpdateNotification(Notifications);
+            Clients.Caller.showNotification(Notifications);
 
         }
         public void CreateNotification()

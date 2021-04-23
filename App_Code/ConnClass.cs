@@ -151,12 +151,12 @@ namespace SignalRChat
             con.Close();
             return RetVal;
         }
-        public List<List<string>> GetAllDataFromDB(string Query)
+        public List<List<string>> GetAllDataFromDB(string Query,MySqlConnection conn)
         {
             List<List<string>> RetVal = new List<List<string>>();
             using (cmd = new MySqlCommand(Query, ntf))
             {
-                 ntf.Open();
+                 conn.Open();
                 sdr = cmd.ExecuteReader();
                 while (sdr.Read())
                 {
@@ -169,7 +169,7 @@ namespace SignalRChat
                 }
             }
             sdr.Close();
-            ntf.Close();
+            conn.Close();
             return RetVal;
         }
         public List<List<string>> GetAllGroups(string Query)

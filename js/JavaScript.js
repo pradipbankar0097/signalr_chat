@@ -125,13 +125,23 @@ function registerClientMethods(chatHub) {
     };
 
 
-    chatHub.client.updateNotification = function (Notifications) {
+    chatHub.client.showNotification = function (Notifications) {
 
         var i;
+        var add;
+        var add1;
+        var add2;
+
         console.log(Notifications);
+        $('#listarea').html('')
         for (i = 0; i < Notifications.length; i++) {
 
-            $('#ntf').append($( Notifications[i][0] + '(' + Notifications[i][1] + ')'));
+            add = ' <tr id="notice' + i + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+
+            add1 = '<td>' + Notifications[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+
+            add2 = '<td><small>11:55 PM</small></td></tr>';
+            $('#listarea').append(add + add1 + add2);
         }
        
     };
