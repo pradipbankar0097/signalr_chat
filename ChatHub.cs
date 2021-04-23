@@ -122,6 +122,7 @@ namespace SignalRChat
             return rstr;
 
         }
+       
 
         public string GetUserImage(string username)
         {
