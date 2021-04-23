@@ -48,7 +48,7 @@
             var enrollno = '<%# this.UserEnrollNo %>';
             var department = '<%# this.UserDepartment %>';
             var email = '<%# this.UserEmail %>';
-         
+           
 
             if (name.length > 0) {
                 chatHub.server.connect(name, badge, enrollno, department, email);
@@ -86,40 +86,48 @@
             $('#classmates').click(function () {
                 console.log("c");
                 chatHub.server.loadRegisteredUsers();
+                
 
             });
             $('#teachers').click(function () {
                 console.log("t");
                 chatHub.server.loadRegisteredTeachers();
+               
 
             });
+
             $('#groups').click(function () {
                 console.log("g");
                 chatHub.server.loadRegisteredGroups();
+               
 
             });
 
 
             
-            $('.rusers').click(function () {
-                var i;
+            $('.rusers').mouseenter(function () {
+                if (true) {
+                   
+                    var i;
 
-                var ide = this.children;
-                for (i = 0; i < ide.length; i++) {
-                    var num = ide.item(i).addEventListener('mouseup', function () {
-                        
-                        var toEnrollNo = this.id;
-                        
-                        if (true) {
-                            console.log(toEnrollNo);
-                            $('#spanUser').val = toEnrollNo;
-                            chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
-                            loaded.push(toEnrollNo);
-                        }
-                    });
+                    var ide = this.children;
+
+                    for (i = 0; i < ide.length; i++) {
+                        var num = ide.item(i).addEventListener('mouseup', function () {
+
+                            var toEnrollNo = this.id;
+
+                            if (true) {
+                                console.log(toEnrollNo);
+                                $('#spanUser').val = toEnrollNo;
+                                chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
+                                loaded.push(toEnrollNo);
+                            }
+                        });
+
+                    }
 
                 }
-
 
 
             });
@@ -204,7 +212,7 @@
         </div>
         <div class="col-sm-8">
           <img src="images/p2.jpg" alt="" class="profile-image rounded-circle"/>
-          <span id="spanUser1" class="ml-2">Rahul Kumar</span>
+          <span id="spanUser1" class="ml-2"></span>
           <span class="float-right mt-2">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
