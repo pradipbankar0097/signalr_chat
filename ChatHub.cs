@@ -172,15 +172,8 @@ namespace SignalRChat
                 AddMessageTo(table_name, message, fromUserEN, toUserEN);
             }
         }
-        
-
-        public void SendPrivateMessage(string toUserId, string message)
+        public void CallAddMessegeTo(string message, Users fromUser,Users toUser)
         {
-
-            string fromUserId = Context.ConnectionId;
-
-            var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
-            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
 
             string fromUserEnrollNo = fromUser.EnrollNo;
             string toUserEnrollNo = toUser.EnrollNo;
@@ -203,6 +196,16 @@ namespace SignalRChat
                 table_name = fromUser.TableNameFor[toUser.EnrollNo];
             }
             AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
+
+        }
+
+        public void SendPrivateMessage(string toUserId, string message)
+        {
+
+            string fromUserId = Context.ConnectionId;
+
+            var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
+            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
             if (toUser != null && fromUser != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();
