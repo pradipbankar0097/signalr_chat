@@ -57,7 +57,7 @@ namespace SignalRChat
 
         }
 
-        public void showNotification()
+        public void ShowNotification()
         {
            string GetNotificationQuery = "select * from notify";
             Console.Write("Method called.1");
@@ -282,7 +282,44 @@ namespace SignalRChat
                 
             }
            
+            
+        }
+        
+        public void SendMessageToTeacher(string fromUserName, string fromUserEnroll, string toUserEnroll, string message)
+        {
+            if (toUserEnroll != null && fromUserEnroll != null)
+            {
+                string CurrentDateTime = DateTime.Now.ToString();
+                CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
+            }
+            else
+            {
+                Console.WriteLine("failed");
+            }
 
+        }
+        public void AddMessageToGroup(string message, string fromUserEnroll, string toGroupID)
+        {
+            try
+            {
+                string AddMessageToGroupQuery = "insert into `" + toGroupID + "msgs`(`Time`,`Message`,`SenderEnrollNo`) values(`" + DateTime.Now.ToString() + "`,`" + message + "`,`" + fromUserEnroll + "`)";
+                ConnC.ExecuteQuery(AddMessageToGroupQuery, ConnC.groups_db);
+            }
+            catch(Exception ee)
+            {
+                
+            }
+        }
+        public void SendMessageToGroup(string fromUserName, string fromUserEnroll, string toGroupID, string message)
+        {
+            if (toGroupID != null && fromUserEnroll != null)
+            {
+                AddMessageToGroup(message, fromUserEnroll, toGroupID);
+            }
+            else
+            {
+                Console.WriteLine("failed");
+            }
         }
     }
 }

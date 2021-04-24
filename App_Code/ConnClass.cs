@@ -18,7 +18,7 @@ namespace SignalRChat
         public DataSet ds = new DataSet();
         public MySqlConnection con = new MySqlConnection(@"Server=localhost;Database=temp;Uid=root;Pwd=");
         public MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
-        public MySqlConnection ntf = new MySqlConnection(@"server=localhost;user id=root;database=notifications");
+        public MySqlConnection ntf = new MySqlConnection(@"server=localhost;user id=root;database=notifications_db");
 
         public bool CreateGroup(string GroupName, string CreatorEnrollNo)
         {
@@ -268,6 +268,22 @@ namespace SignalRChat
                 con.Open();
                 j = cmd.ExecuteNonQuery();
                 con.Close();
+            }
+
+            if (j > 0)
+                return true;
+            else
+                return false;
+
+        }
+        public bool ExecuteQuery(string Query,MySqlConnection conn)
+        {
+            int j = 0;
+            using (cmd = new MySqlCommand(Query, conn))
+            {
+                conn.Open();
+                j = cmd.ExecuteNonQuery();
+                conn.Close();
             }
 
             if (j > 0)
