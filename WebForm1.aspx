@@ -121,7 +121,7 @@
 
             $('#groups').click(function () {
                 selectedfield = 'g';
-                chatHub.server.loadRegisteredGroups();
+                chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
                
 
             });

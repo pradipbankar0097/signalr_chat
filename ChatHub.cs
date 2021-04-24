@@ -46,10 +46,14 @@ namespace SignalRChat
             RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
             Clients.Caller.loadRegisteredUsers(RegisteredUsers);
         }
-        public void loadRegisteredGroups()
+        public void loadRegisteredGroups(string enrollno)
         {
-            string GetRegisteredGroupsQuery = "select * from tbl_groups";
-            RegisterdGroups = ConnC.GetAllGroups(GetRegisteredGroupsQuery);
+            foreach (string groupid in ConnC.GetFullColumn("select GroupId from groupsof_" + enrollno.ToLower(), ConnC.con))
+            {
+                string GetRegisteredGroupsQuery = "SELECT * from tbl_groups where GroupID='" + groupid + "'";
+                RegisterdGroups.Add(ConnC.GetAllGroups(GetRegisteredGroupsQuery)[0]);
+            }
+
             Clients.Caller.loadRegisteredGroups(RegisterdGroups);
         }
         public void loadRegisteredTeachers()
@@ -243,6 +247,12 @@ namespace SignalRChat
                 Console.WriteLine("failed");
             }
 
+        }
+        public void LoadGroupChat(string GroupID)
+        {
+            string GetGroupChatQuery = "select `Time`,`Message`,`SenderEnrollNo` from `"+GroupID+"msgs`";
+            List<List<string>> chat = ConnC.GetAllDataFromDB(GetGroupChatQuery, ConnC.groups_db);
+            Clients.Caller.loadGroupChat(chat);
         }
         public void LoadPrivateChat(string toEnrollNo, string fromEnrollNo)
         {

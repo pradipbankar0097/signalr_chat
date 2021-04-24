@@ -154,7 +154,7 @@ namespace SignalRChat
         public List<List<string>> GetAllDataFromDB(string Query,MySqlConnection conn)
         {
             List<List<string>> RetVal = new List<List<string>>();
-            using (cmd = new MySqlCommand(Query, ntf))
+            using (cmd = new MySqlCommand(Query, conn))
             {
                  conn.Open();
                 sdr = cmd.ExecuteReader();
