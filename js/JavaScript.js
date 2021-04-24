@@ -1,5 +1,7 @@
 ﻿
 $(function () {
+   
+
     var chatHub = $.connection.chatHub;
     registerClientMethods(chatHub);
     // Start Hub
@@ -54,24 +56,19 @@ function AddMessage(userName, message, time, userimg) {
 function registerClientMethods(chatHub) {
 
     // Calls when user successfully logged in
-    chatHub.client.onConnected = function (id, userName, allUsers, messages, times) {
+    chatHub.client.onConnected = function (id, userName,userEnroll) {
         console.log("onConnected Called");
 
         $('#hdId').val(id);
-        $('#hdUserName').val(userName);
+        $('#hdUserEnroll').val(userEnroll);
         $('#spanUser').html(userName);
 
-        // Add All Users
-        for (i = 0; i < allUsers.length; i++) {
-
-            // AddUser(chatHub, allUsers[i].ConnectionId, allUsers[i].UserName, allUsers[i].UserImage, allUsers[i].LoginTime);
-        }
-
-        // Add Existing Messages
-        for (i = 0; i < messages.length; i++) {
-            AddMessage(messages[i].UserName, messages[i].Message, messages[i].Time, messages[i].UserImage);
-
-        }
+       
+    };
+    chatHub.client.method = function (fromusername, fromuserenroll, messasge) {
+        alert("You have message from" + fromusername);
+        console.log(messasge);
+        
     };
     chatHub.client.loadRegisteredUsers = function (users) {
         var i;
@@ -250,7 +247,7 @@ function registerClientMethods(chatHub) {
 
         }
     };
-
+    
 
     chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message, userimg, CurrentDateTime) {
 

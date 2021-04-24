@@ -10,19 +10,23 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" />
     <%--integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous"/>--%>
-
+   
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/StyleSheet1.css"/>
    
 
     <title>WhatsApp Web</title>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
      <link href="Content/bootstrap.css" rel="stylesheet" />
     <link href="Content/style.css" rel="stylesheet" />
     <link href="Content/font-awesome.css" rel="stylesheet" />
 
+   
 
 
-    <script src="Scripts/jQuery-3.2.1.min.js"></script>
+
+    <script src="Scripts/jQuery-3.2.1.min.js"></script> 
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="Scripts/date.format.js"></script>
 
@@ -38,11 +42,15 @@
     
    <%-- <script type="text/javascript" src="js\registerclientmethods"></script>
    <script type="text/javascript" src="js\registerevents"></script>--%>
-    <script type="text/javascript" src="js\JavaScript.js"></script>
+   
+    
+     <script type="text/javascript" src="js\JavaScript.js"></script>
     <script type="text/javascript">
 
+
         function registerEvents(chatHub) {
-        $(document).ready(function () { 
+            $(document).ready(function () { 
+              var selectedfield = 'c';
             var name = '<%# this.UserName %>';
             var badge = '<%# this.UserBadge %>';
             var enrollno = '<%# this.UserEnrollNo %>';
@@ -72,32 +80,47 @@
             $('#btnSendMsg').click(function () {
 
                 var msg = $("#txtMessage").val();
+                $("#txtMessage").val('');
 
                 if (msg.length > 0) {
-
-                    var userName = $('#hdUserName').val();
-
-                    // var date = GetCurrentDateTime(new Date());
-                    var date = 'date';
-                    chatHub.server.sendMessageToAll(userName, msg, date);
-                    $("#txtMessage").val('');
+                    var fromUserName = name;
+                    var fromuserEnroll = $('#hdUserEnroll').val();
+                    var toUserEnroll = $('#hdtoUserEnroll').val();
+                    switch (selectedfield) {
+                        case 'c':
+                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            console.log('server request sent');
+                            break;
+                        case 't':
+                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            break;
+                        case 'g':
+                            chatHub.server.sendMessageToGroup(fromUserName,userEnroll, toUserEnroll, msg);
+                            break;
+                        
+                        default:
+                            alert('Select a field');
+                    };
+                 
+                  //  chatHub.server.sendMessageToAll(userName, msg);
+                    
                 }
             });
             $('#classmates').click(function () {
-                console.log("c");
+                selectedfield = 'c';
                 chatHub.server.loadRegisteredUsers();
                 
 
             });
             $('#teachers').click(function () {
-                console.log("t");
+                selectedfield = 't';
                 chatHub.server.loadRegisteredTeachers();
                
 
             });
 
             $('#groups').click(function () {
-                console.log("g");
+                selectedfield = 'g';
                 chatHub.server.loadRegisteredGroups();
                
 
@@ -116,12 +139,14 @@
                         var num = ide.item(i).addEventListener('mouseup', function () {
 
                             var toEnrollNo = this.id;
+                            $('#hdtoUserEnroll').val(toEnrollNo);
+                          
 
                             if (true) {
                                 console.log(toEnrollNo);
                                 $('#spanUser').val = toEnrollNo;
                                 chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
-                                loaded.push(toEnrollNo);
+                                //loaded.push(toEnrollNo);
                             }
                         });
 
@@ -139,10 +164,14 @@
             });
 
             $('#createNoti').click(function () {
+               console.log("script loaded");
+                
                 console.log("Create Notification called.");
-                chatHub.server.createNotification();
+               chatHub.server.createNotification();
+              
             });
-
+           
+            
 
 
 
@@ -168,9 +197,11 @@
       <div class="back-top"></div>
       <div class="back-main"></div>
     </div>
+            <div id = "dialog-4" title = "Dialog Title goes here...">This my first jQuery UI Dialog!</div>
          <input id="hdId" type="hidden" />
         <input id="PWCount" type="hidden" value="info" />
-        <input id="hdUserName" type="hidden" />
+        <input id="hdUserEnroll" type="hidden" />
+        <input id="hdtoUserEnroll" type="hidden" />
     <div class="container front-container1">
       <div class="row ">
           <ul class="nav navbar-nav panel">

@@ -98,3 +98,10 @@ ul.panel {
     margin-top:5px;
     padding-top:5px;
 }
+
+.ui-widget-header, .ui-state-default, ui-button {
+    background: #31ccf3;
+    border: 1px solid #8766ff;
+    color: #FFFFFF;
+    font-weight: bold;
+}

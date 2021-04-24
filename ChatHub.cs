@@ -35,7 +35,7 @@ namespace SignalRChat
                 ConnectedUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
 
                 //send to caller
-                Clients.Caller.onConnected(id, userName, ConnectedUsers, CurrentMessage);
+                Clients.Caller.onConnected(id, userName,userEnrollNo);
                 loadRegisteredUsers();
              
             }
@@ -185,34 +185,29 @@ namespace SignalRChat
             }
         }
 
-        public void CallAddMessegeTo(string message, Users fromUser,Users toUser)
+       
+        public void CallAddMessegeTo(string message,string fromUserName, string fromUserEnrollNo, string toUserEnrollNo)
         {
+            Console.WriteLine("Reached to calladdmessagetos");
+            string[] arr = new string[] { fromUserEnrollNo, toUserEnrollNo };
+            Array.Sort(arr);
+           string table_name = "f" + arr[0] + "to" + arr[1];
 
-            string fromUserEnrollNo = fromUser.EnrollNo;
-            string toUserEnrollNo = toUser.EnrollNo;
-
-
-    
-
-            //tablename for this conversation
-            string table_name;
+            AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
             try
             {
-                table_name = fromUser.TableNameFor[toUser.EnrollNo];
+                var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnrollNo);
+                Clients.Client(toUser.ConnectionId).method(fromUserName, fromUserEnrollNo, message);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-
-                string[] arr = new string[] { fromUserEnrollNo, toUserEnrollNo };
-                Array.Sort(arr);
-                fromUser.TableNameFor.Add(toUser.EnrollNo, "f" + arr[0] + "to" + arr[1]);
-                table_name = fromUser.TableNameFor[toUser.EnrollNo];
+                Console.WriteLine("User Not Online");
             }
-            AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
+            
 
         }
 
-        public void SendPrivateMessage(string toUserId, string message)
+        public void SendPrivateMessages(string toUserId, string message)
         {
 
             string fromUserId = Context.ConnectionId;
@@ -228,6 +223,24 @@ namespace SignalRChat
 
                 // send to caller user
                 Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
+            }
+
+        } 
+        public void SendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
+        {
+
+          
+            if (toUserEnroll != null && fromUserEnroll != null)
+            {
+                string CurrentDateTime = DateTime.Now.ToString();
+                
+                CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
+             
+               
+            }
+            else
+            {
+                Console.WriteLine("failed");
             }
 
         }
