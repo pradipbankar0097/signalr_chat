@@ -193,7 +193,23 @@
         });
 
 
-};
+        };
+        (function (timer) {
+            console.log('timer called');
+            window.addEventListener('load', function () {
+                var el = document.querySelector('.contact-table-scroll');
+                el.addEventListener('scroll', function (e) {
+                    console.log('scroll added');
+                    (function (el) {
+                        el.classList.add('scroll');
+                        clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            el.classList.remove('scroll');
+                        }, 100);
+                    })(el);
+                })
+            })
+        })();
     </script>
    
 </head>
@@ -218,7 +234,7 @@
                         <li><a id="teachers" runat="server" href="#">Teachers</a></li>
                         <li><a id="groups" runat="server" href="#">Groups</a></li>
                        <li><a id="notification" runat="server" href="#">Notifications</a></li>
-                       <input id="createNoti" type="button" value="button" />
+                       <li><input id="createNoti" type="button" value="button" /></li>
             </ul>
           <table>
               <tbody id="ntf">
