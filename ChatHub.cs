@@ -204,7 +204,7 @@ namespace SignalRChat
             }
             catch(Exception e)
             {
-                Console.WriteLine("User Not Online");
+                Console.WriteLine("User Not Online"+e.ToString());
             }
             
 
@@ -316,6 +316,7 @@ namespace SignalRChat
             }
             catch(Exception ee)
             {
+                Console.WriteLine(ee.Message.ToString());
                 
             }
         }
