@@ -227,6 +227,27 @@ function registerClientMethods(chatHub) {
         }
 
     };
+    chatHub.client.addMessageToGroupChat = function (message, fromusername) {
+
+        var Side = 'left';
+        var TimeSide = 'right';
+        if (message != null) {
+
+            var divChat = '<div class="direct-chat-msg ' + Side + '">' +
+                '<div class="direct-chat-info clearfix">' +
+                // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
+                '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + fromusername+ '</span>' +
+                '</div>' +
+
+                // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
+                ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + message + '</div> </div>';
+            $('#msgarea').append(divChat);
+        }
+
+
+
+
+    }
     chatHub.client.loadGroupChat = function (messages,grpname,enroll) {
         $('#msgarea').html('');
         console.log(grpname);
@@ -235,8 +256,7 @@ function registerClientMethods(chatHub) {
         $('#spanUser1').html('<Text>' + grpname + '</Text>');
         if (messages != null) {
             
-            var Side='left';
-            var TimeSide = 'right';
+           
             var i;
 
                 for (i = 0; i < messages.length; i++) {

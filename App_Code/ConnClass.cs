@@ -154,23 +154,30 @@ namespace SignalRChat
         public List<List<string>> GetAllDataFromDB(string Query,MySqlConnection conn)
         {
             List<List<string>> RetVal = new List<List<string>>();
-            
-            using (cmd = new MySqlCommand(Query, conn))
+            try
             {
-                 conn.OpenAsync();
-                sdr = cmd.ExecuteReader();
-                while (sdr.Read())
+                using (cmd = new MySqlCommand(Query, conn))
                 {
-                    List<string> temp = new List<string>();
-                    for (int i = 0; i < sdr.FieldCount; i++)
+
+                    conn.OpenAsync();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
                     {
-                        temp.Add(sdr[i].ToString());
+                        List<string> temp = new List<string>();
+                        for (int i = 0; i < sdr.FieldCount; i++)
+                        {
+                            temp.Add(sdr[i].ToString());
+                        }
+                        RetVal.Add(temp);
                     }
-                    RetVal.Add(temp);
                 }
+                sdr.Close();
+                conn.Close();
             }
-            sdr.Close();
-            conn.Close();
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message.ToString());
+            }
             return RetVal;
         }
         public List<List<string>> GetAllGroups(string Query)

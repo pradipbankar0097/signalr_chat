@@ -95,7 +95,7 @@
                             chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
                             break;
                         case 'g':
-                            chatHub.server.sendMessageToGroup(fromUserName,userEnroll, toUserEnroll, msg);
+                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toUserEnroll, msg);
                             break;
                         
                         default:
@@ -142,6 +142,7 @@
                           
 
                             if (selectedfield == 'c') {
+
                                 var toEnrollNo = this.id;
                                 $('#hdtoUserEnroll').val(toEnrollNo);
                                 console.log(toEnrollNo);
