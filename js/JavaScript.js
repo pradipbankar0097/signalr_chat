@@ -172,53 +172,114 @@ function registerClientMethods(chatHub) {
     };
 
 
-    chatHub.client.loadChat = function (messages,f,toenroll) {
+    chatHub.client.loadChat = function (messages,f,tousername) {
         $('#msgarea').html('');
-        console.log(toenroll);
+        console.log(tousername);
         $('#spanUser1').html('');
-        $('#spanUser1').html('<Text>' + toenroll + '</Text>');
-        var i;
+        $('#spanUser1').html('<Text>' + tousername + '</Text>');
+        if (messages != null) {
+            var i;
+
+            var Side = 'left';
+            var TimeSide = 'right';
+            for (i = 0; i < messages.length; i++) {
+                console.log(messages[i][1] + messages[i][2]);
+
+                if (f)
+                    if (messages[i][2] == 'True') {
+                        var Side = 'left';
+                        var TimeSide = 'right';
+
+                    }
+                    else {
+                        var Side = 'right';
+                        var TimeSide = 'left';
+
+                    }
+                else
+                    if (messages[i][2] == 'True') {
+                        var Side = 'right';
+                        var TimeSide = 'left';
+
+                    }
+                    else {
+                        var Side = 'left';
+                        var TimeSide = 'right';
+                    }
+
+
+
+
+
+                var divChat = '<div class="direct-chat-msg ' + Side + '">' +
+                    '<div class="direct-chat-info clearfix">' +
+                    // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
+                    '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
+                    '</div>' +
+
+                    // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
+                    ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+                $('#msgarea').append(divChat);
+            }
+
+
+        }
+        else {
+            console.log("No chat found!");
+        }
+
+    };
+    chatHub.client.addMessageToGroupChat = function (message, fromusername) {
 
         var Side = 'left';
         var TimeSide = 'right';
-        for (i = 0; i < messages.length; i++) {
-            console.log(messages[i][1] + messages[i][2]);
-
-            if(f)
-            if (messages[i][2] == 'True') {
-                var Side = 'left';
-                var TimeSide = 'right';
-
-            }
-            else {
-                var Side = 'right';
-                var TimeSide = 'left';
-
-                }
-            else
-                if (messages[i][2] == 'True') {
-                    var Side = 'right';
-                    var TimeSide = 'left';
-
-                }
-                else {
-                    var Side = 'left';
-                    var TimeSide = 'right';
-                }
-
-
-
-
+        if (message != null) {
 
             var divChat = '<div class="direct-chat-msg ' + Side + '">' +
                 '<div class="direct-chat-info clearfix">' +
                 // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-                '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
+                '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + fromusername+ '</span>' +
                 '</div>' +
 
                 // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-                ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+                ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + message + '</div> </div>';
             $('#msgarea').append(divChat);
+        }
+
+
+
+
+    }
+    chatHub.client.loadGroupChat = function (messages,grpname,enroll) {
+        $('#msgarea').html('');
+        console.log(grpname);
+       
+        $('#spanUser1').html('');
+        $('#spanUser1').html('<Text>' + grpname + '</Text>');
+        if (messages != null) {
+            
+           
+            var i;
+            var Side = 'right';
+            var TimeSide = 'left';
+
+                for (i = 0; i < messages.length; i++) {
+                var divChat = '<div class="direct-chat-msg ' + Side + '">' +
+                    '<div class="direct-chat-info clearfix">' +
+                    // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
+                    '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
+                    '</div>' +
+
+                    // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
+                    ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+                $('#msgarea').append(divChat);
+                }
+        }
+
+
+        
+         else {
+            console.log("No chat found!");
         }
 
     };

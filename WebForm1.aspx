@@ -53,13 +53,14 @@
 
 
         function registerEvents(chatHub) {
-            $(document).ready(function () {
-                var selectedfield = 'c';
-                var name = '<%# this.UserName %>';
-                var badge = '<%# this.UserBadge %>';
-                var enrollno = '<%# this.UserEnrollNo %>';
-                var department = '<%# this.UserDepartment %>';
+ $(document).ready(function () { 
+              var selectedfield = 'c';
+            var name = '<%# this.UserName %>';
+            var badge = '<%# this.UserBadge %>';
+            var enrollno = '<%# this.UserEnrollNo %>';
+            var department = '<%# this.UserDepartment %>';
                 var email = '<%# this.UserEmail %>';
+                var toGroupId;
 
 
                 if (name.length > 0) {
@@ -77,37 +78,42 @@
                         chatHub.server.clearTimeout();
                         $('#msgarea').html('');
 
-                    }
-                });
+   // Send Button Click Event
+            $('#btnSendMsg').click(function () {
 
-                // Send Button Click Event
-                $('#btnSendMsg').click(function () {
+                var msg = $("#txtMessage").val();
+                $("#txtMessage").val('');
 
-                    var msg = $("#txtMessage").val();
-                    $("#txtMessage").val('');
-
-                    if (msg.length > 0) {
-                        var fromUserName = name;
-                        var fromuserEnroll = $('#hdUserEnroll').val();
-                        var toUserEnroll = $('#hdtoUserEnroll').val();
-                        switch (selectedfield) {
-                            case 'c':
-                                chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                                console.log('server request sent');
-                                break;
-                            case 't':
-                                chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                                break;
-                            case 'g':
-                                chatHub.server.sendMessageToGroup(fromUserName, userEnroll, toUserEnroll, msg);
-                                break;
-
-                            default:
-                                alert('Select a field');
-                        };
-
-                        //  chatHub.server.sendMessageToAll(userName, msg);
-
+                if (msg.length > 0) {
+                    var fromUserName = name;
+                    var fromuserEnroll = $('#hdUserEnroll').val();
+                    var toUserEnroll = $('#hdtoUserEnroll').val();
+                
+                    alert(toGroupId);
+                    switch (selectedfield) {
+                        case 'c':
+                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            console.log('server request sent');
+                            break;
+                        case 't':
+                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            break;
+                        case 'g':
+                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId , msg);
+                            break;
+                        
+                        default:
+                            alert('Select a field');
+                    };
+                 
+                  //  chatHub.server.sendMessageToAll(userName, msg);
+                    
+                }
+            });
+            $('#classmates').click(function () {
+                selectedfield = 'c';
+                chatHub.server.loadRegisteredUsers();
+                
                     }
                 });
                 $('#classmates').click(function () {
@@ -134,27 +140,32 @@
 
                 $('.rusers').mouseenter(function () {
                     if (true) {
+                       for (i = 0; i < ide.length; i++) {
+                        var num = ide.item(i).addEventListener('mouseup', function () {
+                            console.log('event occured');
 
-                        var i;
+                           
+                          
 
-                        var ide = this.children;
-
-                        for (i = 0; i < ide.length; i++) {
-                            var num = ide.item(i).addEventListener('mouseup', function () {
+                            if (selectedfield == 'c') {
 
                                 var toEnrollNo = this.id;
                                 $('#hdtoUserEnroll').val(toEnrollNo);
+                                console.log(toEnrollNo);
+                                $('#spanUser').val = toEnrollNo;
+                                chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
+                                //loaded.push(toEnrollNo);
+                            }
+                            else if (selectedfield == 'g') {
+                                 toGroupId = this.id;
+                               
+
+                               
+                                chatHub.server.loadGroupChat(toGroupId,enrollno);
+                            }
+                        });
 
 
-                                if (true) {
-                                    console.log(toEnrollNo);
-                                    $('#spanUser').val = toEnrollNo;
-                                    chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
-                                    //loaded.push(toEnrollNo);
-                                }
-                            });
-
-                        }
 
                     }
 
@@ -206,20 +217,33 @@
                 })
 
                
+ };
+        (function (timer) {
+            console.log('timer called');
+            window.addEventListener('load', function () {
+                var el = document.querySelector('.contact-table-scroll');
+                el.addEventListener('scroll', function (e) {
+                    console.log('scroll added');
+                    (function (el) {
+                        el.classList.add('scroll');
+                        clearTimeout(timer);
+                        timer = setTimeout(function () {
+                            el.classList.remove('scroll');
+                        }, 100);
+                    })(el);
+                })
+            })
+        })();
 
 
 
-            });
-
-
-        };
     </script>
 
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
-            <div class="back-container">
+          <div class="back-container">
                 <div class="container-fluid front-container">
                     <div class="back-top"></div>
                     <div class="back-main"></div>
@@ -416,6 +440,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </div>
