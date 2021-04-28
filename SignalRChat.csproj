@@ -144,6 +144,15 @@
     <Content Include="js\JavaScript.js" />
     <Content Include="Scripts\abc.js" />
     <Content Include="WebForm1.aspx" />
+    <Content Include="WhatsApp.html" />
+    <Content Include="WhatsApp_files\99abb3d4056fa7f1eea545403cd324c8_w_1885-40.png" />
+    <Content Include="WhatsApp_files\99abb3d4056fa7f1eea545403cd324c8_w_1888-64.png" />
+    <Content Include="WhatsApp_files\99abb3d4056fa7f1eea545403cd324c8_w_958-64.png" />
+    <Content Include="WhatsApp_files\bootstrap_main.4901d46d1d36a610ddfc.css" />
+    <Content Include="WhatsApp_files\bootstrap_qr-e892ca30934b9f1b9db6.css" />
+    <Content Include="WhatsApp_files\lazy_loaded_high_priority_components.73ec82359679ea8b20b9.css" />
+    <Content Include="WhatsApp_files\lazy_loaded_high_priority_components_lazy_loaded_low_priority_components.fc5b5a8da2673c56e501.css" />
+    <Content Include="WhatsApp_files\lazy_loaded_low_priority_components.c9e655ed9d61a3f90746.css" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
