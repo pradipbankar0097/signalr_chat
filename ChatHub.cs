@@ -125,6 +125,25 @@ namespace SignalRChat
             }
             return rstr;
 
+        } 
+        public string GetGroupName(string grpid,string enrollno)
+        {
+            loadRegisteredGroups(enrollno);
+            string rstr = "";
+            for (int i = 0; i < RegisterdGroups.Count; i++)
+            {
+                for (int j = 0; j < RegisterdGroups[i].Count; j++)
+                {
+                    if (grpid.Equals(RegisterdGroups[i][j]))
+                    {
+                        // Clients.All.alertMe(RegisteredUsers[i]);
+                        rstr = RegisterdGroups[i][0];
+                    }
+                }
+
+            }
+            return rstr;
+
         }
        
 
@@ -248,11 +267,12 @@ namespace SignalRChat
             }
 
         }
-        public void LoadGroupChat(string GroupID)
+        public void LoadGroupChat(string GroupID,string enrollno)
         {
+            string grpname=GetGroupName(GroupID,enrollno);
             string GetGroupChatQuery = "select `Time`,`Message`,`SenderEnrollNo` from `"+GroupID+"msgs`";
             List<List<string>> chat = ConnC.GetAllDataFromDB(GetGroupChatQuery, ConnC.groups_db);
-            Clients.Caller.loadGroupChat(chat);
+            Clients.Caller.loadGroupChat(chat,grpname,enrollno);
         }
         public void LoadPrivateChat(string toEnrollNo, string fromEnrollNo)
         {
@@ -276,20 +296,22 @@ namespace SignalRChat
                 string GetPrevoiuschat = "SELECT * FROM " +new_table_name;
 
                 Chat = Conn.GetAllMessage(GetPrevoiuschat);
-              
-                Clients.Caller.loadChat(Chat,check, GetUserName(toEnrollNo));
-                
-              
+
+                Clients.Caller.loadChat(Chat, check, GetUserName(toEnrollNo));
+
+
             }
             catch(MySql.Data.MySqlClient.MySqlException ex)
             {
                 Console.WriteLine(ex.ToString());
-                
+                Clients.Caller.loadChat(null, check, GetUserName(toEnrollNo));
+
+
             }
             finally
             {
+
                
-                
             }
            
             

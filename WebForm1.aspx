@@ -138,15 +138,22 @@
                     for (i = 0; i < ide.length; i++) {
                         var num = ide.item(i).addEventListener('mouseup', function () {
 
-                            var toEnrollNo = this.id;
-                            $('#hdtoUserEnroll').val(toEnrollNo);
+                           
                           
 
-                            if (true) {
+                            if (selectedfield == 'c') {
+                                var toEnrollNo = this.id;
+                                $('#hdtoUserEnroll').val(toEnrollNo);
                                 console.log(toEnrollNo);
                                 $('#spanUser').val = toEnrollNo;
                                 chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
                                 //loaded.push(toEnrollNo);
+                            }
+                            else if (selectedfield == 'g') {
+                                var toGroupId = this.id;
+
+                                console.log("loading group chat for " + enrollno);
+                                chatHub.server.loadGroupChat(toGroupId,enrollno);
                             }
                         });
 
@@ -202,6 +209,7 @@
         <input id="PWCount" type="hidden" value="info" />
         <input id="hdUserEnroll" type="hidden" />
         <input id="hdtoUserEnroll" type="hidden" />
+               
     <div class="container front-container1">
       <div class="row ">
           <ul class="nav navbar-nav panel">
