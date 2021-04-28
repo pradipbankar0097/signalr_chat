@@ -18,7 +18,7 @@ namespace SignalRChat
         public DataSet ds = new DataSet();
         public MySqlConnection con = new MySqlConnection(@"Server=localhost;Database=temp;Uid=root;Pwd=");
         public MySqlConnection groups_db = new MySqlConnection(@"Server=localhost;Database=groups_db;Uid=root;Pwd=");
-        public MySqlConnection ntf = new MySqlConnection(@"server=localhost;user id=root;database=notifications_db");
+        public MySqlConnection ntf = new MySqlConnection(@"Server=localhost;user id=root;database=notifications_db");
 
         public bool CreateGroup(string GroupName, string CreatorEnrollNo)
         {
@@ -46,14 +46,22 @@ namespace SignalRChat
             return done;
         }
 
-        public bool CreateNotif(string Author,string Message,int GON) {
+        public bool CreateNotif(string Msg, string Creator, string CreatorEnrollNo, string ToDate)
+        {
             bool check = false;
-            
-           // string releaseAt = DateTime.Now.ToString().Replace('-', '_').Replace(':', '_').Replace(' ', '_');
-            
-            string Query = "insert into notify values('" + Message + "','" +Author+ "','"+GON+"')";
+
+            //string FromDate = DateTime.Now.ToString().Replace('-', '\0').Replace(':', '\0').Replace(' ', '\0').Replace('/','\0');
+            //DateTime dt = DateTime.Now;
+            //dt = dt.AddSeconds(-dt.Second);
+            DateTime FromDate = DateTime.Now;
+            FromDate = FromDate.AddSeconds(FromDate.Second);
+            string Fromd = FromDate.ToString().Replace('-', '\0').Replace(':', '\0').Replace(' ', '\0').Replace('/', '\0');
+
+            string NoticeID = CreatorEnrollNo.ToLower() + Fromd;
+            string Query = "insert into notify(Message,Creator,NoticeID,FromDate,ToDate) values('" + Msg + "','" + Creator + "','" + NoticeID + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt") + "','" + ToDate + "')";
+            //string Query = "insert into notify(Message,Creator,NoticeID,FromDate,ToDate) values('{Msg}','{Creator}','{NoticeID}','{FromDate}','{ToDate}')";
             ntf.Open();
-            cmd = new MySqlCommand(Query,ntf);
+            cmd = new MySqlCommand(Query, ntf);
             cmd.ExecuteNonQuery();
             ntf.Close();
             check = true;

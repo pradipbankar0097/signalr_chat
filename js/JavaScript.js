@@ -84,8 +84,8 @@ function registerClientMethods(chatHub) {
 
             add2 = '<td><small>11:55 PM</small></td></tr>';
             $('#listarea').append(add + add1 + add2);
-              }
-        };
+        }
+    };
     chatHub.client.loadRegisteredGroups = function (groups) {
 
             var i;
@@ -101,7 +101,7 @@ function registerClientMethods(chatHub) {
 
                 add2 = '<td><small>11:55 PM</small></td></tr>';
                 $('#listarea').append(add + add1 + add2);
-            }
+        }
 
     };
     chatHub.client.loadRegisteredTeachers = function (teachers) {
@@ -122,27 +122,29 @@ function registerClientMethods(chatHub) {
     };
 
 
-    chatHub.client.showNotification = function (Notifications) {
+    chatHub.client.showNtf = function (Notifications) {
 
         var i;
         var add;
         var add1;
-        var add2;
+        
 
         console.log(Notifications);
-        $('#listarea').html('')
+        
         for (i = 0; i < Notifications.length; i++) {
 
-            add = ' <tr id="notice' + i + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+            //add = ' <li id="notice' + i + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></li>';
 
-            add1 = '<td>' + Notifications[i][0] + ' <br /> <small>achi chal rahi</small></td>';
+            //add1 = '<li>' + Notifications[i][0] + ' <br /> <small>achi chal rahi</small></li>';
 
-            add2 = '<td><small>11:55 PM</small></td></tr>';
-            $('#listarea').append(add + add1 + add2);
+            //add2 = '<li><small>11:55 PM</small></li>';
+            add = '<li>' + Notifications[i][0]+'</li>';
+           // add1 = '<li>' + Notifications[i][1] + '</li>';
+            $('#ntf').append(add);
         }
        
     };
-    chatHub.client.nCreated = function () {
+    chatHub.client.ntfCreated = function () {
         console.log("notification created");
         alert("New Notification created successfully!!!");
     };
@@ -358,3 +360,5 @@ function registerClientMethods(chatHub) {
 
 
 };
+
+

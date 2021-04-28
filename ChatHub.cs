@@ -63,23 +63,22 @@ namespace SignalRChat
 
         public void ShowNotification()
         {
-           string GetNotificationQuery = "select * from notify";
+            // string GetNotificationQuery = "select Message,Creator,FromDate,ToDate from notify";
+            string GetNotificationQuery = "SELECT * FROM notify";
             Console.Write("Method called.1");
             Notifications = ConnC.GetAllDataFromDB(GetNotificationQuery, ConnC.ntf);
             //Console.Write("Method called.1");
             //int count  = ConnC.GetRowNo(GetNotificationQuery);
-            Clients.Caller.showNotification(Notifications);
+            //Clients.Caller.showNtf(Notifications);
+            Clients.Caller.showNtf(Notifications);
 
         }
-        public void CreateNotification()
-        {
-            string author = "admin";
-            string Message = "First Notification";
-            
-            int GON = 1;
-            bool a = ConnC.CreateNotif(author, Message,GON);
-            Console.Write("Method called.");
-            Clients.All.NCreated();
+        public void CreateNotification(string msg,string creator,string creatorEnrollNo,string todate)
+        { 
+
+            bool a = ConnC.CreateNotif(msg,creator,creatorEnrollNo,todate);
+            Console.WriteLine("CreateNotification Method called from ChatHub.");
+            Clients.All.ntfCreated();
         }
 
         public void SendMessageToAll(string userName, string message, string time)
