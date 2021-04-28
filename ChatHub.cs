@@ -310,7 +310,7 @@ namespace SignalRChat
             }
             finally
             {
-
+                
                
             }
            
@@ -334,7 +334,8 @@ namespace SignalRChat
         {
             try
             {
-                string AddMessageToGroupQuery = "insert into `" + toGroupID + "msgs`(`Time`,`Message`,`SenderEnrollNo`) values(`" + DateTime.Now.ToString() + "`,`" + message + "`,`" + fromUserEnroll + "`)";
+                
+                string AddMessageToGroupQuery = "INSERT INTO `"+ toGroupID.ToLower()+"msgs` (`Time`, `Message`, `SenderEnrollNo`) VALUES(current_timestamp(), '"+message+"', '"+fromUserEnroll+"')";
                 ConnC.ExecuteQuery(AddMessageToGroupQuery, ConnC.groups_db);
                 
                 Clients.Caller.addMessageToGroupChat(message, GetUserName(fromUserEnroll));

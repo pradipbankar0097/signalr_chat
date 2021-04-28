@@ -258,6 +258,8 @@ function registerClientMethods(chatHub) {
             
            
             var i;
+            var Side = 'right';
+            var TimeSide = 'left';
 
                 for (i = 0; i < messages.length; i++) {
                 var divChat = '<div class="direct-chat-msg ' + Side + '">' +

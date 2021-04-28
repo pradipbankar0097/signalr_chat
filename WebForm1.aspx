@@ -55,7 +55,9 @@
             var badge = '<%# this.UserBadge %>';
             var enrollno = '<%# this.UserEnrollNo %>';
             var department = '<%# this.UserDepartment %>';
-            var email = '<%# this.UserEmail %>';
+                var email = '<%# this.UserEmail %>';
+                var toGroupId;
+
            
 
             if (name.length > 0) {
@@ -86,6 +88,8 @@
                     var fromUserName = name;
                     var fromuserEnroll = $('#hdUserEnroll').val();
                     var toUserEnroll = $('#hdtoUserEnroll').val();
+                
+                    alert(toGroupId);
                     switch (selectedfield) {
                         case 'c':
                             chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
@@ -95,7 +99,7 @@
                             chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
                             break;
                         case 'g':
-                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId , msg);
                             break;
                         
                         default:
@@ -137,6 +141,7 @@
 
                     for (i = 0; i < ide.length; i++) {
                         var num = ide.item(i).addEventListener('mouseup', function () {
+                            console.log('event occured');
 
                            
                           
@@ -151,9 +156,10 @@
                                 //loaded.push(toEnrollNo);
                             }
                             else if (selectedfield == 'g') {
-                                var toGroupId = this.id;
+                                 toGroupId = this.id;
+                               
 
-                                console.log("loading group chat for " + enrollno);
+                               
                                 chatHub.server.loadGroupChat(toGroupId,enrollno);
                             }
                         });
@@ -210,6 +216,7 @@
         <input id="PWCount" type="hidden" value="info" />
         <input id="hdUserEnroll" type="hidden" />
         <input id="hdtoUserEnroll" type="hidden" />
+        <input id="hdGroupId" type="hidden" />
                
     <div class="container front-container1">
       <div class="row ">
