@@ -1,12 +1,14 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NewForm.aspx.cs" Inherits="SignalRChat.NewForm" %>
+
 <!DOCTYPE html>
-<!-- saved from url=(0025)https://web.whatsapp.com/ -->
+
 <html
   class="js serviceworker adownload cssanimations csstransitions webp webp-alpha webp-animation webp-lossless"
   dir="LTR"
   loc="en-GB"
   lang="en"
 >
-  <head>
+  <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>WhatsApp</title>
@@ -182,45 +184,28 @@
   </head>
   <body class="web">
     <script>
-      try {
-        var systemThemeDark,
-          theme = window.localStorage.getItem("theme"),
-          systemThemeMode = window.localStorage.getItem("system-theme-mode");
-        if (("true" === systemThemeMode || !theme) && window.matchMedia) {
-          var systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
-          systemThemeDark = systemTheme && systemTheme.matches;
-        }
-        ('"dark"' === theme || systemThemeDark) &&
-          document.body.classList.add("dark");
-      } catch (e) {}
+        try {
+            var systemThemeDark,
+                theme = window.localStorage.getItem("theme"),
+                systemThemeMode = window.localStorage.getItem("system-theme-mode");
+            if (("true" === systemThemeMode || !theme) && window.matchMedia) {
+                var systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+                systemThemeDark = systemTheme && systemTheme.matches;
+            }
+            ('"dark"' === theme || systemThemeDark) &&
+                document.body.classList.add("dark");
+        } catch (e) { }
     </script>
     <div id="app">
       <div tabindex="-1" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
         <span></span><span></span><span></span><span></span><span></span>
-        <div class="row" style="width: 1396px; background-color:#00d9bb;" >
-          <ul class="nav navbar-nav panel" style="display: flex; flex-direction: row; ">
-                        <li><a id="classmates" runat="server" href="#">Classmates</a></li>
-                        <li><a id="teachers" runat="server" href="#">Teachers</a></li>
-                        <li><a id="groups" runat="server" href="#">Groups</a></li>
-                       <li><a id="notification" runat="server" href="#">Notifications</a></li>
-                       <li><input id="createNoti" type="button" value="button" /></li>
-            </ul>
-          <table>
-              <tbody id="ntf">
-
-              </tbody>
-              </table>
-                
-          </div>  
         <div tabindex="-1" class="_3QfZd two">
-          
           <div class="_3-dtC"></div>
           <div class="Akuo4">
             <div class="_1Flk2 _2DPZK"><span class="_2zn9Y"></span></div>
             <div class="_1Flk2 _1sFTb"><span class="_2zn9Y"></span></div>
             <div class="_1Flk2 _3xysY"><span class="_2zn9Y"></span></div>
           </div>
-          
           <div class="_1Flk2 _2DPZK">
             <div id="side" class="_3U29Q">
               <header class="_1R3Un">
