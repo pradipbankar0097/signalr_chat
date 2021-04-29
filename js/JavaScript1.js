@@ -1,5 +1,4 @@
-﻿
-$(function () {
+﻿$(function () {
 
 
     var chatHub = $.connection.chatHub;
@@ -168,53 +167,37 @@ function registerClientMethods(chatHub) {
     };
 
 
-    chatHub.client.loadChat = function (messages, f, tousername) {
+    chatHub.client.loadChat = function (messages, tousername) {
         $('#msgarea').html('');
         console.log(tousername);
         $('#spanUser1').html('');
         $('#spanUser1').html('<Text>' + tousername + '</Text>');
         if (messages != null) {
             var i;
-
-            var Side = 'left';
-            var TimeSide = 'right';
+            /* messages = {from,to,msg,time} */
             for (i = 0; i < messages.length; i++) {
-                console.log(messages[i][1] + messages[i][2]);
 
-                if (f)
-                    if (messages[i][2] == 'True') {
-                        var Side = 'left';
-                        var TimeSide = 'right';
+                var divChat = '<div class="row sender-msg-box">'
+                    +'<div class="msg-box-row">'
+                                            +'<div class="sender-box darkable">'
+                                                +'<div class="msg" style="font-size: 20px;">'+messages[i][2]+'</div>'
+                    + '<div class="sender-msg-time-read-rec">'
+                    + '<div class="read-rec">//</div>'
+                    + '<div class="msg-time">' + messages[i][3].substring(10,16) + '</div>'
+                                                    
+                                                +'</div>'
+                                            +'</div>'
+                                        +'</div >'
+                                        +'</div >';
 
-                    }
-                    else {
-                        var Side = 'right';
-                        var TimeSide = 'left';
+                if (messages[i][0] == 'True') {
+                    divChat = divChat.replace(/sender/g, 'sender'); 
+                    divChat = divChat.replace(/class="read-rec"/g, 'hidden'); 
 
-                    }
-                else
-                    if (messages[i][2] == 'True') {
-                        var Side = 'right';
-                        var TimeSide = 'left';
-
-                    }
-                    else {
-                        var Side = 'left';
-                        var TimeSide = 'right';
-                    }
-
-
-
-
-
-                var divChat = '<div class="direct-chat-msg ' + Side + '">' +
-                    '<div class="direct-chat-info clearfix">' +
-                    // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-                    '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
-                    '</div>' +
-
-                    // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-                    ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+                }
+                else {
+                    divChat = divChat.replace(/sender/g, 'receiver');
+                }
                 $('#msgarea').append(divChat);
             }
 

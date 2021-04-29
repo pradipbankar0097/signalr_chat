@@ -356,5 +356,41 @@ namespace SignalRChat
                 Console.WriteLine("failed");
             }
         }
+
+        public void LoadPrivateChat1(string fromEnrollNo, string toEnrollNo)
+        {
+            List<List<string>> Chat = new List<List<string>>();
+            ConnClass Conn = new ConnClass();
+            
+            try
+            {
+
+                string[] arr = new string[] { fromEnrollNo, toEnrollNo };
+                Array.Sort(arr);
+                string table_name = "f" + arr[0] + "to" + arr[1];
+                
+                string GetPrevoiuschat = "SELECT c"+fromEnrollNo+",c"+toEnrollNo+",message,time FROM " + table_name;
+
+                Chat = Conn.GetAllMessage(GetPrevoiuschat);
+
+                Clients.Caller.loadChat(Chat, GetUserName(toEnrollNo));
+
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Clients.Caller.loadChat(null,GetUserName(toEnrollNo));
+
+
+            }
+            finally
+            {
+
+
+            }
+
+
+        }
     }
 }
