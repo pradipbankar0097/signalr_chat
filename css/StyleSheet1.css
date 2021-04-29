@@ -76,14 +76,19 @@ ul.panel {
 }
 
 .contact-table-scroll {
-    overflow-y: scroll;
+    overflow: auto;
+    padding-right: 20px;
+    
     height: 600px;
 }
-
-.message-area {
-    background-color: #e4e1de;
-    min-height: 600px;
+.contact-table-scroll.scroll{
+    padding-right:0px;
 }
+
+    .message-area {
+        background-color: #e4e1de;
+        min-height: 600px;
+    }
 
 .message-table-scroll {
     overflow-y: scroll;

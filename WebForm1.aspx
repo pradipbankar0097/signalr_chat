@@ -53,13 +53,15 @@
 
 
         function registerEvents(chatHub) {
-            $(document).ready(function () {
-                var selectedfield = 'c';
-                var name = '<%# this.UserName %>';
-                var badge = '<%# this.UserBadge %>';
-                var enrollno = '<%# this.UserEnrollNo %>';
-                var department = '<%# this.UserDepartment %>';
+             
+ $(document).ready(function () { 
+              var selectedfield = 'c';
+            var name = '<%# this.UserName %>';
+            var badge = '<%# this.UserBadge %>';
+            var enrollno = '<%# this.UserEnrollNo %>';
+            var department = '<%# this.UserDepartment %>';
                 var email = '<%# this.UserEmail %>';
+                var toGroupId;
 
 
                 if (name.length > 0) {
@@ -67,50 +69,43 @@
 
                 }
 
+    
+                
+          
+   // Send Button Click Event
+            $('#btnSendMsg').click(function () {
 
-                // Clear Chat
-                $('#btnClearChat').click(function () {
+                var msg = $("#txtMessage").val();
+                $("#txtMessage").val('');
 
-                    var msg = $("#msgarea").html();
-
-                    if (msg.length > 0) {
-                        chatHub.server.clearTimeout();
-                        $('#msgarea').html('');
-
-                    }
-                });
-
-                // Send Button Click Event
-                $('#btnSendMsg').click(function () {
-
-                    var msg = $("#txtMessage").val();
-                    $("#txtMessage").val('');
-
-                    if (msg.length > 0) {
-                        var fromUserName = name;
-                        var fromuserEnroll = $('#hdUserEnroll').val();
-                        var toUserEnroll = $('#hdtoUserEnroll').val();
-                        switch (selectedfield) {
-                            case 'c':
-                                chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                                console.log('server request sent');
-                                break;
-                            case 't':
-                                chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                                break;
-                            case 'g':
-                                chatHub.server.sendMessageToGroup(fromUserName, userEnroll, toUserEnroll, msg);
-                                break;
-
-                            default:
-                                alert('Select a field');
-                        };
-
-                        //  chatHub.server.sendMessageToAll(userName, msg);
-
-                    }
-                });
-                $('#classmates').click(function () {
+                if (msg.length > 0) {
+                    var fromUserName = name;
+                    var fromuserEnroll = $('#hdUserEnroll').val();
+                    var toUserEnroll = $('#hdtoUserEnroll').val();
+                
+                    alert(toGroupId);
+                    switch (selectedfield) {
+                        case 'c':
+                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            console.log('server request sent');
+                            break;
+                        case 't':
+                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            break;
+                        case 'g':
+                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId , msg);
+                            break;
+                        
+                        default:
+                            alert('Select a field');
+                    };
+                 
+                  //  chatHub.server.sendMessageToAll(userName, msg);
+                    
+                }
+            });
+     
+            $('#classmates').click(function () {
                     selectedfield = 'c';
                     chatHub.server.loadRegisteredUsers();
 
@@ -123,35 +118,43 @@
 
                 });
 
-<%--            $('#groups').click(function () {
+           $('#groups').click(function () {
                 selectedfield = 'g';
                 chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
                
 
-            });--%>
+            });
 
-
-
+  
                 $('.rusers').mouseenter(function () {
-                    if (true) {
-
-                        var i;
+                     var i;
 
                         var ide = this.children;
+                    if (true) {
+                       for (i = 0; i < ide.length; i++) {
+                        var num = ide.item(i).addEventListener('mouseup', function () {
+                            console.log('event occured');
 
-                        for (i = 0; i < ide.length; i++) {
-                            var num = ide.item(i).addEventListener('mouseup', function () {
+                           
+                          
+
+                            if (selectedfield == 'c') {
 
                                 var toEnrollNo = this.id;
                                 $('#hdtoUserEnroll').val(toEnrollNo);
+                                console.log(toEnrollNo);
+                                $('#spanUser').val = toEnrollNo;
+                                chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
+                                //loaded.push(toEnrollNo);
+                            }
+                            else if (selectedfield == 'g') {
+                                toGroupId = this.id;
 
 
-                                if (true) {
-                                    console.log(toEnrollNo);
-                                    $('#spanUser').val = toEnrollNo;
-                                    chatHub.server.loadPrivateChat(toEnrollNo, enrollno);
-                                    //loaded.push(toEnrollNo);
-                                }
+
+                                chatHub.server.loadGroupChat(toGroupId, enrollno);
+                            }
+                            
                             });
 
                         }
@@ -160,7 +163,7 @@
 
 
                 });
-
+         
                 //NOTIFICAIONS
                 $('#notification').click(function () {
                     console.log("n");
@@ -184,7 +187,7 @@
                     }
                 });
 
-
+   
 
 
                 // Send Message on Enter Button
@@ -194,32 +197,50 @@
                     }
                 });
 
+      
+     $('#exampleModal').on('show.bs.modal', function (event) {
+         var button = $(event.relatedTarget) // Button that triggered the modal
+         //var recipient = button.data('whatever') // Extract info from data-* attributes
+         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+         var modal = $(this)
+         modal.find('.modal-title').text('New Notification');
+         //modal.find('.modal-body input').val(recipient)
+     });
 
-                $('#exampleModal').on('show.bs.modal', function (event) {
-                    var button = $(event.relatedTarget) // Button that triggered the modal
-                    //var recipient = button.data('whatever') // Extract info from data-* attributes
-                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                    var modal = $(this)
-                    modal.find('.modal-title').text('New Notification')
-                    //modal.find('.modal-body input').val(recipient)
-                })
+     (function (timer) {
+         console.log('timer called');
+         window.addEventListener('load', function () {
+             var el = document.querySelector('.contact-table-scroll');
+             el.addEventListener('scroll', function (e) {
+                 console.log('scroll added');
+                 (function (el) {
+                     el.classList.add('scroll');
+                     clearTimeout(timer);
+                     timer = setTimeout(function () {
+                         el.classList.remove('scroll');
+                     }, 100);
+                 })(el);
+             })
+         })
+     })();
 
-               
 
+ });
+            
 
-
-            });
-
-
+       
         };
+       
+
+
     </script>
 
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
-            <div class="back-container">
+          <div class="back-container">
                 <div class="container-fluid front-container">
                     <div class="back-top"></div>
                     <div class="back-main"></div>
@@ -398,7 +419,7 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <input type="text" id="txtMessage" />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" id="btnSendMsg">
+                <input type="button" id="btnSendMsg"/>
                                 </div>
                                 <div class="col-sm-8">
                                 </div>
@@ -416,6 +437,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </div>
