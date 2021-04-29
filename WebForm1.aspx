@@ -77,6 +77,9 @@
                     if (msg.length > 0) {
                         chatHub.server.clearTimeout();
                         $('#msgarea').html('');
+                        
+                         }
+                });
 
    // Send Button Click Event
             $('#btnSendMsg').click(function () {
@@ -111,12 +114,6 @@
                 }
             });
             $('#classmates').click(function () {
-                selectedfield = 'c';
-                chatHub.server.loadRegisteredUsers();
-                
-                    }
-                });
-                $('#classmates').click(function () {
                     selectedfield = 'c';
                     chatHub.server.loadRegisteredUsers();
 
@@ -137,8 +134,10 @@
             });--%>
 
 
-
                 $('.rusers').mouseenter(function () {
+                     var i;
+
+                        var ide = this.children;
                     if (true) {
                        for (i = 0; i < ide.length; i++) {
                         var num = ide.item(i).addEventListener('mouseup', function () {
@@ -162,10 +161,10 @@
 
                                
                                 chatHub.server.loadGroupChat(toGroupId,enrollno);
-                            }
-                        });
+                            
+                            });
 
-
+                        }
 
                     }
 
@@ -216,8 +215,14 @@
                     //modal.find('.modal-body input').val(recipient)
                 })
 
-               
- };
+
+
+
+
+            });
+
+
+        };
         (function (timer) {
             console.log('timer called');
             window.addEventListener('load', function () {
