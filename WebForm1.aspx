@@ -53,6 +53,7 @@
 
 
         function registerEvents(chatHub) {
+             
  $(document).ready(function () { 
               var selectedfield = 'c';
             var name = '<%# this.UserName %>';
@@ -68,19 +69,9 @@
 
                 }
 
-
-                // Clear Chat
-                $('#btnClearChat').click(function () {
-
-                    var msg = $("#msgarea").html();
-
-                    if (msg.length > 0) {
-                        chatHub.server.clearTimeout();
-                        $('#msgarea').html('');
-                        
-                         }
-                });
-
+    
+                
+          
    // Send Button Click Event
             $('#btnSendMsg').click(function () {
 
@@ -113,6 +104,7 @@
                     
                 }
             });
+     
             $('#classmates').click(function () {
                     selectedfield = 'c';
                     chatHub.server.loadRegisteredUsers();
@@ -126,14 +118,14 @@
 
                 });
 
-<%--            $('#groups').click(function () {
+           $('#groups').click(function () {
                 selectedfield = 'g';
                 chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
                
 
-            });--%>
+            });
 
-
+  
                 $('.rusers').mouseenter(function () {
                      var i;
 
@@ -156,11 +148,12 @@
                                 //loaded.push(toEnrollNo);
                             }
                             else if (selectedfield == 'g') {
-                                 toGroupId = this.id;
-                               
+                                toGroupId = this.id;
 
-                               
-                                chatHub.server.loadGroupChat(toGroupId,enrollno);
+
+
+                                chatHub.server.loadGroupChat(toGroupId, enrollno);
+                            }
                             
                             });
 
@@ -170,7 +163,7 @@
 
 
                 });
-
+         
                 //NOTIFICAIONS
                 $('#notification').click(function () {
                     console.log("n");
@@ -194,7 +187,7 @@
                     }
                 });
 
-
+   
 
 
                 // Send Message on Enter Button
@@ -204,42 +197,41 @@
                     }
                 });
 
+      
+     $('#exampleModal').on('show.bs.modal', function (event) {
+         var button = $(event.relatedTarget) // Button that triggered the modal
+         //var recipient = button.data('whatever') // Extract info from data-* attributes
+         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+         var modal = $(this)
+         modal.find('.modal-title').text('New Notification');
+         //modal.find('.modal-body input').val(recipient)
+     });
 
-                $('#exampleModal').on('show.bs.modal', function (event) {
-                    var button = $(event.relatedTarget) // Button that triggered the modal
-                    //var recipient = button.data('whatever') // Extract info from data-* attributes
-                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                    var modal = $(this)
-                    modal.find('.modal-title').text('New Notification')
-                    //modal.find('.modal-body input').val(recipient)
-                })
+     (function (timer) {
+         console.log('timer called');
+         window.addEventListener('load', function () {
+             var el = document.querySelector('.contact-table-scroll');
+             el.addEventListener('scroll', function (e) {
+                 console.log('scroll added');
+                 (function (el) {
+                     el.classList.add('scroll');
+                     clearTimeout(timer);
+                     timer = setTimeout(function () {
+                         el.classList.remove('scroll');
+                     }, 100);
+                 })(el);
+             })
+         })
+     })();
 
 
+ });
+            
 
-
-
-            });
-
-
+       
         };
-        (function (timer) {
-            console.log('timer called');
-            window.addEventListener('load', function () {
-                var el = document.querySelector('.contact-table-scroll');
-                el.addEventListener('scroll', function (e) {
-                    console.log('scroll added');
-                    (function (el) {
-                        el.classList.add('scroll');
-                        clearTimeout(timer);
-                        timer = setTimeout(function () {
-                            el.classList.remove('scroll');
-                        }, 100);
-                    })(el);
-                })
-            })
-        })();
-
+       
 
 
     </script>
