@@ -193,6 +193,7 @@
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\JavaScript.js" />
+    <Content Include="js\JavaScript1.js" />
     <Content Include="NewForm.aspx" />
     <Content Include="Scripts\abc.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
@@ -201,7 +202,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="WebForm1.aspx" />
-      <Content Include="WhatsApp.html" />
+    <Content Include="WhatsApp.html" />
     <Content Include="WhatsApp_files\99abb3d4056fa7f1eea545403cd324c8_w_1885-40.png" />
     <Content Include="WhatsApp_files\99abb3d4056fa7f1eea545403cd324c8_w_1888-64.png" />
     <Content Include="WhatsApp_files\99abb3d4056fa7f1eea545403cd324c8_w_958-64.png" />
@@ -210,7 +211,7 @@
     <Content Include="WhatsApp_files\lazy_loaded_high_priority_components.73ec82359679ea8b20b9.css" />
     <Content Include="WhatsApp_files\lazy_loaded_high_priority_components_lazy_loaded_low_priority_components.fc5b5a8da2673c56e501.css" />
     <Content Include="WhatsApp_files\lazy_loaded_low_priority_components.c9e655ed9d61a3f90746.css" />
-      <Content Include="css\bootstrap-grid.css.map" />
+    <Content Include="css\bootstrap-grid.css.map" />
     <Content Include="css\bootstrap-grid.min.css.map" />
     <Content Include="css\bootstrap-reboot.css.map" />
     <Content Include="css\bootstrap-reboot.min.css.map" />
@@ -220,7 +221,6 @@
     <Content Include="js\bootstrap.bundle.min.js.map" />
     <Content Include="js\bootstrap.js.map" />
     <Content Include="js\bootstrap.min.js.map" />
-
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
