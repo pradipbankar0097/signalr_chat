@@ -41,7 +41,7 @@ namespace SignalRChat
                 {
                     string str = FileImgsave.FileName;
                     FileImgsave.PostedFile.SaveAs(Server.MapPath("~/Images/" + "profile/" + str));
-                    string imgPath = "~/Images/" + "profile/" + str;
+                    string imgPath = "images/" + "profile/" + str;
                     string Query = "insert into tbl_Users(UserName,Badge,EnrollNo,Department,Year,Email,Password,Photo)Values('" + txtName.Value + "','" + Badge.Text + "','" + EnrollNo.Value + "','" + Department.Text + "','" + year.Text + "','" + txtEmail.Value + "','" + txtPassword.Value + "','" + imgPath + "')";
                     string ExistQ = "select * from tbl_Users where Email='" + txtEmail.Value + "'";
                     if (!ConnC.IsExist(ExistQ))

@@ -60,7 +60,8 @@
             var badge = '<%# this.UserBadge %>';
             var enrollno = '<%# this.UserEnrollNo %>';
             var department = '<%# this.UserDepartment %>';
-                var email = '<%# this.UserEmail %>';
+            var email = '<%# this.UserEmail %>';
+            
                 var toGroupId;
 
 
@@ -118,7 +119,7 @@
 
                 });
 
-           $('#groups').click(function () {
+         $('#groups').click(function () {
                 selectedfield = 'g';
                 chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
                
@@ -339,7 +340,7 @@
                     </div>
                     <div class="row chat-top">
                         <div class="col-sm-4 border-right border-secondary">
-                            <img src="images/p3.jpg" alt="" class="profile-image rounded-circle float-left" />
+                            <img src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
                             <span class="float-right mt-2">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-circle" fill="currentColor"
                                     xmlns="http://www.w3.org/2000/svg">

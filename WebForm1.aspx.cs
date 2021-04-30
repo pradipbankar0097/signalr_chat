@@ -21,7 +21,7 @@ namespace SignalRChat
         public string UserBadge = "admin";
         public string UserEnrollNo = "admin";
         public string UserDepartment = "admin";
-        public string UserImage = "/images/DP/dummy.png";
+        public string UserImage = "profile/default.jfif";
         protected string UploadFolderPath = "~/Uploads/";
 
         private string fromUser = "";
@@ -34,6 +34,7 @@ namespace SignalRChat
         {
             string GetRegisteredUsersQuery = "select UserName from tbl_users";
             string[] ColumnName = { "UserName", "EnrollNo" };
+            
             RegisteredUsers = conc.GetAllFromColumn(GetRegisteredUsersQuery, ColumnName);
 
             if (Session["UserName"] != null)
@@ -43,17 +44,28 @@ namespace SignalRChat
                 UserEnrollNo = Session["UserEnrollNo"].ToString();
                 UserDepartment = Session["UserDepartment"].ToString();
                 UserEmail = Session["UserEmail"].ToString();
+                
                 fromUser += UserName;
-                // GetUserImage(UserName);
+                GetUserImage(UserName);
 
             }
-            //else
-            //    // Response.Redirect("Login.aspx");
-            //    ;
+            
 
             this.Header.DataBind();
         }
+        
+        public void GetUserImage(string Username)
+        {
+            if (Username != null)
+            {
+                string query = "select Photo from tbl_Users where UserName='" + Username + "'";
+
+                string ImageName = conc.GetColumnVal(query, "Photo");
+                if (ImageName != "")
+                    UserImage =  ImageName;
+            }
 
 
+        }
     }
 }
