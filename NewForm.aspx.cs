@@ -44,7 +44,8 @@ namespace SignalRChat
                 UserDepartment = Session["UserDepartment"].ToString();
                 UserEmail = Session["UserEmail"].ToString();
                 fromUser += UserName;
-                // GetUserImage(UserName);
+                GetUserImage(UserName);
+                
 
             }
             //else
@@ -54,6 +55,18 @@ namespace SignalRChat
             this.Header.DataBind();
         }
 
+        public void GetUserImage(string Username)
+        {
+            if (Username != null)
+            {
+                string query = "select Photo from tbl_Users where UserName='" + Username + "'";
 
+                string ImageName = conc.GetColumnVal(query, "Photo");
+                if (ImageName != "")
+                    UserImage = ImageName;
+            }
+
+
+        }
     }
 }

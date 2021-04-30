@@ -207,13 +207,13 @@ namespace SignalRChat
             }
         }
 
-       
-        public void CallAddMessegeTo(string message,string fromUserName, string fromUserEnrollNo, string toUserEnrollNo)
+
+        public void CallAddMessegeTo(string message, string fromUserName, string fromUserEnrollNo, string toUserEnrollNo)
         {
             Console.WriteLine("Reached to calladdmessagetos");
             string[] arr = new string[] { fromUserEnrollNo, toUserEnrollNo };
             Array.Sort(arr);
-           string table_name = "f" + arr[0] + "to" + arr[1];
+            string table_name = "f" + arr[0] + "to" + arr[1];
 
             AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
             try
@@ -221,11 +221,11 @@ namespace SignalRChat
                 var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnrollNo);
                 Clients.Client(toUser.ConnectionId).method(fromUserName, fromUserEnrollNo, message);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine("User Not Online"+e.ToString());
+                Console.WriteLine("User Not Online" + e.ToString());
             }
-            
+
 
         }
 
