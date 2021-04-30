@@ -389,6 +389,24 @@
       .testing4{
         background-color: #acb9bf;
       } */
+        .top-panel-bar {
+            padding:15px;
+            width: 1396px;
+            background-color: rgb(250 245 216);
+        }
+
+        .panel-child{
+            padding:5px;
+        }
+
+        .search-header-sm{
+            box-shadow:0px 2px 2px 2px rgb(136, 136, 136);
+        }
+
+        ._1R3Un {
+            padding: 10px 16px;
+            background-color: white;
+        }
       .urow{
         transition: box-shadow 0.09s;
         display: flex;
@@ -404,6 +422,44 @@
         box-shadow: 0 0 11px rgb(136, 136, 136);
         /* color: ;  */
       }
+        
+._3QfZd {
+    position: relative;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 90%;
+    overflow: hidden
+}
+
+@media screen and (min-width:1441px) {
+    .app-wrapper-web ._3QfZd {
+        top: 19px;
+        width: 1396px;
+        height: 90%;
+    }
+
+    html[dir] .app-wrapper-web ._3QfZd {
+       
+        box-shadow: 0 1px 1px 0 rgba(var(--shadow-rgb),.06),0 2px 5px 0 rgba(var(--shadow-rgb),.2)
+    }
+
+    html[dir] .app-wrapper-web.safari-fix ._3QfZd {
+        border-radius: 4px
+    }
+}
+
+            .chat-list-header{
+                box-shadow: 0px 3px 5px 1px #ccc;
+            }
+        
+        .chat-header {
+            padding: 10px 16px;
+            
+            box-shadow: 0px 3px 5px 1px #ccc;
+            background-color: white;
+        }
+
       .name-row{
         padding-top: 3px;
         font-size: 20px;
@@ -457,6 +513,10 @@
         background-color:bisque;
       }
 
+      html[dir] ._1gL0z {
+          background-color:white;
+      }
+
         .sender-msg-box {
             display: flex;
             flex-direction: row;
@@ -472,6 +532,11 @@
         .msg-box-row {
             display: flex;
             flex-direction: row;
+        }
+
+        .msg {
+            color:black;
+            font-size: 20px;
         }
 
         .sender-box{
@@ -495,9 +560,10 @@
         .receiver-box{
             box-shadow: 0 0 11px rgb(136, 136, 136);
             padding: 20px;
-            background-color: rgb(139, 250, 106);
+            background-color: rgb(54, 142, 243);
             border-radius: 20px;
             border-bottom-right-radius: 0px;
+            
         }
 
         .receiver-msg-time-read-rec {
@@ -505,6 +571,7 @@
             flex-direction: row-reverse;
         }
 
+        
     </style>
     <link
       href="./WhatsApp_files/bootstrap_qr-e892ca30934b9f1b9db6.css"
@@ -556,13 +623,13 @@
     <div id="app">
       <div tabindex="-1" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
         <span></span><span></span><span></span><span></span><span></span>
-        <div class="row" style="width: 1396px; background-color:#00d9bb;" >
+        <div class="row top-panel-bar darkable">
           <ul class="nav navbar-nav panel" style="display: flex; flex-direction: row; ">
-                        <li><a id="classmates" runat="server" href="#">Classmates</a></li>
-                        <li><a id="teachers" runat="server" href="#">Teachers</a></li>
-                        <li><a id="groups" runat="server" href="#">Groups</a></li>
-                       <li><a id="notification" runat="server" href="#">Notifications</a></li>
-                       <li><input id="createNoti" type="button" value="button" /></li>
+                       <li class="panel-child"><a id="classmates" runat="server" href="#">Classmates</a></li>
+                       <li class="panel-child"><a id="teachers" runat="server" href="#">Teachers</a></li>
+                       <li class="panel-child"><a id="groups" runat="server" href="#">Groups</a></li>
+                       <li class="panel-child"><a id="notification" runat="server" href="#">Notifications</a></li>
+                       <li class="panel-child"><input id="createNoti" type="button" value="button" /></li>
             </ul>
           <table>
               <tbody id="ntf">
@@ -591,7 +658,7 @@
           
           <div class="_1Flk2 _2DPZK">
             <div id="side" class="_3U29Q">
-              <header class="_1R3Un">
+              <header class="chat-list-header _1R3Un">
                 <div class="_1KBFI">
                   <div
                     class="-y4n1"
@@ -712,95 +779,10 @@
                   </div>
                 </div>
               </header>
-              <span class="_25tHC"
-                ><div class="_18NVz">
-                  <div class="_1ADuG _1fl3S _1Lctt">
-                    <div class="ns-Tk">
-                      <span
-                        data-testid="alert-notification"
-                        data-icon="alert-notification"
-                        class=""
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 48 48"
-                          width="48"
-                          height="48"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M24.154 2C11.919 2 2 11.924 2 24.165S11.919 46.33 24.154 46.33s22.154-9.924 22.154-22.165S36.389 2 24.154 2zm-.744 15.428v-.618c0-.706.618-1.324 1.324-1.324s1.323.618 1.323 1.324v.618c2.559.618 4.412 2.823 4.412 5.559v3.176l-8.294-8.294a5.056 5.056 0 0 1 1.235-.441zm1.323 15.706a1.77 1.77 0 0 1-1.765-1.765h3.529a1.768 1.768 0 0 1-1.764 1.765zm7.236-.883l-1.765-1.765H17.233v-.882l1.765-1.765v-4.853a5.56 5.56 0 0 1 .794-2.912l-2.559-2.559 1.147-1.147 14.735 14.736-1.146 1.147z"
-                          ></path></svg
-                      ></span>
-                    </div>
-                    <div class="_2awml">
-                      <div class="_1wQdF">Get notified of new messages</div>
-                      <div class="_21weU">
-                        <span class="GLTDs"
-                          ><span class="lHWcP"
-                            >Turn on desktop notifications</span
-                          ><span
-                            data-testid="chevron-right-text"
-                            data-icon="chevron-right-text"
-                            class="_1__M6"
-                            ><svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 8 12"
-                              width="8"
-                              height="12"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M2.173 1l4.584 4.725-4.615 4.615-1.103-1.103 3.512-3.512L1 2.173 2.173 1z"
-                              ></path></svg></span
-                        ></span>
-                      </div>
-                    </div>
-                  </div></div
-              ></span>
+              
+              
               <div tabindex="-1" class="SgIJV">
-                <div class="_3LX7r">
-                  <button class="_1Ek-U">
-                    <div class="_1rPZq _1-jFy">
-                      <span data-testid="back" data-icon="back" class=""
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M12 4l1.4 1.4L7.8 11H20v2H7.8l5.6 5.6L12 20l-8-8 8-8z"
-                          ></path></svg
-                      ></span>
-                    </div>
-                    <div class="_1rPZq _2w7RB">
-                      <span data-testid="search" data-icon="search" class=""
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                        >
-                          <path
-                            fill="currentColor"
-                            d="M15.009 13.805h-.636l-.22-.219a5.184 5.184 0 0 0 1.256-3.386 5.207 5.207 0 1 0-5.207 5.208 5.183 5.183 0 0 0 3.385-1.255l.221.22v.635l4.004 3.999 1.194-1.195-3.997-4.007zm-4.808 0a3.605 3.605 0 1 1 0-7.21 3.605 3.605 0 0 1 0 7.21z"
-                          ></path></svg
-                      ></span>
-                    </div></button
-                  ><span></span>
-                  <div class="_2MwRD">Search or start new chat</div>
-                  <label class="RPX_m"
-                    ><div tabindex="-1" class="_1JAUF _1d1OL">
-                      <div class="OTBsx" style="visibility: visible"></div>
-                      <div
-                        class="_2_1wd copyable-text selectable-text"
-                        contenteditable="true"
-                        data-tab="3"
-                        dir="ltr"
-                      ></div></div
-                  ></label>
-                </div>
+                
               </div>
               <div class="_1C2Q3 F-0gY" id="pane-side">
                 <div tabindex="-1" data-tab="4">
@@ -824,7 +806,7 @@
                 data-asset-chat-background-light="true"
                 style="opacity: 0.06"
               ></div>
-              <header class="_1-qgF">
+              <header class="_1-qgF chat-header darkable">
                 <div class="fBf_N" role="button">
                   <div class="-y4n1" style="height: 40px; width: 40px">
                     <div class="_27MZN">
@@ -925,7 +907,7 @@
               <div class="_2wjK5">
                 <div class="_3wXwX copyable-area">
                   <span></span><span></span>
-                  <div class="_1gL0z" tabindex="0">
+                  <div class="_1gL0z class="chat-back-screen darkable" tabindex="0">
                     <div class="_2VvGi"></div>
                     <div class="_2hDby">
                       <div class="_3M4BR" title="load earlier messages…">

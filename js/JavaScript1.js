@@ -77,7 +77,7 @@ function registerClientMethods(chatHub) {
         console.log(users);
         $('#listarea').html('');
         for (i = 0; i < users.length; i++) {
-            add = '            <div id="' + users[i][1] + '" class="row testing urow">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
+            add = '            <div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
             $('#listarea').append(add + add1 + add2);
         }
     };
@@ -180,7 +180,7 @@ function registerClientMethods(chatHub) {
                 var divChat = '<div class="row sender-msg-box">'
                     +'<div class="msg-box-row">'
                                             +'<div class="sender-box darkable">'
-                                                +'<div class="msg" style="font-size: 20px;">'+messages[i][2]+'</div>'
+                                                +'<div class="msg">'+messages[i][2]+'</div>'
                     + '<div class="sender-msg-time-read-rec">'
                     + '<div class="read-rec">//</div>'
                     + '<div class="msg-time">' + messages[i][3].substring(10,16) + '</div>'
@@ -197,6 +197,8 @@ function registerClientMethods(chatHub) {
                 }
                 else {
                     divChat = divChat.replace(/sender/g, 'receiver');
+                    divChat = divChat.replace(/darkable/g, '');
+
                 }
                 $('#msgarea').append(divChat);
             }
