@@ -47,7 +47,7 @@
     <%-- <script type="text/javascript" src="js\registerclientmethods"></script>
    <script type="text/javascript" src="js\registerevents"></script>--%>
 
-    <!--
+   
     <script type="text/javascript" src="js\JavaScript.js"></script>
     <script type="text/javascript">
 
@@ -236,7 +236,7 @@
 
 
     </script>
-        -->
+        
 </head>
 <body>
     <form id="form1" runat="server">
