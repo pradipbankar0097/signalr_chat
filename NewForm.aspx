@@ -389,6 +389,9 @@
       .testing4{
         background-color: #acb9bf;
       } */
+
+
+
         .top-panel-bar {
             padding:15px;
             width: 1396px;
@@ -605,6 +608,68 @@
       href="https://web.whatsapp.com/img/favicon_c5088e888c97ad440a61d247596f88e5.png"
       src="/img/favicon_c5088e888c97ad440a61d247596f88e5.png"
     />
+
+      <style>
+
+ /*search button*/
+     
+
+/*** DEMO ***/
+
+
+/*** STYLES ***/
+          .search-anime {
+              display: inline-block;
+              position: relative;
+              height: 35px;
+              width: 35px;
+              box-sizing: border-box;
+              margin: 0px 8px 7px 0px;
+              padding: 7px 9px 0px 9px;
+              border: 3px solid #FFFFFF;
+              border-radius: 25px;
+              transition: all 200ms ease;
+              cursor: text;
+          }
+	.search-anime:after {
+		content: "";
+		position: absolute;
+		width: 3px;
+		height: 20px;
+		right: -5px;
+		top: 21px;
+		background:  #FFFFFF;
+		border-radius: 3px;
+		transform: rotate(-45deg);
+		transition: all 200ms ease;
+	}
+
+              .search-anime.active
+              :hover {
+                  width: 200px;
+                  margin-right: 0px;
+              }
+		.search-anime:hover:after {
+			height: 0px;	
+		}
+	
+	
+	.search-input {
+		width: 100%;
+		border: none;
+		box-sizing: border-box;
+		font-family: Helvetica;
+		font-size: 15px;
+		color: inherit;
+		background: transparent;
+		outline-width: 0px;
+	}
+}
+
+
+      </style>
+
+
   </head>
   <body class="web">
     <script>
@@ -698,84 +763,25 @@
                 </div>
                 <div class="_2XP8p">
                   <div class="_1ljzS pnYZD">
-                    <span
-                      ><div class="_2n-zq">
-                        <div
-                          aria-disabled="false"
-                          role="button"
-                          tabindex="0"
-                          title="Status"
-                          aria-label="Status"
-                        >
-                          <span
-                            data-testid="status-v3-unread"
-                            data-icon="status-v3-unread"
-                            class=""
-                            ><svg
-                              id="df9d3429-f0ef-48b5-b5eb-f9d27b2deba6"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="24"
-                              height="24"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M12.072 1.761a10.05 10.05 0 0 0-9.303 5.65.977.977 0 0 0 1.756.855 8.098 8.098 0 0 1 7.496-4.553.977.977 0 1 0 .051-1.952zM1.926 13.64a10.052 10.052 0 0 0 7.461 7.925.977.977 0 0 0 .471-1.895 8.097 8.097 0 0 1-6.012-6.386.977.977 0 0 0-1.92.356zm13.729 7.454a10.053 10.053 0 0 0 6.201-8.946.976.976 0 1 0-1.951-.081v.014a8.097 8.097 0 0 1-4.997 7.209.977.977 0 0 0 .727 1.813l.02-.009z"
-                              ></path>
-                              <path
-                                fill="#009588"
-                                d="M19 1.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"
-                              ></path></svg
-                          ></span>
-                        </div>
-                        <span></span>
-                      </div>
-                      <div class="_2n-zq">
-                        <div
-                          aria-disabled="false"
-                          role="button"
-                          tabindex="0"
-                          title="New chat"
-                          aria-label="New chat"
-                        >
-                          <span data-testid="chat" data-icon="chat" class=""
-                            ><svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="24"
-                              height="24"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M19.005 3.175H4.674C3.642 3.175 3 3.789 3 4.821V21.02l3.544-3.514h12.461c1.033 0 2.064-1.06 2.064-2.093V4.821c-.001-1.032-1.032-1.646-2.064-1.646zm-4.989 9.869H7.041V11.1h6.975v1.944zm3-4H7.041V7.1h9.975v1.944z"
-                              ></path></svg
-                          ></span>
-                        </div>
-                        <span></span>
-                      </div>
-                      <div class="_2n-zq">
-                        <div
-                          aria-disabled="false"
-                          role="button"
-                          tabindex="0"
-                          title="Menu"
-                          aria-label="Menu"
-                        >
-                          <span data-testid="menu" data-icon="menu" class=""
-                            ><svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24"
-                              width="24"
-                              height="24"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"
-                              ></path></svg
-                          ></span>
-                        </div>
-                        <span></span></div
-                    ></span>
+                    <span>
+                        <span class="cntr">
+                            <span class="cntr-innr">
+                                <label class="search-anime" for="inpt_search">
+                                    <input id="inpt_search" type="text" />
+                                </label>
+                                <script type="text/javascript">
+                                    $("#inpt_search").on('focus', function () {
+                                        $(this).parent('label').addClass('active');
+                                    });
+
+                                    $("#inpt_search").on('blur', function () {
+                                        if ($(this).val().length == 0)
+                                            $(this).parent('label').removeClass('active');
+                                    });
+                                </script>
+                            </span>
+                        </span>
+                    </span>
                   </div>
                 </div>
               </header>
