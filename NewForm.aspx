@@ -137,12 +137,29 @@
 
                 });
 
-           $('#groups').click(function () {
-                selectedfield = 'g';
-                chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
+           /*$('#groups').onchange(function () {
+             */   
+               var selectBox = document.getElementById("select_user_type");
+               selectBox.addEventListener('change', changeFunc);
+                function changeFunc() {
 
-
-           });
+                    if (this.value == 'Groups') {
+                    /*alert(this.value);*/
+                   selectedfield = 'g';
+                   chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
+                    }
+                    if (this.value == 'Classmates') {
+                    /*alert(this.value);*/
+                        selectedfield = 'c';
+                        chatHub.server.loadRegisteredUsers();
+                    }
+                    if (this.value == 'Teachers') {
+                    /*alert(this.value);*/
+                        selectedfield = 't';
+                        chatHub.server.loadRegisteredTeachers();
+                    }
+               }
+           //});
 
 
      $('.rusers').mouseenter(function () {
@@ -227,22 +244,7 @@
          //modal.find('.modal-body input').val(recipient)
      });
 
-     (function (timer) {
-         console.log('timer called');
-         window.addEventListener('load', function () {
-             var el = document.querySelector('.contact-table-scroll');
-             el.addEventListener('scroll', function (e) {
-                 console.log('scroll added');
-                 (function (el) {
-                     el.classList.add('scroll');
-                     clearTimeout(timer);
-                     timer = setTimeout(function () {
-                         el.classList.remove('scroll');
-                     }, 100);
-                 })(el);
-             })
-         })
-     })();
+     
 
 
  });
@@ -704,7 +706,7 @@
 
                   <div class="ddlist" style="display:flex; height:100%;width:40%; background-color:white;border-radius:10px;padding-left:20px;font-size:20px;">
 
-                      <select id="Select1" name="D1">
+                      <select id="select_user_type" name="D1" onChange="changeFunc();">
                           <option id="classmates" class="user-option">Classmates</option>
                           <option id="teachers" class="user-option">Teachers</option>
                           <option id="groups" class="user-option">Groups</option>
@@ -973,7 +975,9 @@
 
                   </div>
                   
-                          <div id="btnSendMsg" style="display:flex; padding:15px;"></div>
+                          <div id="btnSendMsg" style="display:flex; height:40px;width:40px; ">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path></svg>
+                          </div>
                       
                     
                 </div>
