@@ -511,8 +511,8 @@ html[dir=rtl] .overlay {
     --app-background-rgb: 221,219,209;
     --app-background-deeper: #d2dbdc;
     --app-background-deeper-rgb: 210,219,220;
-    --app-background-stripe: #009688;
-    --app-background-stripe-rgb: 0,150,136;
+    /*--app-background-stripe: #009688;*/
+    --app-background-stripe-rgb: black;
     --attach-media-drop-border: rgba(0,0,0,0.3);
     --attach-media-drop-border-rgb: 0,0,0;
     --attach-media-drop-overlay: hsla(0,0%,100%,0.6);

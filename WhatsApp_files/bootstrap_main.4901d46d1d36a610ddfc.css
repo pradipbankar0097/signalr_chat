@@ -531,10 +531,7 @@ html[dir] ._3QfZd {
     transform-origin: center
 }
 
-html[dir=ltr] ._3QfZd {
-    left: 0;
-    background-position: 0 0
-}
+
 
 html[dir=ltr] ._3QfZd, html[dir=rtl] ._3QfZd {
     animation: dA9DG .3s cubic-bezier(.1,.82,.25,1)

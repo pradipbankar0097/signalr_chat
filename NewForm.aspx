@@ -438,14 +438,17 @@
       }
         
 ._3QfZd {
-    position: relative;
-    top: 0;
-    display: flex;
-    width: 1000px;
-    height: 90%;
-    overflow: hidden
+  position: relative;
+  top: 0;
+  display: flex;
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
 }
-
+html[dir=ltr] ._3QfZd {
+    left: 0;
+    background-position: 0 0
+}
 @media screen and (min-width:1441px) {
     .app-wrapper-web ._3QfZd {
         top: 19px;
