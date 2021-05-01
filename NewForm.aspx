@@ -36,7 +36,7 @@
       href="https://web.whatsapp.com/apple-touch-icon.png"
       type="image/png"
     />
-
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
 
           <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -607,7 +607,11 @@
     box-shadow: 0 0 11px rgb(136, 136, 136);
 }
 
-
+ .fa-bell:before {
+    
+    width:40px;
+    height:40px;
+}
        /* .darkable{
             background-color:black;
             color:white;
@@ -696,8 +700,11 @@
                       <div class="pp-sm-box" style="display: flex; justify-content: center;">
                           <img src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
                       </div>
+                      
                   </div>
-
+                  <div style="display:flex;height:40px;width:60%; flex-direction:row-reverse;">
+                          <i class="fas fa-bell" style="height:40px;width:40px;"></i>
+                      </div>
 
               </header>
               
