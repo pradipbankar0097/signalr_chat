@@ -13,7 +13,7 @@
     });
 });
 
-
+var list_area_row_html = '<div id="' + id_placeholder + '" class="row testing urow darkable"> <div class="pp-sm testing4"> <img class="img-pp-sm" src="images/dummy.png" alt=""> </div> <div class="testing3 udetails-sm">  <div class="testing2 name-row" >  <div class="uname testing3" style="float: left;"> uname_placeholder </div> </div> <div class="testing1 row ulast-chat"> <div class="lchat-msg" style="width:70%">ok bye</div> <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>'; 
 
 function AddMessage(userName, message, time, userimg) {
     console.log("Add Message Called");
@@ -54,6 +54,8 @@ function AddMessage(userName, message, time, userimg) {
 
 function registerClientMethods(chatHub) {
 
+    
+
     // Calls when user successfully logged in
     chatHub.client.onConnected = function (id, userName, userEnroll) {
         console.log("onConnected Called");
@@ -77,7 +79,7 @@ function registerClientMethods(chatHub) {
         console.log(users);
         $('#listarea').html('');
         for (i = 0; i < users.length; i++) {
-            add = '            <div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
+            add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
             $('#listarea').append(add + add1 + add2);
         }
     };
@@ -90,12 +92,11 @@ function registerClientMethods(chatHub) {
         $('#listarea').html('');
         console.log(groups);
         for (i = 0; i < groups.length; i++) {
-            add = ' <tr id="' + groups[i][0] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
+            
+            add = list_area_row_html.replace('id_placeholder', groups[i][0]).replace('uname_placeholder', groups[i][1]);
 
-            add1 = '<td>' + groups[i][1] + ' <br /> <small>&nbsp;</small></td>';
 
-            add2 = '<td><small>11:55 PM</small></td></tr>';
-            $('#listarea').append(add + add1 + add2);
+            $('#listarea').append(add);
         }
 
     };
@@ -107,12 +108,15 @@ function registerClientMethods(chatHub) {
         $('#listarea').html('');
 
         for (i = 0; i < teachers.length; i++) {
+            /*
             add = ' <tr id="' + teachers[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
 
             add1 = '<td>' + teachers[i][0] + ' <br /> <small>achi chal rahi</small></td>';
 
             add2 = '<td><small>11:55 PM</small></td></tr>';
-            $('#listarea').append(add + add1 + add2);
+            */
+            add = list_area_row_html.replace('id_placeholder', teachers[i][1]).replace('uname_placeholder', teachers[i][0]);
+            $('#listarea').append(add);
         }
     };
 
@@ -177,10 +181,10 @@ function registerClientMethods(chatHub) {
             /* messages = {from,to,msg,time} */
             for (i = 0; i < messages.length; i++) {
 
-                var divChat = '<div class="row sender-msg-box">'
+                var divChat = '<div class="row darkable sender-msg-box">'
                     +'<div class="msg-box-row">'
                                             +'<div class="sender-box darkable">'
-                                                +'<div class="msg">'+messages[i][2]+'</div>'
+                                                +'<div class="msg darkable">'+messages[i][2]+'</div>'
                     + '<div class="sender-msg-time-read-rec">'
                     + '<div class="read-rec">//</div>'
                     + '<div class="msg-time">' + messages[i][3].substring(10,16) + '</div>'
@@ -197,8 +201,7 @@ function registerClientMethods(chatHub) {
                 }
                 else {
                     divChat = divChat.replace(/sender/g, 'receiver');
-                    divChat = divChat.replace(/darkable/g, '');
-
+                    //divChat = divChat.replace(/darkable/g, '');
                 }
                 $('#msgarea').append(divChat);
             }

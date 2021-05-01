@@ -42,9 +42,7 @@
           <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
    
-
-
-
+      
 
     <script src="Scripts/jQuery-3.2.1.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
@@ -390,6 +388,10 @@
         background-color: #acb9bf;
       } */
 
+        _2A8P4 {
+            box-shadow: 0 0 11px rgb(136 136 136);
+            font-size: 20px;
+        }
 
 
         .top-panel-bar {
@@ -410,14 +412,21 @@
             padding: 10px 16px;
             background-color: white;
         }
+        .chat-box{
+             left: 0;
+    border-left: 1px solid var(--conversation-panel-border);
+    background-color:white;
+    
+        }
+
       .urow{
         transition: box-shadow 0.09s;
         display: flex;
         flex-direction: row;
-        height: 74px;
+        height: 60px;
         border-bottom-color: black;
         border-bottom-width: 5px;
-        border-radius: 10px;
+        border-radius: 0px;
         padding-top: 10px;
         padding-left: 5px;
       }
@@ -430,7 +439,7 @@
     position: relative;
     top: 0;
     display: flex;
-    width: 100%;
+    width: 1000px;
     height: 90%;
     overflow: hidden
 }
@@ -438,7 +447,7 @@
 @media screen and (min-width:1441px) {
     .app-wrapper-web ._3QfZd {
         top: 19px;
-        width: 1396px;
+        width: 1000px;
         height: 90%;
     }
 
@@ -496,18 +505,23 @@
       }
       .pp-sm{
         padding: 5px;
-        height: 60px;
-        width:60px;
-        border-radius: 30px;
+        height: 50px;
+        width:50px;
+        border-radius: 10px;
         display: flex;
         flex-direction: row;
         float: left;
       }
+     
       .img-pp-sm{
-        border-radius: 20px;
-        height:60px;
-        width:60px;
-        box-shadow: #00d9bb,4,4,4;
+          transition: box-shadow 0.1s;
+        border-radius: 10px;
+        height:50px;
+        width:50px;
+        
+      }
+       .img-pp-sm:hover{
+         box-shadow: 0 0 11px rgb(136, 136, 136);
       }
       .ulast-chat{
         padding-left: 5px;
@@ -580,6 +594,23 @@
             flex-direction: row-reverse;
         }
 
+
+        
+ ._2A8P4 {
+    padding: 9px 12px 11px;
+    margin: 5px 10px;
+    background-color: var(--compose-input-background);
+    border: 1px solid var(--compose-input-border);
+    border-radius: 21px;
+    box-shadow: 0 0 11px rgb(136, 136, 136);
+}
+
+
+       /* .darkable{
+            background-color:black;
+            color:white;
+        }
+*/
         
     </style>
     <link
@@ -591,6 +622,7 @@
       type="text/css"
       href="./WhatsApp_files/bootstrap_main.4901d46d1d36a610ddfc.css"
     />
+      
     <style id="asset-style" type="text/css"></style>
     <link
       rel="stylesheet"
@@ -633,42 +665,31 @@
     <div id="app">
       <div tabindex="-1" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
         <span></span><span></span><span></span><span></span><span></span>
-        <div class="row top-panel-bar darkable">
-          <ul class="nav navbar-nav panel" style="display: flex; flex-direction: row; ">
-                       <li class="panel-child"><a id="classmates" runat="server" href="#">Classmates</a></li>
-                       <li class="panel-child"><a id="teachers" runat="server" href="#">Teachers</a></li>
-                       <li class="panel-child"><a id="groups" runat="server" href="#">Groups</a></li>
-                       <li class="panel-child"><a id="notification" runat="server" href="#">Notifications</a></li>
-                       <li class="panel-child"><input id="createNoti" type="button" value="button" /></li>
-            </ul>
-          <table>
-              <tbody id="ntf">
-
-              </tbody>
-              </table>
-                
-          </div>  
-
+        
           <!-- hidden data -->
             <input id="hdId" type="hidden" />
                 <input id="PWCount" type="hidden" value="info" />
                 <input id="hdUserEnroll" type="hidden" />
                 <input id="hdtoUserEnroll" type="hidden" />
                 
+          <div style="width:1396px; height:100vh; display:flex; flex-direction:column;">
+
+              
+
 
 
         <div tabindex="-1" class="_3QfZd two">
           
           <div class="_3-dtC"></div>
           <div class="Akuo4">
-            <div class="_1Flk2 _2DPZK"><span class="_2zn9Y"></span></div>
+            <div class="_1Flk2 _2DPZK"></div>
             <div class="_1Flk2 _1sFTb"><span class="_2zn9Y"></span></div>
             <div class="_1Flk2 _3xysY"><span class="_2zn9Y"></span></div>
           </div>
           
           <div class="_1Flk2 _2DPZK">
             <div id="side" class="_3U29Q">
-              <header class="chat-list-header _1R3Un">
+              <header class="chat-list-header darkable _1R3Un">
                   <div class="profile-header " style="display: flex; flex-direction: row;">
                       <div class="pp-sm-box" style="display: flex; justify-content: center;">
                           <img src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
@@ -679,14 +700,25 @@
               </header>
               
               
-              <div tabindex="-1" class="SgIJV">
-                
+              <div class="search-in-users" style="display:flex; flex-direction:row; width:100%; height:50px; background-color:#e8e8e8">
+
+                  <div class="ddlist" style="display:flex; height:100%;width:40%; background-color:white;border-radius:10px;padding-left:20px;font-size:20px;">
+
+                      <select id="Select1" name="D1">
+                          <option id="classmates" class="user-option">Classmates</option>
+                          <option id="teachers" class="user-option">Teachers</option>
+                          <option id="groups" class="user-option">Groups</option>
+                          
+                      </select>
+
+                  </div>
+
               </div>
               <div class="_1C2Q3 F-0gY" id="pane-side">
                 <div tabindex="-1" data-tab="4">
                   <div class="" style="pointer-events: auto">
                     <div id="listarea"
-                      class="rusers JnmQF _3QmOg"   style="height: 1000px">
+                      class="rusers JnmQF _3QmOg"   style="height: 1000px;">
                     
                       
                     </div>
@@ -704,7 +736,7 @@
                 data-asset-chat-background-light="true"
                 style="opacity: 0.06"
               ></div>
-              <header class="_1-qgF chat-header darkable">
+              <header class="_1-qgF chat-header darkable" style="border-left-width:2px; border-left-color:rgb(147 147 147);">
                 <div class="fBf_N" role="button">
                   <div class="-y4n1" style="height: 40px; width: 40px">
                     <div class="_27MZN">
@@ -738,7 +770,7 @@
                       <span id="spanUser1"
                         dir="auto"
                         title="Pushkar Joshi GECA"
-                        class="_35k-1 _1adfa _3-8er"
+                        class="darkable _35k-1 _1adfa _3-8er"
                         >Pushkar Joshi GECA</span
                       >
                     </div>
@@ -805,7 +837,7 @@
               <div class="_2wjK5">
                 <div class="_3wXwX copyable-area">
                   <span></span><span></span>
-                  <div class="_1gL0z class="chat-back-screen darkable" tabindex="0">
+                  <div class="_1gL0z chat-back-screen darkable" tabindex="0">
                     <div class="_2VvGi"></div>
                     <div class="_2hDby">
                       <div class="_3M4BR" title="load earlier messages…">
@@ -823,7 +855,7 @@
                         ></span>
                       </div>
                     </div>
-                    <div id="msgarea" tabindex="-1" class="_11liR">
+                    <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
                       <!-- msg list area -->
 
 
@@ -836,7 +868,7 @@
               </div>
               <div class="_2sw49" style="height: 0px"></div>
               <footer tabindex="-1" class="_3uxr9">
-                <div class="vR1LG _3wXwX copyable-area">
+                <div class="vR1LG _3wXwX copyable-area darkable">
                   <div class="EBaI7 _23e-h">
                     <div data-state="closed" class="_291Eb _2MeuX">
                       <button
@@ -936,8 +968,8 @@
                       </div>
                     </div>
                   </div>
-                  <div tabindex="-1" class="_2A8P4 darkable" style="box-shadow:0 0 11px rgb(136 136 136); font-size:20px">
-                    <div tabindex="-1" class="_1JAUF _2x4bz"><div class="OTBsx" style="visibility: hidden">Type a message</div><div id="txtMessage" class="_2_1wd copyable-text selectable-text" contenteditable="true" data-tab="6" placeholder="typesomething" dir="ltr" spellcheck="true"></div></div>
+                  <div tabindex="-1" class="_2A8P4 darkable" >
+                    <div tabindex="-1" class="_1JAUF _2x4bz"><div class="OTBsx" style="visibility: hidden">Type a message</div><div id="txtMessage" class="darkable _2_1wd copyable-text selectable-text" contenteditable="true" data-tab="6" placeholder="typesomething" dir="ltr" spellcheck="true"></div></div>
 
                   </div>
                   
@@ -964,6 +996,9 @@
             <div hidden="" style="display: none"></div>
           </div>
         </div>
+
+              </div>
+
         <div hidden="" style="display: none"></div>
       </div>
       <div hidden="" style="display: none"></div>
