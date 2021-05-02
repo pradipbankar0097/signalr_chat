@@ -76,9 +76,9 @@
             $(document).ready(function () {
                 var selectedfield = 'c';
                 var name = '<%# this.UserName %>';
-     var badge = '<%# this.UserBadge %>';
-     var enrollno = '<%# this.UserEnrollNo %>';
-            var department = '<%# this.UserDepartment %>';
+                var badge = '<%# this.UserBadge %>';
+                var enrollno = '<%# this.UserEnrollNo %>';
+                var department = '<%# this.UserDepartment %>';
                 var email = '<%# this.UserEmail %>';
                 var toGroupId;
 
@@ -92,7 +92,7 @@
                 
           
    // Send Button Click Event
-            $('#btnSendMsg').click(function () {
+            $('#btnSendMsg').click(async function () {
 
                 var msg = $("#txtMessage").html();
                 $("#txtMessage").html('');
@@ -102,7 +102,7 @@
                     var fromuserEnroll = $('#hdUserEnroll').val();
                     var toUserEnroll = $('#hdtoUserEnroll').val();
                 
-                    alert(toGroupId);
+                    
                     switch (selectedfield) {
                         case 'c':
                             chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
@@ -124,13 +124,14 @@
                 }
             });
      
-            $('#classmates').click(function () {
-                    selectedfield = 'c';
+            $('#classmates').click(async function () {
+                selectedfield = 'c';
+               
                     chatHub.server.loadRegisteredUsers();
 
 
                 });
-                $('#teachers').click(function () {
+                $('#teachers').click(async function () {
                     selectedfield = 't';
                     chatHub.server.loadRegisteredTeachers();
 
@@ -141,17 +142,17 @@
              */   
                var selectBox = document.getElementById("select_user_type");
                selectBox.addEventListener('change', changeFunc);
-                function changeFunc() {
+               async  function changeFunc() {
 
                     if (this.value == 'Groups') {
                     /*alert(this.value);*/
                    selectedfield = 'g';
-                   chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
+                        chatHub.server.loadRegisteredGroups(enrollno);
                     }
                     if (this.value == 'Classmates') {
                     /*alert(this.value);*/
                         selectedfield = 'c';
-                        chatHub.server.loadRegisteredUsers();
+                       chatHub.server.loadRegisteredUsers();
                     }
                     if (this.value == 'Teachers') {
                     /*alert(this.value);*/
@@ -162,7 +163,7 @@
            //});
 
 
-     $('.rusers').mouseenter(function () {
+     $('.rusers').mouseenter(async function () {
          var i;
 
          var ide = this.children;
@@ -201,13 +202,13 @@
      });
 
      //NOTIFICAIONS
-     $('#notification').click(function () {
+     $('#notification').click(async function () {
          console.log("n");
          chatHub.server.showNotification();
      });
 
 
-     $('#create-ntf').click(function () {
+     $('#create-ntf').click(async function () {
 
          var msg = $("#ntf-msg").val();
          $("#ntf-msg").val('');
@@ -216,6 +217,17 @@
              var creator = name;
              var creatorEnrollNo = enrollno;
              var toDate = $('#to-date').val();
+             console.log('creating notification');
+             function sleep(milliseconds) {
+                 const date = Date.now();
+                 let currentDate = null;
+                 do {
+                     currentDate = Date.now();
+                     console.log(currentDate.toString());
+                 } while (currentDate - date < milliseconds);
+             }
+             sleep(10000);
+             console.log('notification created');
 
 
              chatHub.server.createNotification(msg, creator, creatorEnrollNo, toDate);
@@ -234,7 +246,7 @@
      });
 
 
-     $('#exampleModal').on('show.bs.modal', function (event) {
+     $('#exampleModal').on('show.bs.modal', async function (event) {
          var button = $(event.relatedTarget) // Button that triggered the modal
          //var recipient = button.data('whatever') // Extract info from data-* attributes
          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -869,7 +881,7 @@ html[dir=ltr] ._3QfZd {
                     </div>
                     <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
                       <!-- msg list area -->
-
+                        
 
 
 

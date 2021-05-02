@@ -40,15 +40,8 @@ function AddMessage(userName, message, time, userimg) {
         ' <div class="direct-chat-text" >' + message + '</div> </div>';
     $('#msgarea').append(divChat);
 
-    var height = $('#msgarea')[0].scrollHeight;
+   
 
-    // Apply Slim Scroll Bar in Group Chat Box
-    $('#msgarea').slimScroll({
-        height: height
-    });
-
-    //ParseEmoji('#divChatWindow');
-    console.log("suuuuuuuuuccccesss");
 
 };
 
@@ -152,7 +145,7 @@ function registerClientMethods(chatHub) {
     };
 
     // On New User Connected
-    chatHub.client.onNewUserConnected = function (id, name, UserImage, loginDate) {
+    chatHub.client.onNewUserConnected =  function (id, name, UserImage, loginDate) {
         AddUser(chatHub, id, name, UserImage, loginDate);
     };
 
@@ -273,7 +266,7 @@ function registerClientMethods(chatHub) {
 
 
     chatHub.client.alertMe = function (str) {
-        alert(str);
+       
 
 
 

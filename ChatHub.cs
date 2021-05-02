@@ -7,7 +7,8 @@ using Microsoft.AspNet.SignalR;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
-
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SignalRChat
 {
@@ -21,7 +22,7 @@ namespace SignalRChat
         public List<List<string>> RegisterdGroups = new List < List<string> >();
         ConnClass ConnC = new ConnClass();
 
-        public void Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
+        public  void  Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
         {
             var id = Context.ConnectionId;
 
@@ -29,7 +30,7 @@ namespace SignalRChat
 
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
             {
-                string UserImg = GetUserImage(userName);
+                string UserImg =  GetUserImage(userName);
                 string logintime = DateTime.Now.ToString();
 
                 ConnectedUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
@@ -81,9 +82,9 @@ namespace SignalRChat
             Clients.All.ntfCreated();
         }
 
-        public void SendMessageToAll(string userName, string message, string time)
+        public async  void SendMessageToAll(string userName, string message, string time)
         {
-            string UserImg = GetUserImage(userName);
+            string UserImg =  GetUserImage(userName);
             // store last 100 messages in cache
             AddMessageinCache(userName, message, time, UserImg);
 
@@ -146,7 +147,7 @@ namespace SignalRChat
         }
        
 
-        public string GetUserImage(string username)
+        public  string GetUserImage(string username)
         {
             string RetimgName = "images/dummy.png";
             try
@@ -229,7 +230,7 @@ namespace SignalRChat
 
         }
 
-        public void SendPrivateMessages(string toUserId, string message)
+        public async void SendPrivateMessages(string toUserId, string message)
         {
 
             string fromUserId = Context.ConnectionId;
@@ -239,16 +240,12 @@ namespace SignalRChat
             if (toUser != null && fromUser != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();
-                string UserImg = GetUserImage(fromUser.UserName);
-                // send to 
-                Clients.Client(toUserId).sendPrivateMessage(fromUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
-
-                // send to caller user
-                Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
+                string UserImg = await Task.Run(()=> GetUserImage(fromUser.UserName));
+              
             }
 
         } 
-        public void SendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
+        public async void SendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
         {
 
           
