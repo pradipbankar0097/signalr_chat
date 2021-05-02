@@ -59,6 +59,7 @@ function registerClientMethods(chatHub) {
 
 
     };
+    chatHub.client.addMessageToPrivateChat = function (msg,username,userenroll,time) { console.log(msg)};
     chatHub.client.method = function (fromusername, fromuserenroll, messasge) {
         alert("You have message from" + fromusername);
         console.log(messasge);

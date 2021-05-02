@@ -92,7 +92,7 @@
                 
           
    // Send Button Click Event
-            $('#btnSendMsg').click(async function () {
+            $('#btnSendMsg').click(  function () {
 
                 var msg = $("#txtMessage").html();
                 $("#txtMessage").html('');
@@ -105,7 +105,7 @@
                     
                     switch (selectedfield) {
                         case 'c':
-                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                              chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
                             console.log('server request sent');
                             break;
                         case 't':
@@ -124,14 +124,14 @@
                 }
             });
      
-            $('#classmates').click(async function () {
+            $('#classmates').click( function () {
                 selectedfield = 'c';
                
                     chatHub.server.loadRegisteredUsers();
 
 
                 });
-                $('#teachers').click(async function () {
+                $('#teachers').click(  function () {
                     selectedfield = 't';
                     chatHub.server.loadRegisteredTeachers();
 
@@ -163,7 +163,7 @@
            //});
 
 
-     $('.rusers').mouseenter(async function () {
+     $('.rusers').mouseenter(  function () {
          var i;
 
          var ide = this.children;

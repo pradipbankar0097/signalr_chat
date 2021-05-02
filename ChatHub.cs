@@ -217,35 +217,13 @@ namespace SignalRChat
             string table_name = "f" + arr[0] + "to" + arr[1];
 
             AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
-            try
-            {
-                var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnrollNo);
-                Clients.Client(toUser.ConnectionId).method(fromUserName, fromUserEnrollNo, message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("User Not Online" + e.ToString());
-            }
+           
 
 
         }
 
-        public async void SendPrivateMessages(string toUserId, string message)
-        {
-
-            string fromUserId = Context.ConnectionId;
-
-            var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
-            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
-            if (toUser != null && fromUser != null)
-            {
-                string CurrentDateTime = DateTime.Now.ToString();
-                string UserImg = await Task.Run(()=> GetUserImage(fromUser.UserName));
-              
-            }
-
-        } 
-        public async void SendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
+        
+        public  void sendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
         {
 
           
@@ -253,9 +231,18 @@ namespace SignalRChat
             {
                 string CurrentDateTime = DateTime.Now.ToString();
                 
-                CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
-             
-               
+               CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
+                Clients.Client(Context.ConnectionId).addMessageToPrivateChat(message,fromUserName,fromUserEnroll,"time");
+                try
+                {
+                    var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnroll);
+                   Clients.Client(toUser.ConnectionId).method(fromUserName, fromUserEnroll, message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("User Not Online" + e.ToString());
+                }
+
             }
             else
             {
