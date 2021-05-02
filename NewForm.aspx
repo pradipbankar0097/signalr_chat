@@ -102,7 +102,7 @@
                     var fromuserEnroll = $('#hdUserEnroll').val();
                     var toUserEnroll = $('#hdtoUserEnroll').val();
                 
-                    alert(toGroupId);
+                    
                     switch (selectedfield) {
                         case 'c':
                             chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);

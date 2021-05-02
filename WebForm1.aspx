@@ -46,7 +46,7 @@
     <script src="Scripts/jquery-ui-1.12.1.js"></script>
     <%-- <script type="text/javascript" src="js\registerclientmethods"></script>
    <script type="text/javascript" src="js\registerevents"></script>--%>
-
+    <!--
    
     <script type="text/javascript" src="js\JavaScript.js"></script>
     <script type="text/javascript">
@@ -236,6 +236,8 @@
 
 
     </script>
+
+-->
         
 </head>
 <body>

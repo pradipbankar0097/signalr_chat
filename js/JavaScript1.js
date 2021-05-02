@@ -216,20 +216,30 @@ function registerClientMethods(chatHub) {
         }
 
     };
-    chatHub.client.addMessageToGroupChat = function (message, fromusername) {
+    chatHub.client.addMessageToGroupChat = function (message, fromusername,datetime) {
+        console.log('addMessageToGroupChat called');
+        console.log(message);
+        console.log();
 
         var Side = 'left';
         var TimeSide = 'right';
         if (message != null) {
 
-            var divChat = '<div class="direct-chat-msg ' + Side + '">' +
-                '<div class="direct-chat-info clearfix">' +
-                // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-                '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + fromusername + '</span>' +
-                '</div>' +
+            var divChat = '<div class="row darkable sender-msg-box">'
+                + '<div class="msg-box-row">'
+                + '<div class="sender-box darkable">'
+                + '<div class="msg darkable">' + message + '</div>'
+                + '<div class="sender-msg-time-read-rec">'
+                + '<div class="read-rec">//</div>'
+                + '<div class="msg-time">' +datetime.substring(10, 16) + '</div>'
 
-                // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-                ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + message + '</div> </div>';
+                + '</div>'
+                + '</div>'
+                + '</div >'
+                + '</div >';
+            console.log('before');
+            divChat = divChat.replace(/sender/g, 'receiver');
+            console.log('after');
             $('#msgarea').append(divChat);
         }
 
@@ -247,18 +257,28 @@ function registerClientMethods(chatHub) {
 
 
             var i;
-            var Side = 'right';
-            var TimeSide = 'left';
-
+            
             for (i = 0; i < messages.length; i++) {
-                var divChat = '<div class="direct-chat-msg ' + Side + '">' +
-                    '<div class="direct-chat-info clearfix">' +
-                    // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-                    '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
-                    '</div>' +
+                
+                var divChat = '<div class="row darkable sender-msg-box">'
+                    + '<div class="msg-box-row">'
+                    + '<div class="sender-box darkable">'
+                    + '<div class="msg darkable">' + messages[i][1] + '</div>'
+                    + '<div class="sender-msg-time-read-rec">'
+                    + '<div class="read-rec">//</div>'
+                    + '<div class="msg-time">' + messages[i][0].substring(10, 16) + '</div>'
 
-                    // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-                    ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+                    + '</div>'
+                    + '</div>'
+                    + '</div >'
+                    + '</div >';
+                
+                if (messages[i][2] == enroll) {
+                    
+                    divChat = divChat.replace(/sender/g, 'receiver');
+                    
+                }
+                
                 $('#msgarea').append(divChat);
             }
         }

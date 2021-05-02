@@ -329,7 +329,7 @@ namespace SignalRChat
             }
 
         }
-        public void AddMessageToGroup(string message, string fromUserEnroll, string toGroupID)
+        public void AddMessageToGroup(string message, string fromUserEnroll, string toGroupID,string datetime)
         {
             try
             {
@@ -337,7 +337,7 @@ namespace SignalRChat
                 string AddMessageToGroupQuery = "INSERT INTO `"+ toGroupID.ToLower()+"msgs` (`Time`, `Message`, `SenderEnrollNo`) VALUES(current_timestamp(), '"+message+"', '"+fromUserEnroll+"')";
                 ConnC.ExecuteQuery(AddMessageToGroupQuery, ConnC.groups_db);
                 
-                Clients.Caller.addMessageToGroupChat(message, GetUserName(fromUserEnroll));
+                Clients.Caller.addMessageToGroupChat(message, GetUserName(fromUserEnroll),datetime);
             }
             catch(Exception ee)
             {
@@ -349,7 +349,7 @@ namespace SignalRChat
         {
             if (toGroupID != null && fromUserEnroll != null)
             {
-                AddMessageToGroup(message, fromUserEnroll, toGroupID);
+                AddMessageToGroup(message, fromUserEnroll, toGroupID,DateTime.Now.ToString());
             }
             else
             {
