@@ -71,7 +71,11 @@
     <script type="text/javascript">
 
 
+        
         function registerEvents(chatHub) {
+
+           
+
 
             $(document).ready(function () {
                 var selectedfield = 'c';
@@ -235,9 +239,14 @@
          }
      });
 
+                $('#self_pp_sm').click(function () {
+
+                    console.log('success');
+                    chatHub.server.getUserData("<%=Session["UserEnrollNo"].ToString()%>");
+                });
 
 
-
+                
      // Send Message on Enter Button
      $("#txtMessage").keypress(function (e) {
          if (e.which == 13) {
@@ -265,7 +274,7 @@
 
         };
 
-
+        
 
     </script>
 
@@ -673,6 +682,7 @@ html[dir=ltr] ._3QfZd {
 
   </head>
   <body class="web">
+      <form id="form1" runat="server">
     <script>
         try {
             var systemThemeDark,
@@ -714,11 +724,32 @@ html[dir=ltr] ._3QfZd {
           <div class="_1Flk2 _2DPZK">
             <div id="side" class="_3U29Q">
               <header class="chat-list-header darkable _1R3Un">
-                  <div class="profile-header " style="display: flex; flex-direction: row;">
-                      <div class="pp-sm-box" style="display: flex; justify-content: center;">
-                          <img src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
+                  <div  class="profile-header " style="display: flex; flex-direction: row;">
+                      <div id="self_pp_sm" class="pp-sm-box" style="display: flex; justify-content: center;">
+                          <img  src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
                       </div>
-                      
+                      <div>
+                          <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Search in user"/>
+                          <script>
+                              function searchuser() {
+                                  
+                                  var input, filter, ul, li, a, i, txtValue;
+                                  input = document.getElementById('user_search');
+                                  filter = input.value.toUpperCase();
+                                  ul = document.getElementById("listarea");
+                                  li = ul.getElementsByClassName('urow');
+                                  for (i = 0; i < li.length; i++) {
+                                      a = li[i].getElementsByClassName('uname')[0];
+                                      txtValue = a.textContent || a.innerText;
+                                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                          li[i].style.display = "";
+                                      } else {
+                                          li[i].style.display = "none";
+                                      }
+                                  }
+                              }
+                          </script>
+                      </div>
                   </div>
                   <div style="display:flex;height:40px;width:90%; flex-direction:row-reverse;">
                       <div id="notification" style="display:flex; height:40px; width:40px; ">
@@ -734,7 +765,7 @@ html[dir=ltr] ._3QfZd {
 
                   <div class="ddlist" style="display:flex; height:40px;width:40%; background-color:white;border-radius:10px;padding-left:20px;font-size:20px;">
 
-                      <select id="select_user_type" name="D1" onChange="changeFunc();">
+                      <select id="select_user_type" name="D1" >
                           <option id="classmates" class="user-option">Classmates</option>
                           <option id="teachers" class="user-option">Teachers</option>
                           <option id="groups" class="user-option">Groups</option>
@@ -747,9 +778,20 @@ html[dir=ltr] ._3QfZd {
               <div class="_1C2Q3 F-0gY" id="pane-side">
                 <div tabindex="-1" data-tab="4">
                   <div class="" style="pointer-events: auto">
+                      
+                      <div id="list_area" style="width:100%;height:1000px; background-color:aqua; display:none;">
+                          
+                            <asp:TextBox ID="TextBox8" placeholder="new username" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox9" placeholder="new password" runat="server"></asp:TextBox>
+                          
+                            <asp:TextBox ID="TextBox10" placeholder="new email" runat="server"></asp:TextBox>
+                          <asp:Button ID="UpdateDetails" runat="server" OnClick="UpdateDetails_Click" Text="Button" />
+                       &nbsp;
+                      </div>
+                      
                     <div id="listarea"
                       class="rusers JnmQF _3QmOg"   style="height: 1000px;">
-                    
+                   
                       
                     </div>
                   </div>
@@ -1035,5 +1077,6 @@ html[dir=ltr] ._3QfZd {
       </div>
       <div hidden="" style="display: none"></div>
     </div>
+      </form>
   </body>
 </html>

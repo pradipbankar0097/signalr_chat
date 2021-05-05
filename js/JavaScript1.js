@@ -45,6 +45,8 @@ function AddMessage(userName, message, time, userimg) {
 
 };
 
+
+
 function registerClientMethods(chatHub) {
 
     
@@ -359,7 +361,25 @@ function registerClientMethods(chatHub) {
         });
     };
 
-
+    chatHub.client.getUserData = function (userdata) {
+        $('list_area').html('');
+        var targetdiv = document.getElementById('list_area');
+        targetdiv.style.display = "block";
+        console.log(userdata);
+        for (var i = 0; i < userdata.length; i++) {
+            var toappend = '';
+            if (i == (userdata.length - 1)) {
+                 toappend = '<div><img src="' + userdata[i] + '" style="height:100px;width:100px;"><div>'
+            }
+            else {
+                 toappend = '<div><input type="text" value="'+userdata[i]+'" /></div>';
+            }
+            targetdiv.innerHTML += toappend;
+            console.log(userdata[i]);
+        }
+        targetdiv.innerHTML += '<input type="submit" value="Update" id="UpdateDetails"/>';
+        console.log('success 2');
+    };
 };
 
 

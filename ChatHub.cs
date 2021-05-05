@@ -376,5 +376,19 @@ namespace SignalRChat
 
 
         }
+        public void GetUserData(string enroll)
+        {
+            List<string> userdata = new List<string>();
+            string QueryForData = "select `UserName`, `Badge`, `EnrollNo`, `Department`, `Year`, `Email`, `Photo` from tbl_users where EnrollNo='"+enroll+"'";
+            userdata = ConnC.GetRow(QueryForData);
+            Clients.Caller.getUserData(userdata);
+        }
+        public void UpdateData(string enroll,string username,string password,string email)
+        {
+            string query = "update tbl_user set UserName='" + username + "',Password='" + password + "',Email='" + email + "' where EnrollNo='" + enroll + "' ";
+            ConnC.ExecuteQuery(query);
+
+          
+       }
     }
 }

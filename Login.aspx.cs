@@ -29,9 +29,12 @@ namespace SignalRChat
                 Session["UserEnrollNo"] = EnrollNo;
                 string Department = ConnC.GetColumnVal(Query, "Department");
                 Session["UserDepartment"] = Department;
-               
+
+                Session["Pass"] = txtPassword.Value;
                 Session["UserEmail"] = txtEmail.Value;
                 Response.Redirect("NewForm.aspx");
+
+                
             }
             else
                 txtEmail.Value = "Invalid Email or Password!!";
