@@ -282,7 +282,7 @@ namespace SignalRChat
         }
         public string GetUserBadge(string enrollno)
         {
-            loadRegisteredUsers();
+            loadRegisteredUsers(enrollno);
             string rstr = "";
             for (int i = 0; i < RegisteredUsers.Count; i++)
             {
