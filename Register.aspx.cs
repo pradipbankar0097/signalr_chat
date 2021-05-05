@@ -48,7 +48,7 @@ namespace SignalRChat
                     {
                         if (ConnC.ExecuteQuery(Query))
                         {
-                            string CreateTableQuery = "create table groupsof_" + EnrollNo.Value + "(GroupID varchar(40))";
+                            string CreateTableQuery = "create table if not exists groupsof_" + EnrollNo.Value + "(GroupID varchar(40))";
                             string InsertGroupQuery = "insert into " + "groupsof_" + EnrollNo.Value + "(GroupID) values('" + year.Text + Department.Text + "')";
                             ConnC.ExecuteQuery(CreateTableQuery);
                             ConnC.ExecuteQuery(InsertGroupQuery);
@@ -104,5 +104,20 @@ namespace SignalRChat
             return false;
         } //IsValidImageFormat
 
+        protected void Badge_SelectedIndexChanged(object sender, EventArgs e)
+        {
+         
+            
+        }
+
+        protected void year_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Department_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

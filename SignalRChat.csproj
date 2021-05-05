@@ -284,6 +284,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\Student.cs" />
+    <Content Include="App_Code\Teachers.cs" />
     <Compile Include="Chat.aspx.cs">
       <DependentUpon>Chat.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

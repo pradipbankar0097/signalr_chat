@@ -9,6 +9,28 @@
     <link href="Content/style.css" rel="stylesheet" />
     <link href="Content/icheck-bootstrap.css" rel="stylesheet" />
     <link href="Content/font-awesome.css" rel="stylesheet" />
+    <script src="Scripts/jquery-3.2.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#Badge").change(function () {
+              
+                
+                var value = $("#Badge option:selected").text();
+                console.log(value);
+                if (value == 'Principal') {
+                    $("#dept").hide();
+                    $("#yr").hide();
+                }
+                else if (value == 'HOD' || value == 'Professor') {
+                    $("#yr").hide();
+                }
+
+
+            });
+        });
+
+    </script>
 </head>
 <body class="hold-transition register-page">
     <form id="form1" runat="server">
@@ -28,7 +50,7 @@
                 </div>
                 <div class="form-group has-feedback">
                     Designation : 
-          <asp:DropDownList ID="Badge" runat="server">
+          <asp:DropDownList ID="Badge" runat="server" OnSelectedIndexChanged="Badge_SelectedIndexChanged">
               <asp:ListItem>Student</asp:ListItem>
               <asp:ListItem>Professor</asp:ListItem>
               <asp:ListItem>HOD</asp:ListItem>
@@ -37,10 +59,11 @@
           </asp:DropDownList>
                     &nbsp;<span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="dept">
                     Department :&nbsp;
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    <asp:DropDownList ID="Department" runat="server">
+                    <asp:DropDownList ID="Department" runat="server" OnSelectedIndexChanged="Department_SelectedIndexChanged" >
+                        <asp:ListItem></asp:ListItem>
                         <asp:ListItem>Mechanical</asp:ListItem>
                         <asp:ListItem>Civil</asp:ListItem>
                         <asp:ListItem>Electrical</asp:ListItem>
@@ -51,9 +74,10 @@
                         <asp:ListItem>Science</asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="yr">
                     Year : 
-           <asp:DropDownList ID="year" runat="server">
+           <asp:DropDownList ID="year" runat="server" Enabled="true" OnSelectedIndexChanged="year_SelectedIndexChanged">
+                <asp:ListItem></asp:ListItem>
                <asp:ListItem>FE</asp:ListItem>
                <asp:ListItem>SE</asp:ListItem>
                <asp:ListItem>TE</asp:ListItem>
@@ -111,7 +135,6 @@
     </form>
 
    <%-- <script src="Scripts/jquery-1.9.1.min.js"></script>--%>
-    <script src="Scripts/jquery-3.2.1.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
+    
 </body>
 </html>
