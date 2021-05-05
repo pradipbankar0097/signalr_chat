@@ -109,7 +109,7 @@
                     
                     switch (selectedfield) {
                         case 'c':
-                              chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
                             console.log('server request sent');
                             break;
                         case 't':

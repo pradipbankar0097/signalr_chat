@@ -9,17 +9,14 @@ using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-
 namespace SignalRChat
 {
     public class ChatHub : Hub
     {
         static List<Users> ConnectedUsers = new List<Users>();
-        static List<Messages> CurrentMessage = new List<Messages>();
-
         public List<List<string>> Notifications = new List<List<string>>();
         public List<List<string>> RegisteredUsers = new List<List<string>>();
-        public List<List<string>> RegisterdGroups = new List < List<string> >();
+        public List<List<string>> RegisterdGroups = new List < List<string>>();
         ConnClass ConnC = new ConnClass();
 
         public  void  Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
@@ -32,8 +29,10 @@ namespace SignalRChat
             {
                 string UserImg =  GetUserImage(userName);
                 string logintime = DateTime.Now.ToString();
-
-                ConnectedUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
+                if(userBadge.Equals("Student"))
+                ConnectedUsers.Add(new Student { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
+                else
+                ConnectedUsers.Add(new Teacher { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
 
                 //send to caller
                 Clients.Caller.onConnected(id, userName,userEnrollNo);
@@ -43,9 +42,10 @@ namespace SignalRChat
         }
         public void loadRegisteredUsers()
         {
-            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo FROM tbl_users";
+            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users";
             RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
             Clients.Caller.loadRegisteredUsers(RegisteredUsers);
+
         }
         public void loadRegisteredGroups(string enrollno)
         {
@@ -82,31 +82,12 @@ namespace SignalRChat
             Clients.All.ntfCreated();
         }
 
-        public async  void SendMessageToAll(string userName, string message, string time)
-        {
-            string UserImg =  GetUserImage(userName);
-            // store last 100 messages in cache
-            AddMessageinCache(userName, message, time, UserImg);
+      
 
-            // Broad cast message
-            Clients.All.messageReceived(userName, message, time, UserImg);
-
-        }
-
-        private void AddMessageinCache(string userName, string message, string time, string UserImg)
-        {
-            CurrentMessage.Add(new Messages { UserName = userName, Message = message, Time = time, UserImage = UserImg });
-
-            if (CurrentMessage.Count > 100)
-                CurrentMessage.RemoveAt(0);
-
-        }
+       
 
         // Clear Chat History
-        public void clearTimeout()
-        {
-            CurrentMessage.Clear();
-        }
+       
         public string GetUserName(string enroll)
         {
             loadRegisteredUsers();
@@ -226,7 +207,7 @@ namespace SignalRChat
         public  void sendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
         {
 
-          
+           
             if (toUserEnroll != null && fromUserEnroll != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();
@@ -299,9 +280,54 @@ namespace SignalRChat
            
             
         }
+        public string GetUserBadge(string enrollno)
+        {
+            loadRegisteredUsers();
+            string rstr = "";
+            for (int i = 0; i < RegisteredUsers.Count; i++)
+            {
+                for (int j = 0; j < RegisteredUsers[i].Count; j++)
+                {
+                    if (enrollno.Equals(RegisteredUsers[i][j]))
+                    {
+                        // Clients.All.alertMe(RegisteredUsers[i]);
+                        rstr = RegisteredUsers[i][2];
+                    }
+                }
+
+            }
+            return rstr;
+        }
+        public bool ValidateRequest(string FromEnroll, string ToEnroll)
+        {
+          string  fbadge=GetUserBadge(FromEnroll);
+            string tbadge = GetUserBadge(ToEnroll);
+            if(tbadge=="Principal")
+            {
+                if(fbadge=="Student")
+                {
+                    return false;
+                }
+            }
+            else if(tbadge=="HOD")
+            {
+                if(fbadge=="Student")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         
         public void SendMessageToTeacher(string fromUserName, string fromUserEnroll, string toUserEnroll, string message)
         {
+            if (!ValidateRequest(fromUserEnroll, toUserEnroll))
+            {
+             
+                Clients.Client(Context.ConnectionId).sendRequestFailed(fromUserEnroll, toUserEnroll);
+                return;
+            }
             if (toUserEnroll != null && fromUserEnroll != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();

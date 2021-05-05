@@ -22,8 +22,15 @@
                     $("#dept").hide();
                     $("#yr").hide();
                 }
-                else if (value == 'HOD' || value == 'Professor') {
+                else if (value == 'HOD' || value == 'Professor')
+                {
                     $("#yr").hide();
+                }
+                else
+                {
+                    $("#dept").show();
+                    $("#yr").show();
+
                 }
 
 

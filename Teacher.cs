@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SignalRChat.App_Code
+namespace SignalRChat
 {
-    public class Student: Users
+    public class Teacher:Users
     {
-
     }
 }

@@ -284,8 +284,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\Student.cs" />
-    <Content Include="App_Code\Teachers.cs" />
     <Compile Include="Chat.aspx.cs">
       <DependentUpon>Chat.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -323,6 +321,8 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="App_Code\Users.cs" />
+    <Compile Include="Student.cs" />
+    <Compile Include="Teacher.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
