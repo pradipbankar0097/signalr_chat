@@ -33,7 +33,7 @@ namespace SignalRChat
         protected void Page_Load(object sender, EventArgs e)
         {
             UserPassword = Session["Pass"].ToString();
-        string GetRegisteredUsersQuery = "select UserName from tbl_users";
+        string GetRegisteredUsersQuery = "select UserName from tbl_users where EnrollNo <> '" + UserEnrollNo + "' and Badge='Student'";
             string[] ColumnName = { "UserName", "EnrollNo" };
             RegisteredUsers = conc.GetAllFromColumn(GetRegisteredUsersQuery, ColumnName);
 

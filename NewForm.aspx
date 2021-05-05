@@ -26,16 +26,8 @@
     />
     <meta name="og:url" content="https://web.whatsapp.com/" />
     <meta name="og:title" content="WhatsApp Web" />
-    <meta
-      name="og:image"
-      content="https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="194x194"
-      href="https://web.whatsapp.com/apple-touch-icon.png"
-      type="image/png"
-    />
+    
+    
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
 
@@ -131,7 +123,7 @@
             $('#classmates').click( function () {
                 selectedfield = 'c';
                
-                    chatHub.server.loadRegisteredUsers();
+                chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
 
 
                 });
@@ -156,7 +148,7 @@
                     if (this.value == 'Classmates') {
                     /*alert(this.value);*/
                         selectedfield = 'c';
-                       chatHub.server.loadRegisteredUsers();
+                        chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
                     }
                     if (this.value == 'Teachers') {
                     /*alert(this.value);*/
@@ -638,8 +630,8 @@ html[dir=ltr] ._3QfZd {
     height:40px;
 }
 
-
-       /* .darkable{
+ /*
+        .darkable{
             background-color:black;
             color:white;
         }

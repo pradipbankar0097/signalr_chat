@@ -5,12 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>SignalR Chat : Register</title>
-    <link href="Content/bootstrap.css" rel="stylesheet" />
-    <link href="Content/style.css" rel="stylesheet" />
-    <link href="Content/icheck-bootstrap.css" rel="stylesheet" />
-    <link href="Content/font-awesome.css" rel="stylesheet" />
-    <script src="Scripts/jquery-3.2.1.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="login/fonts/material-icon/css/material-design-iconic-font.min.css"/>
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="login/css/style.css"/>
+
     <script type="text/javascript">
         $(function () {
             $("#Badge").change(function () {
@@ -40,15 +39,21 @@
     </script>
 </head>
 <body class="hold-transition register-page">
-    <form id="form1" runat="server">
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Register</h2>
+    <form id="form1" class="register-form" runat="server">
 
         <div class="register-box">
-            <div class="register-logo">
-                <a href="Login.aspx"><b>SignalR </b>Chat App</a>
-            </div>
-
-            <div class="register-box-body">
-                <p class="login-box-msg">Register a new membership</p>
+            
+            <div class="register-box-body" style="font-size:20px;">
+                
 
 
                 <div class="form-group has-feedback">
@@ -118,30 +123,36 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck-primary">
-
-                            <input type="checkbox" id="chkTerms" required="required" runat="server" />
-                            <label for="chkTerms">I agree to the </label>
-                            <a href="#">terms</a>
-                        </div>
-
-                    </div>
+                    
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="btnRegister" runat="server" onserverclick="btnRegister_ServerClick">Register</button>
+                        <button type="submit" class="form-submit" id="btnRegister" runat="server" onserverclick="btnRegister_ServerClick">Register</button>
                     </div>
                     <!-- /.col -->
                 </div>
 
-                <a href="Login.aspx" class="text-center">I already have an account</a>
-
+                
                 <!-- /.form-box -->
             </div>
         </div>
     </form>
 
+                </div>
+                    <div class="signup-image">
+                        <h2 class="form-title">ChatHub-GECA</h2>
+                        <figure><img src="login/images/signin-image.jpg" alt="sing up image"/></figure>
+                        <a href="Login.aspx" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
    <%-- <script src="Scripts/jquery-1.9.1.min.js"></script>--%>
     
+
+
+        </div>
+
+    <script src="login/vendor/jquery/jquery.min.js"></script>
+    <script src="login/js/main.js"></script>
 </body>
 </html>

@@ -4,50 +4,61 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>SignalR Chat : Login</title>
-    <link href="Content/bootstrap.css" rel="stylesheet" />
-    <link href="Content/style.css" rel="stylesheet" />
-    <link href="Content/font-awesome.css" rel="stylesheet" />
-    <link href="Content/icheck-bootstrap.css" rel="stylesheet" />
+    <title>Login : ChatHub-GECA</title>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="login/fonts/material-icon/css/material-design-iconic-font.min.css"/>
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="login/css/style.css"/>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page darkable" style="background-color:rgb(255 251 210)">
 -
-    <form id="form1" runat="server">
-        <div class="login-box">
-            <div class="login-logo">
-                <a href="Login.aspx"><b>SignalR </b>Chat App</a>
-            </div>
-            <!-- /.login-logo -->
-            <div class="login-box-body">
-                <p class="login-box-msg">Please Login to Proceed</p>
-                <div class="form-group has-feedback">
-                    <input type="email" id="txtEmail" class="form-control" placeholder="Email" required="required" runat="server" />
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="password" id="txtPassword" class="form-control" placeholder="Password" required="required" runat="server" autocomplete="off" />
-                    <span class="fa fa-lock form-control-feedback"></span>
-                </div>
-                <div class="row">
-                  
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <asp:Button ID="btnSignIn" runat="server" OnClick="btnSignIn_Click" Text="Login" CssClass="btn btn-success btn-block btn-flat" /><br />
 
+
+<div class="main">
+
+     <!-- Sing in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="login/images/signin-image.jpg" alt="sing up image"/></figure>
+                        <a href="Register.aspx" class="signup-image-link">Create an account</a>
                     </div>
 
-                      <div class="col-xs-8">
-                        <a href="Register.aspx" class="btn btn-primary btn-block btn-flat">New User - Registration</a>
-
+                    <div class="signin-form">
+                        <h2 class="form-title">Login : ChatHub-GECA</h2>
+                        <form method="POST" class="register-form" id="form1" runat="server">
+                            <div class="form-group">
+                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                 <input type="email" id="txtEmail" class="form-control" placeholder="Email" required="required" runat="server" />
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" id="txtPassword" class="form-control" placeholder="Password" required="required" runat="server" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                            </div>
+                            <div class="form-group form-button">
+                                <asp:Button ID="btnSignIn" runat="server" OnClick="btnSignIn_Click" Text="Login" CssClass="form-submit" />
+                            </div>
+                        </form>
+                        
                     </div>
-                    <!-- /.col -->
                 </div>
-           
-               
             </div>
-            <!-- /.login-box-body -->
-        </div>
-    </form>
+        </section>   
+
+</div>
+    <!-- JS -->
+    <script src="login/vendor/jquery/jquery.min.js"></script>
+    <script src="login/js/main.js"></script>
+
+
+    
     <script src="plugins/jquery-1.9.1.min"></script>
     <script src="plugins/bootstrap.min.js"></script>
     

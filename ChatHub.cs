@@ -36,13 +36,13 @@ namespace SignalRChat
 
                 //send to caller
                 Clients.Caller.onConnected(id, userName,userEnrollNo);
-                loadRegisteredUsers();
+                loadRegisteredUsers(userEnrollNo);
              
             }
         }
-        public void loadRegisteredUsers()
+        public void loadRegisteredUsers(string enrollno)
         {
-            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users";
+            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users where EnrollNo <> '"+enrollno+"' and Badge='Student'";
             RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
             Clients.Caller.loadRegisteredUsers(RegisteredUsers);
 
@@ -90,7 +90,7 @@ namespace SignalRChat
        
         public string GetUserName(string enroll)
         {
-            loadRegisteredUsers();
+            loadRegisteredUsers(enroll);
             string rstr = "";
             for (int i = 0; i < RegisteredUsers.Count; i++)
             {

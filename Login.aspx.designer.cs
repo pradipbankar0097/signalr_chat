@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SignalRChat {
-    
-    
-    public partial class Login {
-        
+namespace SignalRChat
+{
+
+
+    public partial class Login
+    {
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace SignalRChat {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// txtEmail control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace SignalRChat {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtEmail;
-        
+
         /// <summary>
         /// txtPassword control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace SignalRChat {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtPassword;
-        
+
         /// <summary>
         /// btnSignIn control.
         /// </summary>
