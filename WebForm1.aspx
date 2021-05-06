@@ -46,7 +46,7 @@
     <script src="Scripts/jquery-ui-1.12.1.js"></script>
     <%-- <script type="text/javascript" src="js\registerclientmethods"></script>
    <script type="text/javascript" src="js\registerevents"></script>--%>
-
+    <!--
    
     <script type="text/javascript" src="js\JavaScript.js"></script>
     <script type="text/javascript">
@@ -236,12 +236,14 @@
 
 
     </script>
-        
+
+-->
+
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
-          <div class="back-container">
+            <div class="back-container">
                 <div class="container-fluid front-container">
                     <div class="back-top"></div>
                     <div class="back-main"></div>
@@ -255,7 +257,7 @@
                     <div class="row ">
                         <ul class="nav navbar-nav panel">
 
-                            
+
                             <li><a id="classmates" runat="server" href="#">Classmates</a></li>
                             <li><a id="teachers" runat="server" href="#">Teachers</a></li>
                             <li><a id="groups" runat="server" href="#">Groups</a></li>
@@ -267,15 +269,15 @@
                                 Launch demo modal
                             </button>--%>
                         </ul>
-                        
+
                         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                   <table class="table table-hover">
-                                    <tbody id="ntf" >
-                                        <%--user/groups list are loaded here dyanmically--%>
-                                    </tbody>
-                                </table>
+                                    <table class="table table-hover">
+                                        <tbody id="ntf">
+                                            <%--user/groups list are loaded here dyanmically--%>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -422,7 +424,7 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <input type="text" id="txtMessage" />
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" id="btnSendMsg"/>
+                <input type="button" id="btnSendMsg" />
                                 </div>
                                 <div class="col-sm-8">
                                 </div>

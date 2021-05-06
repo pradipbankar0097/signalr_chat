@@ -108,6 +108,7 @@ namespace SignalRChat
 
         public List<string> GetRow(string Query)
         {
+            con.Open();
             List<string> RetVal = new List<string>();
             cmd = new MySqlCommand(Query, con);
             sdr = cmd.ExecuteReader();

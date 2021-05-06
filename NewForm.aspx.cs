@@ -22,18 +22,19 @@ namespace SignalRChat
         public string UserEnrollNo = "admin";
         public string UserDepartment = "admin";
         public string UserImage = "/images/DP/dummy.png";
-        protected string UploadFolderPath = "/Uploads/";
-
+        protected string UploadFolderPath = "~/Uploads/";
+        
         private string fromUser = "";
         public string UserEmail = "";
-
+        public string UserPassword;
         public List<List<string>> RegisteredUsers = new List<List<string>>();
        
         ConnClass conc = new ConnClass();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string GetRegisteredUsersQuery = "select UserName from tbl_users";
+            UserPassword = Session["Pass"].ToString();
+        string GetRegisteredUsersQuery = "select UserName from tbl_users where EnrollNo <> '" + UserEnrollNo + "' and Badge='Student'";
             string[] ColumnName = { "UserName", "EnrollNo" };
             RegisteredUsers = conc.GetAllFromColumn(GetRegisteredUsersQuery, ColumnName);
 
@@ -54,6 +55,7 @@ namespace SignalRChat
             //    ;
 
             this.Header.DataBind();
+            
         }
 
         public void GetUserImage(string Username)
@@ -69,29 +71,14 @@ namespace SignalRChat
 
 
         }
-        
-        public void Attach(params object[] list)
-        {
-
-            for(int i=0;i<list.Length;i++)
-            {
-                Console.WriteLine(list[i] + "");
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                sb.Append("alert('");
-                sb.Append(list[i] + " ");
-                sb.Append("');");
-
-            }
-            //string filename = System.IO.Path.GetFileName(.fileName);
-            ////atch.SaveAs(Server.MapPath(this.UploadFolderPath) + filename);
-        }
-
-        public void Attachment()
+        protected void UpdateDetails_Click(object sender, EventArgs e)
         {
             
+            string query = "update tbl_users set UserName='" + TextBox8.Text + "',Password='" + TextBox9.Text + "',Email='" + TextBox10.Text + "' where EnrollNo='" + UserEnrollNo + "' ";
+            //conc.ExecuteQuery(query);
+
+            conc.ExecuteQuery(query);
         }
-
-
-
+        
     }
 }

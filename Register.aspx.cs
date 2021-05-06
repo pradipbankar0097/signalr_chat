@@ -48,11 +48,17 @@ namespace SignalRChat
                     {
                         if (ConnC.ExecuteQuery(Query))
                         {
-                            string CreateTableQuery = "create table groupsof_" + EnrollNo.Value + "(GroupID varchar(40))";
-                            string InsertGroupQuery = "insert into " + "groupsof_" + EnrollNo.Value + "(GroupID) values('" + year.Text + Department.Text + "')";
+                            string CreateTableQuery = "create table if not exists groupsof_" + EnrollNo.Value + "(GroupID varchar(40))";
                             ConnC.ExecuteQuery(CreateTableQuery);
-                            ConnC.ExecuteQuery(InsertGroupQuery);
-                            ConnC.AddToGroup(year.Text + Department.Text, EnrollNo.Value);
+                            if (Badge.Text == "Student" || Badge.Text == "CR")
+                            {
+                                
+                                string InsertGroupQuery = "insert into " + "groupsof_" + EnrollNo.Value + "(GroupID) values('" + year.Text + Department.Text + "')";
+                                
+                                ConnC.ExecuteQuery(InsertGroupQuery);
+
+                                ConnC.AddToGroup(year.Text + Department.Text, EnrollNo.Value);
+                            }
                             ScriptManager.RegisterStartupScript(this, GetType(), "Message", "alert('Congratulations!! You have successfully registered..');", true);
                             
                             Response.Redirect("Login.aspx");
@@ -104,5 +110,20 @@ namespace SignalRChat
             return false;
         } //IsValidImageFormat
 
+        protected void Badge_SelectedIndexChanged(object sender, EventArgs e)
+        {
+         
+            
+        }
+
+        protected void year_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Department_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

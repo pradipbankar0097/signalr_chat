@@ -12,7 +12,7 @@ lang="en">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>WhatsApp</title>
+    <title><%=Session["UserName"] %></title>
     <meta name="viewport" content="width=device-width" />
     <meta name="google" content="notranslate" />
     <meta name="format-detection" content="telephone=no" />
@@ -24,15 +24,9 @@ lang="en">
         content="Quickly send and receive WhatsApp messages right from your computer." />
     <meta name="og:url" content="https://web.whatsapp.com/" />
     <meta name="og:title" content="WhatsApp Web" />
-    <meta
-        name="og:image"
-        content="https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png" />
-    <link
-        rel="apple-touch-icon"
-        sizes="194x194"
-        href="https://web.whatsapp.com/apple-touch-icon.png"
-        type="image/png" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -67,7 +61,11 @@ lang="en">
     <script type="text/javascript">
 
 
+        
         function registerEvents(chatHub) {
+
+           
+
 
             $(document).ready(function () {
                 var selectedfield = 'c';
@@ -84,70 +82,71 @@ lang="en">
 
                 }
 
-
-
-
-                // Send Button Click Event
-                $('#btnSendMsg').click(function () {
+    
+                
+          
+   // Send Button Click Event
+            $('#btnSendMsg').click(  function () {
 
                     var msg = $("#txtMessage").html();
                     $("#txtMessage").html('');
 
-                    if (msg.length > 0) {
-                        var fromUserName = name;
-                        var fromuserEnroll = $('#hdUserEnroll').val();
-                        var toUserEnroll = $('#hdtoUserEnroll').val();
+                if (msg.length > 0) {
+                    var fromUserName = name;
+                    var fromuserEnroll = $('#hdUserEnroll').val();
+                    var toUserEnroll = $('#hdtoUserEnroll').val();
+                
+                    
+                    switch (selectedfield) {
+                        case 'c':
+                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            console.log('server request sent');
+                            break;
+                        case 't':
+                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            break;
+                        case 'g':
+                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId , msg);
+                            break;
+                        
+                        default:
+                            alert('Select a field');
+                    };
+                 
+                  //  chatHub.server.sendMessageToAll(userName, msg);
+                    
+                }
+            });
+     
+            $('#classmates').click( function () {
+                selectedfield = 'c';
+               
+                chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
 
-                        alert(toGroupId);
-                        switch (selectedfield) {
-                            case 'c':
-                                chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                                console.log('server request sent');
-                                break;
-                            case 't':
-                                chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                                break;
-                            case 'g':
-                                chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId, msg);
-                                break;
 
-                            default:
-                                alert('Select a field');
-                        };
-
-                        //  chatHub.server.sendMessageToAll(userName, msg);
-
-                    }
                 });
-
-                $('#classmates').click(function () {
-                    selectedfield = 'c';
-                    chatHub.server.loadRegisteredUsers();
-
-
-                });
-                $('#teachers').click(function () {
+                $('#teachers').click(  function () {
                     selectedfield = 't';
                     chatHub.server.loadRegisteredTeachers();
 
 
                 });
 
-                /*$('#groups').onchange(function () {
-                  */
-                var selectBox = document.getElementById("select_user_type");
-                selectBox.addEventListener('change', changeFunc);
-                function changeFunc() {
+           /*$('#groups').onchange(function () {
+             */   
+               var selectBox = document.getElementById("select_user_type");
+               selectBox.addEventListener('change', changeFunc);
+               async  function changeFunc() {
 
                     if (this.value == 'Groups') {
-                        /*alert(this.value);*/
-                        selectedfield = 'g';
-                        chatHub.server.loadRegisteredGroups("<%=Session["UserEnrollNo"].ToString()%>");
+                    /*alert(this.value);*/
+                   selectedfield = 'g';
+                        chatHub.server.loadRegisteredGroups(enrollno);
                     }
                     if (this.value == 'Classmates') {
                         /*alert(this.value);*/
                         selectedfield = 'c';
-                        chatHub.server.loadRegisteredUsers();
+                        chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
                     }
                     if (this.value == 'Teachers') {
                         /*alert(this.value);*/
@@ -158,8 +157,8 @@ lang="en">
                 //});
 
 
-                $('.rusers').mouseenter(function () {
-                    var i;
+     $('.rusers').mouseenter(  function () {
+         var i;
 
                     var ide = this.children;
                     if (true) {
@@ -228,15 +227,26 @@ lang="en">
                 });
 
 
-                $('#create-ntf').click(function () {
+     $('#create-ntf').click( function () {
 
                     var msg = $("#ntf-msg").val();
                     $("#ntf-msg").val('');
 
-                    if (msg.length > 0) {
-                        var creator = name;
-                        var creatorEnrollNo = enrollno;
-                        var toDate = $('#to-date').val();
+         if (msg.length > 0) {
+             var creator = name;
+             var creatorEnrollNo = enrollno;
+             var toDate = $('#to-date').val();
+             console.log('creating notification');
+             function sleep(milliseconds) {
+                 const date = Date.now();
+                 let currentDate = null;
+                 do {
+                     currentDate = Date.now();
+                     console.log(currentDate.toString());
+                 } while (currentDate - date < milliseconds);
+             }
+             sleep(10000);
+             console.log('notification created');
 
 
                         chatHub.server.createNotification(msg, creator, creatorEnrollNo, toDate);
@@ -244,26 +254,31 @@ lang="en">
                     }
                 });
 
+                $('#self_pp_sm').click(function () {
 
-
-
-                // Send Message on Enter Button
-                $("#txtMessage").keypress(function (e) {
-                    if (e.which == 13) {
-                        $('#btnSendMsg').click();
-                    }
+                    console.log('success');
+                    chatHub.server.getUserData("<%=Session["UserEnrollNo"].ToString()%>");
                 });
 
 
-                $('#exampleModal').on('show.bs.modal', function (event) {
-                    var button = $(event.relatedTarget) // Button that triggered the modal
-                    //var recipient = button.data('whatever') // Extract info from data-* attributes
-                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                    var modal = $(this)
-                    modal.find('.modal-title').text('New Notification');
-                    //modal.find('.modal-body input').val(recipient)
-                });
+                
+     // Send Message on Enter Button
+     $("#txtMessage").keypress(function (e) {
+         if (e.which == 13) {
+             $('#btnSendMsg').click();
+         }
+     });
+
+
+     $('#exampleModal').on('show.bs.modal',  function (event) {
+         var button = $(event.relatedTarget) // Button that triggered the modal
+         //var recipient = button.data('whatever') // Extract info from data-* attributes
+         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+         var modal = $(this)
+         modal.find('.modal-title').text('New Notification');
+         //modal.find('.modal-body input').val(recipient)
+     });
 
 
 
@@ -536,43 +551,41 @@ lang="en">
             background-color: white;
         }
 
-        .urow {
-            transition: box-shadow 0.09s;
-            display: flex;
-            flex-direction: row;
-            height: 60px;
-            border-bottom-color: black;
-            border-bottom-width: 5px;
-            border-radius: 0px;
-            padding-top: 10px;
-            padding-left: 5px;
-        }
-
-            .urow:hover {
-                box-shadow: 0 0 11px rgb(136, 136, 136);
-                /* color: ;  */
-            }
-
-        ._3QfZd {
-            position: relative;
-            top: 0;
-            display: flex;
-            width: 80%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        html[dir=ltr] ._3QfZd {
-            left: 0;
-            background-position: 0 0
-        }
-
-        @media screen and (min-width:1441px) {
-            .app-wrapper-web ._3QfZd {
-                top: 19px;
-                width: 1000px;
-                height: 90%;
-            }
+      .urow{
+        transition: box-shadow 0.09s;
+        display: flex;
+        flex-direction: row;
+        height: 60px;
+        border-bottom-color: black;
+        border-bottom-width: 5px;
+        border-radius: 0px;
+        padding-top: 10px;
+        padding-left: 5px;
+      }
+      .urow:hover{
+        box-shadow: 0 0 11px rgb(136, 136, 136);
+        /* color: ;  */
+      }
+        
+._3QfZd {
+  position: relative;
+  top: 0;
+  display: flex;
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+}
+html[dir=ltr] ._3QfZd {
+    left: 10vw;
+    background-position: 0 0;
+    
+}
+@media screen and (min-width:1441px) {
+    .app-wrapper-web ._3QfZd {
+        top: 19px;
+        width: 1000px;
+        height: 90%;
+    }
 
             html[dir] .app-wrapper-web ._3QfZd {
                 box-shadow: 0 1px 1px 0 rgba(var(--shadow-rgb),.06),0 2px 5px 0 rgba(var(--shadow-rgb),.2)
@@ -731,11 +744,14 @@ lang="en">
             box-shadow: 0 0 11px rgb(136, 136, 136);
         }
 
-        .fa-bell:before {
-            width: 40px;
-            height: 40px;
-        }
-        /* .darkable{
+ .fa-bell:before {
+    
+    width:40px;
+    height:40px;
+}
+
+ /*
+        .darkable{
             background-color:black;
             color:white;
         }
@@ -769,8 +785,9 @@ lang="en">
         href="https://web.whatsapp.com/img/favicon_c5088e888c97ad440a61d247596f88e5.png"
         src="/img/favicon_c5088e888c97ad440a61d247596f88e5.png" />
 
-</head>
-<body class="web">
+  </head>
+  <body class="web">
+      <form id="form1" runat="server">
     <script>
         try {
             var systemThemeDark,
@@ -785,10 +802,10 @@ lang="en">
         } catch (e) { }
     </script>
     <div id="app">
-        <div tabindex="-1" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
-            <span></span><span></span><span></span><span></span><span></span>
-
-            <!-- hidden data -->
+      <div tabindex="-1" id="for_background" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
+        <span></span><span></span><span></span><span></span><span></span>
+        
+          <!-- hidden data -->
             <input id="hdId" type="hidden" />
             <input id="PWCount" type="hidden" value="info" />
             <input id="hdUserEnroll" type="hidden" />
@@ -796,179 +813,296 @@ lang="en">
 
             <div style="width: 1396px; height: 100vh; display: flex; flex-direction: column;">
 
+              
+              
 
 
+        <div tabindex="-1" class="_3QfZd two">
+          
+          <div class="_3-dtC"></div>
+          <div class="Akuo4">
+            <div class="_1Flk2 _2DPZK"></div>
+            <div class="_1Flk2 _1sFTb"><span class="_2zn9Y"></span></div>
+            <div class="_1Flk2 _3xysY"><span class="_2zn9Y"></span></div>
+          </div>
+          
+          <div class="_1Flk2 _2DPZK">
+            <div id="side" class="_3U29Q">
+              <header class="chat-list-header darkable _1R3Un">
+                  <div  class="profile-header " style="display: flex; flex-direction: row;">
+                      <div id="self_pp_sm" class="pp-sm-box" style="display: flex; justify-content: center;">
+                          <img  src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
+                      </div>
+                      <div>
+                          <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Enter Name "/>
+                          <script>
+                              function searchuser() {
+                                  
+                                  var input, filter, ul, li, a, i, txtValue;
+                                  input = document.getElementById('user_search');
+                                  filter = input.value.toUpperCase();
+                                  ul = document.getElementById("listarea");
+                                  li = ul.getElementsByClassName('urow');
+                                  for (i = 0; i < li.length; i++) {
+                                      a = li[i].getElementsByClassName('uname')[0];
+                                      txtValue = a.textContent || a.innerText;
+                                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                          li[i].style.display = "";
+                                      } else {
+                                          li[i].style.display = "none";
+                                      }
+                                  }
+                              }
+                          </script>
+                      </div>
+                  </div>
+                  <div style="display:flex;height:40px;width:90%; flex-direction:row-reverse;">
+                      <div id="notification" style="display:flex; height:40px; width:40px; ">
+                         <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons"><path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z"/><path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z"/><path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z"/><path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z"/><path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z"/><path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z"/></svg>
+                      </div>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">+</button>
+                      </div>
+                   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <table class="table table-hover">
+                                        <tbody id="ntf">
+                                            <%--user/groups list are loaded here dyanmically--%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
 
-                <div tabindex="-1" class="_3QfZd two">
-
-                    <div class="_3-dtC"></div>
-                    <div class="Akuo4">
-                        <div class="_1Flk2 _2DPZK"></div>
-                        <div class="_1Flk2 _1sFTb"><span class="_2zn9Y"></span></div>
-                        <div class="_1Flk2 _3xysY"><span class="_2zn9Y"></span></div>
-                    </div>
-
-                    <div class="_1Flk2 _2DPZK">
-                        <div id="side" class="_3U29Q">
-                            <header class="chat-list-header darkable _1R3Un">
-                                <div class="profile-header " style="display: flex; flex-direction: row;">
-                                    <div class="pp-sm-box" style="display: flex; justify-content: center;">
-                                        <img src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
+                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
+                                    <div class="modal-body1">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+
+
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+
+                                            <div class="form -group">
+                                                <label for="to-date" class="col-form-label">ExpireDate:</label>
+                                                <input type="datetime-local" class="form-control" id="to-date" />
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Message:</label>
+                                                <textarea class="form-control" id="ntf-msg"></textarea>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
+                                    </div>
                                 </div>
-                                <div style="display: flex; height: 40px; width: 60%; flex-direction: row-reverse;">
-                                    <i class="fas fa-bell" style="height: 40px; width: 40px;"></i>
-                                </div>
+                            </div>
+                        </div>
 
                             </header>
 
 
                             <div class="search-in-users" style="display: flex; flex-direction: row; width: 100%; height: 50px; background-color: #e8e8e8">
 
-                                <div class="ddlist" style="display: flex; height: 100%; width: 40%; background-color: white; border-radius: 10px; padding-left: 20px; font-size: 20px;">
+                  <div class="ddlist" style="display:flex; height:40px;width:40%; background-color:white;border-radius:10px;padding-left:20px;font-size:20px;">
 
-                                    <select id="select_user_type" name="D1" onchange="changeFunc();">
-                                        <option id="classmates" class="user-option">Classmates</option>
-                                        <option id="teachers" class="user-option">Teachers</option>
-                                        <option id="groups" class="user-option">Groups</option>
-
-                                    </select>
+                      <select id="select_user_type" name="D1" >
+                          <option id="classmates" class="user-option">Classmates</option>
+                          <option id="teachers" class="user-option">Teachers</option>
+                          <option id="groups" class="user-option">Groups</option>
+                          
+                      </select>
 
                                 </div>
 
-                            </div>
-                            <div class="_1C2Q3 F-0gY" id="pane-side">
-                                <div tabindex="-1" data-tab="4">
-                                    <div class="" style="pointer-events: auto">
-                                        <div id="listarea"
-                                            class="rusers JnmQF _3QmOg" style="height: 1000px;">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div hidden="" style="display: none"></div>
-                                <div class="_3q7pL"></div>
-                            </div>
-                        </div>
+              </div>
+              <div class="_1C2Q3 F-0gY" id="pane-side">
+                <div tabindex="-1" data-tab="4">
+                  <div class="" style="pointer-events: auto">
+                      
+                      <div id="list_area" style="width:100%;height:1000px; background-color:aqua; display:none;">
+                          
+                            <asp:TextBox ID="TextBox8" placeholder="new username" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox9" placeholder="new password" runat="server"></asp:TextBox>
+                          
+                            <asp:TextBox ID="TextBox10" placeholder="new email" runat="server"></asp:TextBox>
+                          <asp:Button ID="UpdateDetails" runat="server" OnClick="UpdateDetails_Click" Text="Button" />
+                       &nbsp;
+                      </div>
+                      
+                    <div id="listarea"
+                      class="rusers JnmQF _3QmOg"   style="height: 1000px;">
+                   
+                      
                     </div>
-                    <div class="_1Flk2 _1sFTb">
-                        <div id="main" class="_3AUV4">
-                            <div
-                                class="IeYBo"
-                                data-asset-chat-background-light="true"
-                                style="opacity: 0.06">
-                            </div>
-                            <header class="_1-qgF chat-header darkable" style="border-left-width: 2px; border-left-color: rgb(147 147 147);">
-                                <div class="fBf_N" role="button">
-                                    <div class="-y4n1" style="height: 40px; width: 40px">
-                                        <div class="_27MZN">
-                                            <span
-                                                data-testid="default-user"
-                                                data-icon="default-user"
-                                                class="">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 212 212"
-                                                    width="212"
-                                                    height="212">
-                                                    <path
-                                                        fill="#DFE5E7"
-                                                        class="background"
-                                                        d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z">
-                                                    </path>
-                                                    <path
-                                                        fill="#FFF"
-                                                        class="primary"
-                                                        d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z">
-                                                    </path></svg></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="_2uaUb" role="button">
-                                    <div class="z4t2k">
-                                        <div class="_2KQyF">
-                                            <span id="spanUser1"
-                                                dir="auto"
-                                                title="Pushkar Joshi GECA"
-                                                class="darkable _35k-1 _1adfa _3-8er">Pushkar Joshi GECA</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="_1IeOz">
-                                    <div class="_1ljzS pnYZD">
-                                        <div class="_2n-zq">
-                                            <div
-                                                aria-disabled="false"
-                                                role="button"
-                                                tabindex="0"
-                                                data-tab="8"
-                                                title="Search…"
-                                                aria-label="Search…">
-                                                <span
-                                                    data-testid="search-alt"
-                                                    data-icon="search-alt"
-                                                    class="">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24"
-                                                        width="24"
-                                                        height="24">
-                                                        <path
-                                                            fill="currentColor"
-                                                            d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z">
-                                                        </path></svg></span>
-                                            </div>
-                                            <span></span>
-                                        </div>
-                                        <div class="_2n-zq">
-                                            <div
-                                                aria-disabled="false"
-                                                role="button"
-                                                tabindex="0"
-                                                data-tab="8"
-                                                title="Menu"
-                                                aria-label="Menu">
-                                                <span data-testid="menu" data-icon="menu" class="">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24"
-                                                        width="24"
-                                                        height="24">
-                                                        <path
-                                                            fill="currentColor"
-                                                            d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z">
-                                                        </path></svg></span>
-                                            </div>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </header>
-                            <span class="_1C6f8"></span>
-                            <div class="_1C6f8"><span></span></div>
-                            <div class="_2wjK5">
-                                <div class="_3wXwX copyable-area">
-                                    <span></span><span></span>
-                                    <div class="_1gL0z chat-back-screen darkable" tabindex="0">
-                                        <div class="_2VvGi"></div>
-                                        <div class="_2hDby">
-                                            <div class="_3M4BR" title="load earlier messages…">
-                                                <span data-testid="refresh" data-icon="refresh" class="">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 24 24"
-                                                        width="24"
-                                                        height="24">
-                                                        <path
-                                                            fill="currentColor"
-                                                            d="M17.6 6.4C16.2 4.9 14.2 4 12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1c-.8 2.3-3 4-5.6 4-3.3 0-6-2.7-6-6s2.7-6 6-6c1.7 0 3.1.7 4.2 1.8L13 11h7V4l-2.4 2.4z">
-                                                        </path></svg></span>
-                                            </div>
-                                        </div>
-                                        <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
-                                            <!-- msg list area -->
-
+                  </div>
+                </div>
+                <div hidden="" style="display: none"></div>
+                <div class="_3q7pL"></div>
+              </div>
+            </div>
+          </div>
+          <div class="_1Flk2 _1sFTb">
+            <div id="main" class="_3AUV4">
+              <div
+                class="IeYBo"
+                data-asset-chat-background-light="true"
+                style="opacity: 0.06"
+              ></div>
+              <header class="_1-qgF chat-header darkable" style="border-left-width:2px; border-left-color:rgb(147 147 147);">
+                <div class="fBf_N" role="button">
+                  <div class="-y4n1" style="height: 40px; width: 40px">
+                    <div class="_27MZN">
+                      <span
+                        data-testid="default-user"
+                        data-icon="default-user"
+                        class=""
+                        ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 212 212"
+                          width="212"
+                          height="212"
+                        >
+                          <path
+                            fill="#DFE5E7"
+                            class="background"
+                            d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"
+                          ></path>
+                          <path
+                            fill="#FFF"
+                            class="primary"
+                            d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"
+                          ></path></svg
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="_2uaUb" role="button">
+                  <div class="z4t2k">
+                    <div class="_2KQyF">
+                      <span id="spanUser1"
+                        dir="auto"
+                        title="Pushkar Joshi GECA"
+                        class="darkable _35k-1 _1adfa _3-8er"
+                        >Pushkar Joshi GECA</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="_1IeOz">
+                  <div class="_1ljzS pnYZD">
+                    <div class="_2n-zq">
+                      <div
+                        aria-disabled="false"
+                        role="button"
+                        tabindex="0"
+                        data-tab="8"
+                        title="Search…"
+                        aria-label="Search…"
+                      >
+                        <span
+                          data-testid="search-alt"
+                          data-icon="search-alt"
+                          class=""
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"
+                            ></path></svg
+                        ></span>
+                      </div>
+                      <span></span>
+                    </div>
+                    <div class="_2n-zq">
+                      <div
+                        aria-disabled="false"
+                        role="button"
+                        tabindex="0"
+                        data-tab="8"
+                        title="Menu"
+                        aria-label="Menu"
+                      >
+                        <span data-testid="menu" data-icon="menu" class=""
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"
+                            ></path></svg
+                        ></span>
+                      </div>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </header>
+              <span class="_1C6f8"></span>
+              <div class="_1C6f8"><span></span></div>
+              <div class="_2wjK5">
+                <div class="_3wXwX copyable-area">
+                  <span></span><span></span>
+                  <div class="_1gL0z chat-back-screen darkable" tabindex="0">
+                    <div class="_2VvGi"></div>
+                    <div class="_2hDby">
+                      <div class="_3M4BR" title="load earlier messages…">
+                        <span data-testid="refresh" data-icon="refresh" class=""
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M17.6 6.4C16.2 4.9 14.2 4 12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1c-.8 2.3-3 4-5.6 4-3.3 0-6-2.7-6-6s2.7-6 6-6c1.7 0 3.1.7 4.2 1.8L13 11h7V4l-2.4 2.4z"
+                            ></path></svg
+                        ></span>
+                      </div>
+                    </div>
+                    <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
+                      <!-- msg list area -->
+                        
 
 
 
@@ -1132,5 +1266,6 @@ lang="en">
         </div>
         <div hidden="" style="display: none"></div>
     </div>
-</body>
+      </form>
+  </body>
 </html>

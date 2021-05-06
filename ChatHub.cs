@@ -7,21 +7,21 @@ using Microsoft.AspNet.SignalR;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
-
-
+using System.Threading;
+using System.Threading.Tasks;
 namespace SignalRChat
 {
     public class ChatHub : Hub
     {
         static List<Users> ConnectedUsers = new List<Users>();
-        static List<Messages> CurrentMessage = new List<Messages>();
-
         public List<List<string>> Notifications = new List<List<string>>();
         public List<List<string>> RegisteredUsers = new List<List<string>>();
-        public List<List<string>> RegisterdGroups = new List < List<string> >();
+        public List<List<string>> RegisterdGroups = new List < List<string>>();
+        public List<List<string>> RegisteredUsers1 = new List<List<string>>();
+        public List<List<string>> RegisteredTeachers = new List<List<string>>();
         ConnClass ConnC = new ConnClass();
 
-        public void Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
+        public  void  Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
         {
             var id = Context.ConnectionId;
 
@@ -29,22 +29,32 @@ namespace SignalRChat
 
             if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
             {
-                string UserImg = GetUserImage(userName);
+                string UserImg =  GetUserImage(userName);
                 string logintime = DateTime.Now.ToString();
-
-                ConnectedUsers.Add(new Users { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
+                if(userBadge.Equals("Student"))
+                ConnectedUsers.Add(new Student { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
+                else
+                ConnectedUsers.Add(new Teacher { ConnectionId = id, UserName = userName, UserImage = UserImg, LoginTime = logintime, Badge = userBadge, EnrollNo = userEnrollNo, Department = userDepartment, Email = userEmail });
 
                 //send to caller
                 Clients.Caller.onConnected(id, userName,userEnrollNo);
-                loadRegisteredUsers();
+                loadRegisteredUsers(userEnrollNo);
              
             }
         }
-        public void loadRegisteredUsers()
+        public void loadRegisteredUsers(string enrollno)
         {
-            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo FROM tbl_users";
+            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users where EnrollNo <> '"+enrollno+"' and Badge='Student'";
             RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
             Clients.Caller.loadRegisteredUsers(RegisteredUsers);
+
+        }
+        public void loadRegisteredUsers1()
+        {
+            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users";
+            RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
+            //Clients.Caller.loadRegisteredUsers(RegisteredUsers);
+
         }
         public void loadRegisteredGroups(string enrollno)
         {
@@ -58,7 +68,9 @@ namespace SignalRChat
         }
         public void loadRegisteredTeachers()
         {
-
+            string GetRegisteredTeachersQuery = "SELECT * from tbl_users where Badge<>'Student' and Badge<>'CR'";
+            RegisteredTeachers=ConnC.GetAllDataFromDB(GetRegisteredTeachersQuery,ConnC.con);
+            Clients.Client(Context.ConnectionId).loadRegisteredTeachers(RegisteredTeachers);
         }
 
         public void ShowNotification()
@@ -81,35 +93,15 @@ namespace SignalRChat
             Clients.All.ntfCreated();
         }
 
-        public void SendMessageToAll(string userName, string message, string time)
-        {
-            string UserImg = GetUserImage(userName);
-            // store last 100 messages in cache
-            AddMessageinCache(userName, message, time, UserImg);
-            Console.WriteLine("Method called.1");
+      
 
-            // Broad cast message
-            Clients.All.messageReceived(userName, message, time, UserImg);
-
-        }
-
-        private void AddMessageinCache(string userName, string message, string time, string UserImg)
-        {
-            CurrentMessage.Add(new Messages { UserName = userName, Message = message, Time = time, UserImage = UserImg });
-
-            if (CurrentMessage.Count > 100)
-                CurrentMessage.RemoveAt(0);
-
-        }
+       
 
         // Clear Chat History
-        public void clearTimeout()
-        {
-            CurrentMessage.Clear();
-        }
+       
         public string GetUserName(string enroll)
         {
-            loadRegisteredUsers();
+            loadRegisteredUsers1();
             string rstr = "";
             for (int i = 0; i < RegisteredUsers.Count; i++)
             {
@@ -128,7 +120,7 @@ namespace SignalRChat
         } 
         public string GetGroupName(string grpid,string enrollno)
         {
-            loadRegisteredGroups(enrollno);
+            loadRegisteredUsers1();
             string rstr = "";
             for (int i = 0; i < RegisterdGroups.Count; i++)
             {
@@ -147,7 +139,7 @@ namespace SignalRChat
         }
        
 
-        public string GetUserImage(string username)
+        public  string GetUserImage(string username)
         {
             string RetimgName = "images/dummy.png";
             try
@@ -217,49 +209,32 @@ namespace SignalRChat
             string table_name = "f" + arr[0] + "to" + arr[1];
 
             AddMessageTo(table_name, message, fromUserEnrollNo, toUserEnrollNo);
-            try
-            {
-                var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnrollNo);
-                Clients.Client(toUser.ConnectionId).method(fromUserName, fromUserEnrollNo, message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("User Not Online" + e.ToString());
-            }
+           
 
 
         }
 
-        public void SendPrivateMessages(string toUserId, string message)
+        
+        public  void sendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
         {
 
-            string fromUserId = Context.ConnectionId;
-
-            var toUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == toUserId);
-            var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == fromUserId);
-            if (toUser != null && fromUser != null)
-            {
-                string CurrentDateTime = DateTime.Now.ToString();
-                string UserImg = GetUserImage(fromUser.UserName);
-                // send to 
-                Clients.Client(toUserId).sendPrivateMessage(fromUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
-
-                // send to caller user
-                Clients.Caller.sendPrivateMessage(toUserId, fromUser.UserName, message, UserImg, CurrentDateTime);
-            }
-
-        } 
-        public void SendPrivateMessage(string fromUserName, string fromUserEnroll,string toUserEnroll , string message)
-        {
-
-          
+           
             if (toUserEnroll != null && fromUserEnroll != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();
                 
-                CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
-             
-               
+               CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
+                Clients.Client(Context.ConnectionId).addMessageToPrivateChat(message,fromUserName,fromUserEnroll,"time");
+                try
+                {
+                    var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnroll);
+                   Clients.Client(toUser.ConnectionId).method(fromUserName, fromUserEnroll, message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("User Not Online" + e.ToString());
+                }
+
             }
             else
             {
@@ -316,9 +291,54 @@ namespace SignalRChat
            
             
         }
+        public string GetUserBadge(string enrollno)
+        {
+            loadRegisteredUsers1();
+            string rstr = "";
+            for (int i = 0; i < RegisteredUsers.Count; i++)
+            {
+                for (int j = 0; j < RegisteredUsers[i].Count; j++)
+                {
+                    if (enrollno.Equals(RegisteredUsers[i][j]))
+                    {
+                        // Clients.All.alertMe(RegisteredUsers[i]);
+                        rstr = RegisteredUsers[i][2];
+                    }
+                }
+
+            }
+            return rstr;
+        }
+        public bool ValidateRequest(string FromEnroll, string ToEnroll)
+        {
+          string  fbadge=GetUserBadge(FromEnroll);
+            string tbadge = GetUserBadge(ToEnroll);
+            if(tbadge=="Principal")
+            {
+                if(fbadge=="Student")
+                {
+                    return false;
+                }
+            }
+            else if(tbadge=="HOD")
+            {
+                if(fbadge=="Student")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         
         public void SendMessageToTeacher(string fromUserName, string fromUserEnroll, string toUserEnroll, string message)
         {
+            if (!ValidateRequest(fromUserEnroll, toUserEnroll))
+            {
+             
+                Clients.Client(Context.ConnectionId).sendRequestFailed(fromUserEnroll, toUserEnroll);
+                return;
+            }
             if (toUserEnroll != null && fromUserEnroll != null)
             {
                 string CurrentDateTime = DateTime.Now.ToString();
@@ -330,7 +350,7 @@ namespace SignalRChat
             }
 
         }
-        public void AddMessageToGroup(string message, string fromUserEnroll, string toGroupID)
+        public void AddMessageToGroup(string message, string fromUserEnroll, string toGroupID,string datetime)
         {
             try
             {
@@ -338,7 +358,7 @@ namespace SignalRChat
                 string AddMessageToGroupQuery = "INSERT INTO `"+ toGroupID.ToLower()+"msgs` (`Time`, `Message`, `SenderEnrollNo`) VALUES(current_timestamp(), '"+message+"', '"+fromUserEnroll+"')";
                 ConnC.ExecuteQuery(AddMessageToGroupQuery, ConnC.groups_db);
                 
-                Clients.Caller.addMessageToGroupChat(message, GetUserName(fromUserEnroll));
+                Clients.Caller.addMessageToGroupChat(message, GetUserName(fromUserEnroll),datetime);
             }
             catch(Exception ee)
             {
@@ -350,7 +370,7 @@ namespace SignalRChat
         {
             if (toGroupID != null && fromUserEnroll != null)
             {
-                AddMessageToGroup(message, fromUserEnroll, toGroupID);
+                AddMessageToGroup(message, fromUserEnroll, toGroupID,DateTime.Now.ToString());
             }
             else
             {
@@ -393,5 +413,19 @@ namespace SignalRChat
 
 
         }
+        public void GetUserData(string enroll)
+        {
+            List<string> userdata = new List<string>();
+            string QueryForData = "select `UserName`, `Badge`, `EnrollNo`, `Department`, `Year`, `Email`, `Photo` from tbl_users where EnrollNo='"+enroll+"'";
+            userdata = ConnC.GetRow(QueryForData);
+            Clients.Caller.getUserData(userdata);
+        }
+        public void UpdateData(string enroll,string username,string password,string email)
+        {
+            string query = "update tbl_user set UserName='" + username + "',Password='" + password + "',Email='" + email + "' where EnrollNo='" + enroll + "' ";
+            ConnC.ExecuteQuery(query);
+
+          
+       }
     }
 }

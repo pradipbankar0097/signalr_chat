@@ -42,17 +42,12 @@ function AddMessage(userName, message, time, userimg) {
         ' <div class="direct-chat-text" >' + message + '</div> </div>';
     $('#msgarea').append(divChat);
 
-    var height = $('#msgarea')[0].scrollHeight;
+   
 
-    // Apply Slim Scroll Bar in Group Chat Box
-    $('#msgarea').slimScroll({
-        height: height
-    });
-
-    //ParseEmoji('#divChatWindow');
-    console.log("suuuuuuuuuccccesss");
 
 };
+
+
 
 function registerClientMethods(chatHub) {
 
@@ -68,6 +63,12 @@ function registerClientMethods(chatHub) {
 
 
     };
+    chatHub.client.sendRequestFailed = function (fromuserenroll,touserenroll) {
+        alert("You are not authorized for this operation");
+     };
+
+    chatHub.client.addMessageToPrivateChat = function (msg, username, userenroll, time) { console.log(msg) };
+
     chatHub.client.method = function (fromusername, fromuserenroll, messasge) {
         alert("You have message from" + fromusername);
         console.log(messasge);
@@ -79,7 +80,9 @@ function registerClientMethods(chatHub) {
         var add1='';
         var add2='';
         console.log(users);
+
         $('#listarea').html('');
+        $('#listarea').height(70 * users.length);
         for (i = 0; i < users.length; i++) {
             add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
             $('#listarea').append(add + add1 + add2);
@@ -93,6 +96,7 @@ function registerClientMethods(chatHub) {
         var add2;
         $('#listarea').html('');
         console.log(groups);
+        $('#listarea').height(70 * groups.length);
         for (i = 0; i < groups.length; i++) {
             var list_area_row_html = '<div id="id_placeholder" class="row testing urow darkable"> <div class="pp-sm testing4"> <img class="img-pp-sm" src="images/dummy.png" alt=""> </div> <div class="testing3 udetails-sm">  <div class="testing2 name-row" >  <div class="uname testing3" style="float: left;"> uname_placeholder </div> </div> <div class="testing1 row ulast-chat"> <div class="lchat-msg" style="width:70%">ok bye</div> <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>'; 
             add = list_area_row_html.replace('id_placeholder', groups[i][0]).
@@ -109,7 +113,8 @@ function registerClientMethods(chatHub) {
         var add1;
         var add2;
         $('#listarea').html('');
-
+        console.log(teachers);
+        $('#listarea').height(70 * teachers.length);
         for (i = 0; i < teachers.length; i++) {
             /*
             add = ' <tr id="' + teachers[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
@@ -137,13 +142,9 @@ function registerClientMethods(chatHub) {
 
         for (i = 0; i < Notifications.length; i++) {
 
-            //add = ' <li id="notice' + i + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></li>';
-
-            //add1 = '<li>' + Notifications[i][0] + ' <br /> <small>achi chal rahi</small></li>';
-
-            //add2 = '<li><small>11:55 PM</small></li>';
+            
             add = '<li>' + Notifications[i][0] + '</li>';
-            // add1 = '<li>' + Notifications[i][1] + '</li>';
+          
             $('#ntf').append(add);
         }
 
@@ -154,7 +155,7 @@ function registerClientMethods(chatHub) {
     };
 
     // On New User Connected
-    chatHub.client.onNewUserConnected = function (id, name, UserImage, loginDate) {
+    chatHub.client.onNewUserConnected =  function (id, name, UserImage, loginDate) {
         AddUser(chatHub, id, name, UserImage, loginDate);
     };
 
@@ -218,20 +219,30 @@ function registerClientMethods(chatHub) {
         }
 
     };
-    chatHub.client.addMessageToGroupChat = function (message, fromusername) {
+    chatHub.client.addMessageToGroupChat = function (message, fromusername,datetime) {
+        console.log('addMessageToGroupChat called');
+        console.log(message);
+        console.log();
 
         var Side = 'left';
         var TimeSide = 'right';
         if (message != null) {
 
-            var divChat = '<div class="direct-chat-msg ' + Side + '">' +
-                '<div class="direct-chat-info clearfix">' +
-                // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-                '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + fromusername + '</span>' +
-                '</div>' +
+            var divChat = '<div class="row darkable sender-msg-box">'
+                + '<div class="msg-box-row">'
+                + '<div class="sender-box darkable">'
+                + '<div class="msg darkable">' + message + '</div>'
+                + '<div class="sender-msg-time-read-rec">'
+                + '<div class="read-rec">//</div>'
+                + '<div class="msg-time">' +datetime.substring(10, 16) + '</div>'
 
-                // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-                ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + message + '</div> </div>';
+                + '</div>'
+                + '</div>'
+                + '</div >'
+                + '</div >';
+            console.log('before');
+            divChat = divChat.replace(/sender/g, 'receiver');
+            console.log('after');
             $('#msgarea').append(divChat);
         }
 
@@ -249,18 +260,28 @@ function registerClientMethods(chatHub) {
 
 
             var i;
-            var Side = 'right';
-            var TimeSide = 'left';
-
+            
             for (i = 0; i < messages.length; i++) {
-                var divChat = '<div class="direct-chat-msg ' + Side + '">' +
-                    '<div class="direct-chat-info clearfix">' +
-                    // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
-                    '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + messages[i][0] + '</span>' +
-                    '</div>' +
+                
+                var divChat = '<div class="row darkable sender-msg-box">'
+                    + '<div class="msg-box-row">'
+                    + '<div class="sender-box darkable">'
+                    + '<div class="msg darkable">' + messages[i][1] + '</div>'
+                    + '<div class="sender-msg-time-read-rec">'
+                    + '<div class="read-rec">//</div>'
+                    + '<div class="msg-time">' + messages[i][0].substring(10, 16) + '</div>'
 
-                    // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
-                    ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
+                    + '</div>'
+                    + '</div>'
+                    + '</div >'
+                    + '</div >';
+                
+                if (messages[i][2] == enroll) {
+                    
+                    divChat = divChat.replace(/sender/g, 'receiver');
+                    
+                }
+                
                 $('#msgarea').append(divChat);
             }
         }
@@ -275,7 +296,7 @@ function registerClientMethods(chatHub) {
 
 
     chatHub.client.alertMe = function (str) {
-        alert(str);
+       
 
 
 
@@ -347,7 +368,25 @@ function registerClientMethods(chatHub) {
         });
     };
 
-
+    chatHub.client.getUserData = function (userdata) {
+        $('list_area').html('');
+        var targetdiv = document.getElementById('list_area');
+        targetdiv.style.display = "block";
+        console.log(userdata);
+        for (var i = 0; i < userdata.length; i++) {
+            var toappend = '';
+            if (i == (userdata.length - 1)) {
+                 toappend = '<div><img src="' + userdata[i] + '" style="height:100px;width:100px;"><div>'
+            }
+            else {
+                 toappend = '<div><input type="text" value="'+userdata[i]+'" /></div>';
+            }
+            targetdiv.innerHTML += toappend;
+            console.log(userdata[i]);
+        }
+        targetdiv.innerHTML += '<input type="submit" value="Update" id="UpdateDetails"/>';
+        console.log('success 2');
+    };
 };
 
 
