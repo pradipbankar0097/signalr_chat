@@ -101,7 +101,7 @@
                     
                     switch (selectedfield) {
                         case 'c':
-                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
                             console.log('server request sent');
                             break;
                         case 't':
@@ -198,13 +198,13 @@
      });
 
      //NOTIFICAIONS
-     $('#notification').click(async function () {
+     $('#notification').click(function () {
          console.log("n");
          chatHub.server.showNotification();
      });
 
 
-     $('#create-ntf').click(async function () {
+     $('#create-ntf').click( function () {
 
          var msg = $("#ntf-msg").val();
          $("#ntf-msg").val('');
@@ -247,7 +247,7 @@
      });
 
 
-     $('#exampleModal').on('show.bs.modal', async function (event) {
+     $('#exampleModal').on('show.bs.modal',  function (event) {
          var button = $(event.relatedTarget) // Button that triggered the modal
          //var recipient = button.data('whatever') // Extract info from data-* attributes
          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -721,7 +721,7 @@ html[dir=ltr] ._3QfZd {
                           <img  src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
                       </div>
                       <div>
-                          <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Search in user"/>
+                          <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Enter Name "/>
                           <script>
                               function searchuser() {
                                   
@@ -749,6 +749,74 @@ html[dir=ltr] ._3QfZd {
                       </div>
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">+</button>
                       </div>
+                   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <table class="table table-hover">
+                                        <tbody id="ntf">
+                                            <%--user/groups list are loaded here dyanmically--%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body1">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+
+                                            <div class="form -group">
+                                                <label for="to-date" class="col-form-label">ExpireDate:</label>
+                                                <input type="datetime-local" class="form-control" id="to-date" />
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Message:</label>
+                                                <textarea class="form-control" id="ntf-msg"></textarea>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
               </header>
               

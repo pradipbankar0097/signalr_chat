@@ -136,13 +136,9 @@ function registerClientMethods(chatHub) {
 
         for (i = 0; i < Notifications.length; i++) {
 
-            //add = ' <li id="notice' + i + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></li>';
-
-            //add1 = '<li>' + Notifications[i][0] + ' <br /> <small>achi chal rahi</small></li>';
-
-            //add2 = '<li><small>11:55 PM</small></li>';
+            
             add = '<li>' + Notifications[i][0] + '</li>';
-            // add1 = '<li>' + Notifications[i][1] + '</li>';
+          
             $('#ntf').append(add);
         }
 

@@ -17,6 +17,7 @@ namespace SignalRChat
         public List<List<string>> Notifications = new List<List<string>>();
         public List<List<string>> RegisteredUsers = new List<List<string>>();
         public List<List<string>> RegisterdGroups = new List < List<string>>();
+        public List<List<string>> RegisteredUsers1 = new List<List<string>>();
         ConnClass ConnC = new ConnClass();
 
         public  void  Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
@@ -45,6 +46,13 @@ namespace SignalRChat
             string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users where EnrollNo <> '"+enrollno+"' and Badge='Student'";
             RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
             Clients.Caller.loadRegisteredUsers(RegisteredUsers);
+
+        }
+        public void loadRegisteredUsers1()
+        {
+            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users";
+            RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
+            //Clients.Caller.loadRegisteredUsers(RegisteredUsers);
 
         }
         public void loadRegisteredGroups(string enrollno)
@@ -90,7 +98,7 @@ namespace SignalRChat
        
         public string GetUserName(string enroll)
         {
-            loadRegisteredUsers(enroll);
+            loadRegisteredUsers1();
             string rstr = "";
             for (int i = 0; i < RegisteredUsers.Count; i++)
             {
@@ -109,7 +117,7 @@ namespace SignalRChat
         } 
         public string GetGroupName(string grpid,string enrollno)
         {
-            loadRegisteredGroups(enrollno);
+            loadRegisteredUsers1();
             string rstr = "";
             for (int i = 0; i < RegisterdGroups.Count; i++)
             {
@@ -282,7 +290,7 @@ namespace SignalRChat
         }
         public string GetUserBadge(string enrollno)
         {
-            loadRegisteredUsers(enrollno);
+            loadRegisteredUsers1();
             string rstr = "";
             for (int i = 0; i < RegisteredUsers.Count; i++)
             {
