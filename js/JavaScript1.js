@@ -78,7 +78,9 @@ function registerClientMethods(chatHub) {
         var add1='';
         var add2='';
         console.log(users);
+
         $('#listarea').html('');
+        $('#listarea').height(70 * users.length);
         for (i = 0; i < users.length; i++) {
             add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
             $('#listarea').append(add + add1 + add2);
@@ -92,6 +94,7 @@ function registerClientMethods(chatHub) {
         var add2;
         $('#listarea').html('');
         console.log(groups);
+        $('#listarea').height(70 * groups.length);
         for (i = 0; i < groups.length; i++) {
             var list_area_row_html = '<div id="id_placeholder" class="row testing urow darkable"> <div class="pp-sm testing4"> <img class="img-pp-sm" src="images/dummy.png" alt=""> </div> <div class="testing3 udetails-sm">  <div class="testing2 name-row" >  <div class="uname testing3" style="float: left;"> uname_placeholder </div> </div> <div class="testing1 row ulast-chat"> <div class="lchat-msg" style="width:70%">ok bye</div> <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>'; 
             add = list_area_row_html.replace('id_placeholder', groups[i][0]).
@@ -109,6 +112,7 @@ function registerClientMethods(chatHub) {
         var add2;
         $('#listarea').html('');
         console.log(teachers);
+        $('#listarea').height(70 * teachers.length);
         for (i = 0; i < teachers.length; i++) {
             /*
             add = ' <tr id="' + teachers[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';
