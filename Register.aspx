@@ -9,7 +9,8 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="login/css/style.css"/>
-
+    <script src="login/vendor/jquery/jquery.min.js"></script>
+  
     <script type="text/javascript">
         $(function () {
             $("#Badge").change(function () {
@@ -18,17 +19,17 @@
                 var value = $("#Badge option:selected").text();
                 console.log(value);
                 if (value == 'Principal') {
-                    $("#Department").hide();
-                    $("#year").hide();
+                    $("#Departmentc").hide();
+                    $("#yearc").hide();
                 }
                 else if (value == 'HOD' || value == 'Professor')
                 {
-                    $("#year").hide();
+                    $("#yearc").hide();
                 }
                 else
                 {
-                    $("#Department").show();
-                    $("#year").show();
+                    $("#Departmentc").show();
+                    $("#yearc").show();
 
                 }
 
@@ -60,7 +61,7 @@
                     <input id="txtName" type="text" class="form-control" placeholder="Full name" required="required" runat="server" />
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="Badgec">
                     Designation : 
           <asp:DropDownList ID="Badge" runat="server" OnSelectedIndexChanged="Badge_SelectedIndexChanged">
               <asp:ListItem>Student</asp:ListItem>
@@ -71,7 +72,7 @@
           </asp:DropDownList>
                     &nbsp;<span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback" id="dept">
+                <div class="form-group has-feedback" id="Departmentc">
                     Department :&nbsp;
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     <asp:DropDownList ID="Department" runat="server" OnSelectedIndexChanged="Department_SelectedIndexChanged" >
@@ -86,7 +87,7 @@
                         <asp:ListItem>Science</asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="form-group has-feedback" id="yr">
+                <div class="form-group has-feedback" id="yearc">
                     Year : 
            <asp:DropDownList ID="year" runat="server" Enabled="true" OnSelectedIndexChanged="year_SelectedIndexChanged">
                 <asp:ListItem></asp:ListItem>
@@ -152,7 +153,6 @@
 
         </div>
 
-    <script src="login/vendor/jquery/jquery.min.js"></script>
-    <script src="login/js/main.js"></script>
+      <script src="login/js/main.js"></script>
 </body>
 </html>
