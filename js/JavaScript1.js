@@ -108,7 +108,7 @@ function registerClientMethods(chatHub) {
         var add1;
         var add2;
         $('#listarea').html('');
-
+        console.log(teachers);
         for (i = 0; i < teachers.length; i++) {
             /*
             add = ' <tr id="' + teachers[i][1] + '" }> <td><img src="images/p2.jpg" alt="" class="profile-image rounded-circle" /></td>';

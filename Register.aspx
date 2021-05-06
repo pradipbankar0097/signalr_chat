@@ -18,17 +18,17 @@
                 var value = $("#Badge option:selected").text();
                 console.log(value);
                 if (value == 'Principal') {
-                    $("#dept").hide();
-                    $("#yr").hide();
+                    $("#Department").hide();
+                    $("#year").hide();
                 }
                 else if (value == 'HOD' || value == 'Professor')
                 {
-                    $("#yr").hide();
+                    $("#year").hide();
                 }
                 else
                 {
-                    $("#dept").show();
-                    $("#yr").show();
+                    $("#Department").show();
+                    $("#year").show();
 
                 }
 

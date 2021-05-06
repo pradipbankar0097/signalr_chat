@@ -18,6 +18,7 @@ namespace SignalRChat
         public List<List<string>> RegisteredUsers = new List<List<string>>();
         public List<List<string>> RegisterdGroups = new List < List<string>>();
         public List<List<string>> RegisteredUsers1 = new List<List<string>>();
+        public List<List<string>> RegisteredTeachers = new List<List<string>>();
         ConnClass ConnC = new ConnClass();
 
         public  void  Connect(string userName, string userBadge, string userEnrollNo, string userDepartment, string userEmail)
@@ -67,7 +68,9 @@ namespace SignalRChat
         }
         public void loadRegisteredTeachers()
         {
-
+            string GetRegisteredTeachersQuery = "SELECT * from tbl_users where Badge<>'Student' and Badge<>'CR'";
+            RegisteredTeachers=ConnC.GetAllDataFromDB(GetRegisteredTeachersQuery,ConnC.con);
+            Clients.Client(Context.ConnectionId).loadRegisteredTeachers(RegisteredTeachers);
         }
 
         public void ShowNotification()
