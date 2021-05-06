@@ -19,18 +19,20 @@ function AddMessage(userName, message, time, userimg) {
     console.log("Add Message Called");
 
     var CurrUser = $('#hdUserName').val();
-
+    //var Side = 'right';
+    //var TimeSide = 'left';
 
     if (CurrUser == userName) {
         Side = 'left';
         TimeSide = 'right';
 
     }
-
+  
     // var divChat = '<div class="bg-primary p-2 mt-2 mr-5 shadow-sm text-white float-right rounded ">'+message+'</div>';
 
 
     var divChat = '<div class="direct-chat-msg ' + Side + '">' +
+        
         '<div class="direct-chat-info clearfix">' +
         // '<span class="direct-chat-name pull-' + Side + '">' + userName + '</span>' +
         '<span class="direct-chat-timestamp pull-' + TimeSide + '"">' + time + '</span>' +

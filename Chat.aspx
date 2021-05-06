@@ -57,8 +57,8 @@
 
             });
 
-            
-            
+
+
 
 
 
@@ -204,7 +204,7 @@
                 }
             }
 
-            
+
 
             chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message, userimg, CurrentDateTime) {
 
@@ -458,7 +458,7 @@
             var msgTextbox = $div.find("#txtPrivateMessage");
             $(msgTextbox).emojioneArea();
 
-            
+
 
         }
 
@@ -470,95 +470,95 @@
             $(div).html(output);
         }
 
-function uploadComplete(sender, args) {
-    var imgDisplay = $get("imgDisplay");
-    imgDisplay.src = "images/loading.gif";
-    imgDisplay.style.cssText = "";
-    var img = new Image();
-    img.onload = function () {
-        imgDisplay.style.cssText = "Display:none;";
-        imgDisplay.src = img.src;
-    };
+        function uploadComplete(sender, args) {
+            var imgDisplay = $get("imgDisplay");
+            imgDisplay.src = "images/loading.gif";
+            imgDisplay.style.cssText = "";
+            var img = new Image();
+            img.onload = function () {
+                imgDisplay.style.cssText = "Display:none;";
+                imgDisplay.src = img.src;
+            };
 
-    imgDisplay.src = "<%# ResolveUrl(UploadFolderPath) %>" + args.get_fileName();
-var chatHub = $.connection.chatHub;
-var userName = $('#hdUserName').val();
-var date = GetCurrentDateTime(new Date());
-var sizeKB = (args.get_length() / 1024).toFixed(2);
+            imgDisplay.src = "<%# ResolveUrl(UploadFolderPath) %>" + args.get_fileName();
+            var chatHub = $.connection.chatHub;
+            var userName = $('#hdUserName').val();
+            var date = GetCurrentDateTime(new Date());
+            var sizeKB = (args.get_length() / 1024).toFixed(2);
 
-var msg1;
+            var msg1;
 
-if (IsValidateFile(args.get_fileName())) {
-    if (IsImageFile(args.get_fileName())) {
-        msg1 =
-            '<div class="box-body">' +
-            '<div class="attachment-block clearfix">' +
-            '<a><img id="imgC" style="width:100px;" class="attachment-img" src="' + imgDisplay.src + '" alt="Attachment Image"></a>' +
-            '<div class="attachment-pushed"> ' +
-            '<h4 class="attachment-heading"><i class="fa fa-image">  ' + args.get_fileName() + ' </i></h4> <br />' +
-            '<div id="at" class="attachment-text"> Dimensions : ' + imgDisplay.height + 'x' + imgDisplay.width + ', Type: ' + args.get_contentType() +
+            if (IsValidateFile(args.get_fileName())) {
+                if (IsImageFile(args.get_fileName())) {
+                    msg1 =
+                        '<div class="box-body">' +
+                        '<div class="attachment-block clearfix">' +
+                        '<a><img id="imgC" style="width:100px;" class="attachment-img" src="' + imgDisplay.src + '" alt="Attachment Image"></a>' +
+                        '<div class="attachment-pushed"> ' +
+                        '<h4 class="attachment-heading"><i class="fa fa-image">  ' + args.get_fileName() + ' </i></h4> <br />' +
+                        '<div id="at" class="attachment-text"> Dimensions : ' + imgDisplay.height + 'x' + imgDisplay.width + ', Type: ' + args.get_contentType() +
 
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
-            '<button type="button" id="ShowModelImg"  value="' + imgDisplay.src + '"  class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</button>' +
-            '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
-            '</div>';
-    }
-    else {
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
+                        '<button type="button" id="ShowModelImg"  value="' + imgDisplay.src + '"  class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</button>' +
+                        '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
+                        '</div>';
+                }
+                else {
 
-        msg1 =
-            '<div class="box-body">' +
-            '<div class="attachment-block clearfix">' +
-            '<a><img id="imgC" style="width:100px;" class="attachment-img" src="images/file-icon.png" alt="Attachment Image"></a>' +
-            '<div class="attachment-pushed"> ' +
-            '<h4 class="attachment-heading"><i class="fa fa-file-o">  ' + args.get_fileName() + ' </i></h4> <br />' +
-            '<div id="at" class="attachment-text"> Type: ' + args.get_contentType() +
+                    msg1 =
+                        '<div class="box-body">' +
+                        '<div class="attachment-block clearfix">' +
+                        '<a><img id="imgC" style="width:100px;" class="attachment-img" src="images/file-icon.png" alt="Attachment Image"></a>' +
+                        '<div class="attachment-pushed"> ' +
+                        '<h4 class="attachment-heading"><i class="fa fa-file-o">  ' + args.get_fileName() + ' </i></h4> <br />' +
+                        '<div id="at" class="attachment-text"> Type: ' + args.get_contentType() +
 
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
-            '<a href="' + imgDisplay.src + '" target="_blank" class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</a>' +
-            '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
-            '</div>';
-    }
-    chatHub.server.sendMessageToAll(userName, msg1, date);
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
+                        '<a href="' + imgDisplay.src + '" target="_blank" class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</a>' +
+                        '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
+                        '</div>';
+                }
+                chatHub.server.sendMessageToAll(userName, msg1, date);
 
-}
+            }
 
 
-imgDisplay.src = '';
-}
+            imgDisplay.src = '';
+        }
 
         function uploadStarted() {
             $get("imgDisplay").style.display = "none";
         }
 
-$(document).on('click', '#ShowModelImg', function () {
-    $get("ImgModal").src = this.value;
-    $('#ShowPictureModal').modal('show');
-});
+        $(document).on('click', '#ShowModelImg', function () {
+            $get("ImgModal").src = this.value;
+            $('#ShowPictureModal').modal('show');
+        });
 
-function IsValidateFile(fileF) {
-    var allowedFiles = [".doc", ".docx", ".pdf", ".txt", ".xlsx", ".xls", ".png", ".jpg", ".gif"];
-    var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
-    if (!regex.test(fileF.toLowerCase())) {
-        alert("Please upload files having extensions: " + allowedFiles.join(', ') + " only.");
-        return false;
-    }
-    return true;
-}
+        function IsValidateFile(fileF) {
+            var allowedFiles = [".doc", ".docx", ".pdf", ".txt", ".xlsx", ".xls", ".png", ".jpg", ".gif"];
+            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+            if (!regex.test(fileF.toLowerCase())) {
+                alert("Please upload files having extensions: " + allowedFiles.join(', ') + " only.");
+                return false;
+            }
+            return true;
+        }
 
-function IsImageFile(fileF) {
-    var ImageFiles = [".png", ".jpg", ".gif"];
-    var regex = new RegExp("(" + ImageFiles.join('|') + ")$");
-    if (!regex.test(fileF.toLowerCase())) {
-        return false;
-    }
-    return true;
-}
+        function IsImageFile(fileF) {
+            var ImageFiles = [".png", ".jpg", ".gif"];
+            var regex = new RegExp("(" + ImageFiles.join('|') + ")$");
+            if (!regex.test(fileF.toLowerCase())) {
+                return false;
+            }
+            return true;
+        }
         //$('#btnSend').click(function () {
         //    $textBox = $div.find("#txtPrivateMessage");
 
@@ -667,7 +667,7 @@ function IsImageFile(fileF) {
                             <div class="input-group" style="float: right;">
                                 <input class="form-control" style="visibility: hidden;" />
                                 <span class="input-group-btn">
-                                     <input type="button" class="btn btn-primary btn-flat" id="btnSendMsg" value="send" />
+                                    <input type="button" class="btn btn-primary btn-flat" id="btnSendMsg" value="send" />
                                 </span>
                                 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
 

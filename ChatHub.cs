@@ -86,6 +86,7 @@ namespace SignalRChat
             string UserImg = GetUserImage(userName);
             // store last 100 messages in cache
             AddMessageinCache(userName, message, time, UserImg);
+            Console.WriteLine("Method called.1");
 
             // Broad cast message
             Clients.All.messageReceived(userName, message, time, UserImg);

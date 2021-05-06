@@ -22,12 +22,13 @@ namespace SignalRChat
         public string UserEnrollNo = "admin";
         public string UserDepartment = "admin";
         public string UserImage = "/images/DP/dummy.png";
-        protected string UploadFolderPath = "~/Uploads/";
+        protected string UploadFolderPath = "/Uploads/";
 
         private string fromUser = "";
         public string UserEmail = "";
 
         public List<List<string>> RegisteredUsers = new List<List<string>>();
+       
         ConnClass conc = new ConnClass();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -68,5 +69,29 @@ namespace SignalRChat
 
 
         }
+        
+        public void Attach(params object[] list)
+        {
+
+            for(int i=0;i<list.Length;i++)
+            {
+                Console.WriteLine(list[i] + "");
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.Append("alert('");
+                sb.Append(list[i] + " ");
+                sb.Append("');");
+
+            }
+            //string filename = System.IO.Path.GetFileName(.fileName);
+            ////atch.SaveAs(Server.MapPath(this.UploadFolderPath) + filename);
+        }
+
+        public void Attachment()
+        {
+            
+        }
+
+
+
     }
 }
