@@ -728,7 +728,7 @@ html[dir=ltr] ._3QfZd {
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div id="ntf">
-                                        here are the notices
+                                        
                                     </div>
                                 </div>
                             </div>
