@@ -82,6 +82,7 @@ namespace SignalRChat
             //Console.Write("Method called.1");
             //int count  = ConnC.GetRowNo(GetNotificationQuery);
             //Clients.Caller.showNtf(Notifications);
+            
             Clients.Caller.showNtf(Notifications);
 
         }
@@ -224,7 +225,7 @@ namespace SignalRChat
                 string CurrentDateTime = DateTime.Now.ToString();
                 
                CallAddMessegeTo(message, fromUserName, fromUserEnroll, toUserEnroll);
-                Clients.Client(Context.ConnectionId).addMessageToPrivateChat(message,fromUserName,fromUserEnroll,"time");
+                Clients.Client(Context.ConnectionId).addMessageToPrivateChat(message, fromUserName, fromUserEnroll, CurrentDateTime);
                 try
                 {
                     var toUser = ConnectedUsers.FirstOrDefault(x => x.EnrollNo == toUserEnroll);
