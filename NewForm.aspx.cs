@@ -22,7 +22,7 @@ namespace SignalRChat
         public string UserEnrollNo = "admin";
         public string UserDepartment = "admin";
         public string UserImage = "/images/DP/dummy.png";
-        protected string UploadFolderPath = "~/Uploads/";
+        //protected string UploadFolderPath = "/Uploads/";
         
         private string fromUser = "";
         public string UserEmail = "";
@@ -45,6 +45,7 @@ namespace SignalRChat
                 UserEnrollNo = Session["UserEnrollNo"].ToString();
                 UserDepartment = Session["UserDepartment"].ToString();
                 UserEmail = Session["UserEmail"].ToString();
+               
                 fromUser += UserName;
                 GetUserImage(UserName);
                 
@@ -79,6 +80,46 @@ namespace SignalRChat
 
             conc.ExecuteQuery(query);
         }
+
+        protected void btnSendMsg_Click(object sender,EventArgs e)
+        {
+
+            HttpPostedFile postedFile = Request.Files["attachFile"];
+            if(postedFile != null && postedFile.ContentLength > 0)
+            {
+                string filePath = Server.MapPath("~/uploads/") + Path.GetFileName(postedFile.FileName);
+                postedFile.SaveAs(filePath);
+                int fileSize = postedFile.ContentLength;
+                if(fileSize > 2097152)
+                {
+
+                }
+                else
+                {
+
+                }
+
+            }
+            
+            
+        }
+
+        //protected void btnSendMsg_Click(object sender,EventArgs e)
+        //{
+        //    //string a = Request.Form["FileUploadAtch"];
+        //    //a.SaveAs(Server.MapPath("~/Uploads/" + FileUploadAtch.FileName));
+        //    lblmsg1.InnerText = "Please select Image";
+        //    //if (FileUploadAtch.HasFile)
+        //    //{
+        //    //    //string fileExt = System.IO.Path.GetExtension(FileUploadAtch.FileName);
+        //    //    //if( (fileExt.ToLower() !=  ".doc") && (fileExt.ToLower() != ".txt"))
+        //    //    //{
+
+        //    //    //}
+
+                
+        //    //}
+        //}
         
     }
 }

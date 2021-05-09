@@ -1,0 +1,138 @@
+Microsoft Windows [Version 10.0.19041.804]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Users\Abc>sqlplus "/as sysdba"
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Mar 5 11:51:21 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> alter system identified by system;
+alter system identified by system
+             *
+ERROR at line 1:
+ORA-02065: illegal option for ALTER SYSTEM
+
+
+SQL> alter user system identified by system;
+
+User altered.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL> exit
+Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+C:\Users\Abc>sqlplus
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Mar 5 11:54:07 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Fri Mar 05 2021 11:34:20 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> desc stud2
+ERROR:
+ORA-04043: object stud2 does not exist
+
+
+SQL> desc student
+ERROR:
+ORA-04043: object student does not exist
+
+
+SQL> create table student(rollno number(3), name char(10), per float(4));
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(3)
+ NAME                                               CHAR(10)
+ PER                                                FLOAT(4)
+
+SQL> alter table student add(address char(20),phone number(10));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(3)
+ NAME                                               CHAR(10)
+ PER                                                FLOAT(4)
+ ADDRESS                                            CHAR(20)
+ PHONE                                              NUMBER(10)
+
+SQL> alter table student modify name varchar2(15);
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(3)
+ NAME                                               VARCHAR2(15)
+ PER                                                FLOAT(4)
+ ADDRESS                                            CHAR(20)
+ PHONE                                              NUMBER(10)
+
+SQL> alter table student drop column per;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(3)
+ NAME                                               VARCHAR2(15)
+ ADDRESS                                            CHAR(20)
+ PHONE                                              NUMBER(10)
+
+SQL> rename student to student1;
+
+Table renamed.
+
+SQL> desc student;
+ERROR:
+ORA-04043: object student does not exist
+
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(3)
+ NAME                                               VARCHAR2(15)
+ ADDRESS                                            CHAR(20)
+ PHONE                                              NUMBER(10)
+
+SQL> drop table student1;
+
+Table dropped.
+
+SQL> desc student1;
+ERROR:
+ORA-04043: object student1 does not exist
+
+
+SQL>
+
+

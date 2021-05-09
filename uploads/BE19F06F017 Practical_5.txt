@@ -1,0 +1,158 @@
+ENTROLLMENT NO.: BE19F06F017
+NAME: PRATIKSHA WALMIK GAIKWAD
+
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Apr 16 12:46:44 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Fri Apr 16 2021 11:48:33 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> create table customers(cid int,cname varchar(30),cage int,city varchar(40));
+
+Table created.
+
+SQL> insert into customers(cid,cname,cage,city) values(1,'Pratiksha',19,'Aurangabad');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(2,'Sana',20,'Nashik');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(3,'Renuka',24,'Mumbai');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(4,'Smita',24,'Thane');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(5,'Shamal',88,'Beed');
+
+1 row created.
+
+SQL>  set linesize 100 pagesize 50
+SQL> select * from customers;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         2 Sana                                   20 Nashik
+         3 Renuka                                 24 Mumbai
+         4 Smita                                  24 Thane
+         5 Shamal                                 88 Beed
+
+SQL> select min(age) from customers;
+select min(age) from customers
+           *
+ERROR at line 1:
+ORA-00904: "AGE": invalid identifier
+
+
+SQL> select min(cage) from customers;
+
+ MIN(CAGE)
+----------
+        19
+
+SQL> select max(cage) from customers;
+
+ MAX(CAGE)
+----------
+        88
+
+SQL> select count(cage) from customers;
+
+COUNT(CAGE)
+-----------
+          5
+
+SQL> select avg(cage) from customers;
+
+ AVG(CAGE)
+----------
+        35
+
+SQL> select sum(cage) from customers;
+
+ SUM(CAGE)
+----------
+       175
+
+SQL> select avg(cage) as avg_age,sum(cage) as sum_of_age from customers;
+
+   AVG_AGE SUM_OF_AGE
+---------- ----------
+        35        175
+
+SQL> select name from customers where age > 20;
+select name from customers where age > 20
+                                 *
+ERROR at line 1:
+ORA-00904: "AGE": invalid identifier
+
+
+SQL> select name from customers where cage > 20;
+select name from customers where cage > 20
+       *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier
+
+
+SQL> select cname from customers where cage > 20;
+
+CNAME
+------------------------------
+Renuka
+Smita
+Shamal
+
+SQL> select cname from customers where cage<30;
+
+CNAME
+------------------------------
+Pratiksha
+Sana
+Renuka
+Smita
+
+SQL>
+SQL> select cid,cage,from customers where cname like '_%a';
+select cid,cage,from customers where cname like '_%a'
+                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select cid,cage from customers where cname like '_%a';
+
+       CID       CAGE
+---------- ----------
+         1         19
+         2         20
+         3         24
+         4         24
+
+SQL> select cid,cage from customers where cname like 't%';
+
+no rows selected
+
+SQL> select cid,cage from customers where cname like 'p%';
+
+no rows selected
+
+SQL> select cid,cage from customers where cname like 'P%';
+
+       CID       CAGE
+---------- ----------
+         1         19
+
+SQL> 

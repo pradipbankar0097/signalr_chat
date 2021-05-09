@@ -454,6 +454,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="images\profile\" />
     <Folder Include="Models\" />
+    <Folder Include="uploads\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

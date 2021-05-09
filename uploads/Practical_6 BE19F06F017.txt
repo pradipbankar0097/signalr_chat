@@ -1,0 +1,308 @@
+ENROLLMENT NO. : BE19F06F017
+NAME: PRATIKSHA WALMIK GAIKWAD
+
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri Apr 16 12:46:44 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Fri Apr 16 2021 11:48:33 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> create table customers(cid int,cname varchar(30),cage int,city varchar(40));
+
+Table created.
+
+
+SQL> insert into customers(cid,cname,cage,city) values(1,'Pratiksha',19,'Aurangabad');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(2,'Sana',20,'Nashik');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(3,'Renuka',24,'Mumbai');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(4,'Smita',24,'Thane');
+
+1 row created.
+
+SQL> insert into customers(cid,cname,cage,city) values(5,'Shamal',88,'Beed');
+
+1 row created.
+
+SQL> select * from customers
+  2  ;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         2 Sana                                   20 Nashik
+         3 Renuka                                 24 Mumbai
+         4 Smita                                  24 Thane
+         5 Shamal                                 88 Beed
+
+SQL> select cid,cname from customers;
+
+       CID CNAME
+---------- ------------------------------
+         1 Pratiksha
+         2 Sana
+         3 Renuka
+         4 Smita
+         5 Shamal
+
+SQL> select * from customers;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         2 Sana                                   20 Nashik
+         3 Renuka                                 24 Mumbai
+         4 Smita                                  24 Thane
+         5 Shamal                                 88 Beed
+
+SQL> select cname,cage,city from customers;
+
+CNAME                                CAGE CITY
+------------------------------ ---------- ----------------------------------------
+Pratiksha                              19 Aurangabad
+Sana                                   20 Nashik
+Renuka                                 24 Mumbai
+Smita                                  24 Thane
+Shamal                                 88 Beed
+
+SQL> select distinct cname,cage,city from customers;
+
+CNAME                                CAGE CITY
+------------------------------ ---------- ----------------------------------------
+Pratiksha                              19 Aurangabad
+Shamal                                 88 Beed
+Sana                                   20 Nashik
+Renuka                                 24 Mumbai
+Smita                                  24 Thane
+
+SQL> select distinct cage from customers;
+
+      CAGE
+----------
+        88
+        20
+        19
+        24
+
+SQL> select distinct cage,cname from customers;
+
+      CAGE CNAME
+---------- ------------------------------
+        19 Pratiksha
+        24 Renuka
+        88 Shamal
+        20 Sana
+        24 Smita
+
+SQL> select cage from customers where cage > 50;
+
+      CAGE
+----------
+        88
+
+SQL> select cage,cname from customers where cage > 50;
+
+      CAGE CNAME
+---------- ------------------------------
+        88 Shamal
+
+SQL> select * from customers where city='Thane' and cage=24;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         4 Smita                                  24 Thane
+
+SQL> select * from customers where city='Thane' or cage=20
+  2  ;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         2 Sana                                   20 Nashik
+         4 Smita                                  24 Thane
+
+SQL> select * from customers where not city='Nashik'
+  2  ;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         3 Renuka                                 24 Mumbai
+         4 Smita                                  24 Thane
+         5 Shamal                                 88 Beed
+
+SQL> select * from customers where city='Thane' and (cage='24' or city = 'Mumbai');
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         4 Smita                                  24 Thane
+
+SQL> select * from customers where not city='Thane' and (cage='24' or city = 'Mumbai');
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         3 Renuka                                 24 Mumbai
+
+SQL> select * from customers order by cname,city,cname asc|desc;
+select * from customers order by cname,city,cname asc|desc
+                                                     *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from customers order by cname;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         3 Renuka                                 24 Mumbai
+         2 Sana                                   20 Nashik
+         5 Shamal                                 88 Beed
+         4 Smita                                  24 Thane
+
+SQL> select * from customers order by city;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         5 Shamal                                 88 Beed
+         3 Renuka                                 24 Mumbai
+         2 Sana                                   20 Nashik
+         4 Smita                                  24 Thane
+
+SQL> select * from customers order by city desc;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         4 Smita                                  24 Thane
+         2 Sana                                   20 Nashik
+         3 Renuka                                 24 Mumbai
+         5 Shamal                                 88 Beed
+         1 Pratiksha                              19 Aurangabad
+
+SQL> select * from customers order by city,cname desc;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         5 Shamal                                 88 Beed
+         3 Renuka                                 24 Mumbai
+         2 Sana                                   20 Nashik
+         4 Smita                                  24 Thane
+
+SQL> select * from customers order by city asc,cname desc;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         5 Shamal                                 88 Beed
+         3 Renuka                                 24 Mumbai
+         2 Sana                                   20 Nashik
+         4 Smita                                  24 Thane
+
+SQL> select * from customers order by cname asc,city desc;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         3 Renuka                                 24 Mumbai
+         2 Sana                                   20 Nashik
+         5 Shamal                                 88 Beed
+         4 Smita                                  24 Thane
+
+SQL> select cname from customers where cage is null;
+
+no rows selected
+
+SQL> select cname from customers where cage is not null;
+
+CNAME
+------------------------------
+Pratiksha
+Sana
+Renuka
+Smita
+Shamal
+
+SQL> select cage from customers where cage is null;
+
+no rows selected
+
+SQL> update customers set city = 'Ratnagiri' where cid = 2;
+
+1 row updated.
+
+SQL> select * from customers;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         2 Sana                                   20 Ratnagiri
+         3 Renuka                                 24 Mumbai
+         4 Smita                                  24 Thane
+         5 Shamal                                 88 Beed
+
+SQL> delete from customers where cname='Renuka';
+
+1 row deleted.
+
+SQL> select * from customers;
+
+       CID CNAME                                CAGE CITY
+---------- ------------------------------ ---------- ----------------------------------------
+         1 Pratiksha                              19 Aurangabad
+         2 Sana                                   20 Ratnagiri
+         4 Smita                                  24 Thane
+         5 Shamal                                 88 Beed
+
+
+SQL> select count(cid),city from customers group by city, order by count(cid) desc;
+select count(cid),city from customers group by city, order by count(cid) desc
+                                                     *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select count(cid),city from customers group by city order by count(cid) desc;
+
+COUNT(CID) CITY
+---------- ----------------------------------------
+         1 Thane
+         1 Beed
+         1 Ratnagiri
+         1 Aurangabad
+
+SQL> select count(cid),city from customers group by city order by count(cid) desc;
+
+COUNT(CID) CITY
+---------- ----------------------------------------
+         1 Thane
+         1 Beed
+         1 Ratnagiri
+         1 Aurangabad
+
+SQL> select cname from customers where exists (select 1 from customers where cage = 24);
+
+CNAME
+------------------------------
+Pratiksha
+Sana
+Smita
+Shamal
+
+SQL>

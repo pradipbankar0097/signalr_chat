@@ -1,0 +1,55 @@
+Enrollment no. : BE19F06F017                                          Student: PRATIKSHA WALMIK GAIKWAD
+PRACTICAL-10
+Aim: To implement views in SQL
+SQL*Plus: Release 10.2.0.1.0 - Production on Fri May 7 14:30:26 2021
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect system
+Enter password:
+Connected.
+SQL> select * from cust;
+
+        ID NAME            CITY            POSTALCODE
+---------- --------------- --------------- ----------
+         1 Pratiksha    Aurangabad           431101
+         2 Madhuri         Jalna                12212
+         3 Priya          Pune                  12209
+         4 Megha           Ahmednagar           34206
+         5 Pooja           Aurangabad             12216
+
+
+
+SQL> CREATE VIEW "Aurangabad cust" AS
+  2  SELECT name,postalcode
+  3  FROM cust
+  4  WHERE city='Aurangabad';
+
+View created.
+
+SQL> SELECT * FROM "Aurangabad cust";
+
+NAME            POSTALCODE
+--------------- ----------
+Pratiksha        431101
+Pooja              12216
+
+SQL> CREATE OR REPLACE VIEW "Aurangabad cust" AS
+  2  SELECT name, postalcode, city
+  3  FROM cust
+  4  WHERE city='Aurangabad';
+
+View created.
+
+SQL> SELECT * FROM "Aurangabad cust";
+
+NAME            POSTALCODE CITY
+--------------- ---------- ---------------
+Pratiksha         431101 Aurangabad
+Pooja             12216 Aurangabad
+
+SQL> DROP VIEW "Aurangabad cust";
+
+View dropped.
+
+SQL>

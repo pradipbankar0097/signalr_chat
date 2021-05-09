@@ -1,0 +1,82 @@
+ENROLLMENT NO: BE19F06F017   PRATIKSHA WALMIK GAIKWAD
+
+Aim: To Implement Procedure in SQL
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Fri May 7 23:34:19 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Fri May 07 2021 22:08:55 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> CREATE TABLE DBUSER (
+  2    USER_ID       NUMBER (5)    NOT NULL,
+  3    USERNAME      VARCHAR2 (20)  NOT NULL,
+  4    CREATED_BY    VARCHAR2 (20)  NOT NULL,
+  5    CREATED_DATE  DATE          NOT NULL,
+  6    PRIMARY KEY ( USER_ID )
+  7   );
+
+Table created.
+
+SQL> CREATE OR REPLACE PROCEDURE getDBUSERByUserId(
+  2         p_userid IN DBUSER.USER_ID%TYPE,
+  3         o_username OUT DBUSER.USERNAME%TYPE,
+  4         o_createdby OUT  DBUSER.CREATED_BY%TYPE,
+  5         o_date OUT DBUSER.CREATED_DATE%TYPE)
+  6  IS
+  7  BEGIN
+  8
+  9    SELECT USERNAME , CREATED_BY, CREATED_DATE
+ 10    INTO o_username, o_createdby,  o_date
+ 11    from  DBUSER WHERE USER_ID = p_userid;
+ 12
+ 13  END;
+ 14  /
+
+Procedure created.
+
+
+SQL> insert into DBUSER (user_id,username,created_by,created_date) values(1,'Pratiksha','Priya','3-may-21');
+
+1 row created.
+
+SQL> insert into DBUSER (user_id,username,created_by,created_date) values(2,'Shruti','Pallavi','4-may-21');
+
+1 row created.
+
+SQL> insert into DBUSER (user_id,username,created_by,created_date) values(3,'Radha','Priya','6-may-21');
+
+1 row created.
+
+SQL> select  * from dbuser;
+
+   USER_ID USERNAME             CREATED_BY           CREATED_D
+---------- -------------------- -------------------- ---------
+         1 Pratiksha            Priya                03-MAY-21
+         2 Shruti               Pallavi              04-MAY-21
+         3 Radha                Priya                06-MAY-21
+
+
+SQL> DECLARE
+  2     o_username DBUSER.USERNAME%TYPE;
+  3     o_createdby DBUSER.CREATED_BY%TYPE;
+  4     o_date DBUSER.CREATED_DATE%TYPE;
+  5  BEGIN
+  6     getDBUSERByUserId(1,o_username,o_createdby,o_date);
+  7     DBMS_OUTPUT.PUT_LINE('username :  ' || o_username);
+  8     DBMS_OUTPUT.PUT_LINE('createdby :  ' || o_createdby);
+  9     DBMS_OUTPUT.PUT_LINE('createddate :  ' || o_date);
+ 10
+ 11  END;
+ 12  /
+
+PL/SQL procedure successfully completed.
+
+SQL>
