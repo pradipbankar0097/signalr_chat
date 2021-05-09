@@ -67,7 +67,7 @@ function registerClientMethods(chatHub) {
         alert("You are not authorized for this operation");
      };
 
-    chatHub.client.addMessageToPrivateChat = function (msg, username, userenroll, time) { console.log(msg) };
+    //chatHub.client.addMessageToPrivateChat = function (msg, username, userenroll, time) { console.log(msg) };
 
     chatHub.client.method = function (fromusername, fromuserenroll, messasge) {
         alert("You have message from" + fromusername);
@@ -219,6 +219,30 @@ function registerClientMethods(chatHub) {
         }
 
     };
+
+    chatHub.client.addMessageToPrivateChat = function (message, fromUserName, fromUserEnroll, currentDateTime) {
+        console.log('addMessageToPrivateChat called');
+
+        var divChat = '<div class="row darkable sender-msg-box">'
+            + '<div class="msg-box-row">'
+            + '<div class="sender-box darkable">'
+            + '<div class="msg darkable">' + message + '</div>'
+            + '<div class="sender-msg-time-read-rec">'
+            + '<div class="read-rec">//</div>'
+            + '<div class="msg-time">' + currentDateTime + '</div>'
+
+            + '</div>'
+            + '</div>'
+            + '</div >'
+            + '</div >';
+
+        
+            divChat = divChat.replace(/sender/g, 'receiver');
+            //divChat = divChat.replace(/darkable/g, '');
+        
+        $('#msgarea').append(divChat);
+    }
+
     chatHub.client.addMessageToGroupChat = function (message, fromusername,datetime) {
         console.log('addMessageToGroupChat called');
         console.log(message);

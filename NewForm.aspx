@@ -204,36 +204,13 @@ lang="en">
 
                 });
 
-
-                //$('#Attachment').click(function () {
-
-                //    var fileSelector = $('<input type="file" >').on('change', function () {
-                //        var filePath = $(this).val();
-                //        console.log(filePath);
-                //    }); //for one file
-                //    //var fileSelector = $('<input type="file" multiple>').on('change', (event)=> {
-                //    //    const fileList = event.target.files;
-
-                //    //    console.log(fileList);
-
-                //    //}); // for multiple files
-
-                //    fileSelector.click();
-                //    console.log("attachment");
-                //    //console.log(fileSelector);
-                //    //chatHub.server.Attach(fileList);
-                //});
-
-
-
-
-
-
-                //NOTIFICAIONS
-                $('#notification').click(function () {
-                    console.log("n");
-                    chatHub.server.showNotification();
-                });
+     //NOTIFICAIONS
+     $('#notification').click(function () {
+         console.log("notification clicked");
+         var targetdiv = document.getElementById('notification-btn-target');
+         targetdiv.style.display = "block";
+         chatHub.server.showNotification();
+     });
 
 
                 $('#create-ntf').click(function () {
@@ -279,10 +256,15 @@ lang="en">
                 });
 
 
-
-
-
-            });
+                $('#exampleModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    //var recipient = button.data('whatever') // Extract info from data-* attributes
+                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                    var modal = $(this)
+                    modal.find('.modal-title').text('New Notification');
+                    //modal.find('.modal-body input').val(recipient)
+                });
 
 
         };
@@ -811,179 +793,101 @@ lang="en">
         href="https://web.whatsapp.com/img/favicon_c5088e888c97ad440a61d247596f88e5.png"
         src="/img/favicon_c5088e888c97ad440a61d247596f88e5.png" />
 
-</head>
-<body class="web">
-
-   
-        <form id="form1" runat="server">
-
-            <script>
-                try {
-                    var systemThemeDark,
-                        theme = window.localStorage.getItem("theme"),
-                        systemThemeMode = window.localStorage.getItem("system-theme-mode");
-                    if (("true" === systemThemeMode || !theme) && window.matchMedia) {
-                        var systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
-                        systemThemeDark = systemTheme && systemTheme.matches;
-                    }
-                    ('"dark"' === theme || systemThemeDark) &&
-                        document.body.classList.add("dark");
-                } catch (e) { }
-            </script>
-            <div id="app">
-                <div tabindex="-1" id="for_background" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
-                    <span></span><span></span><span></span><span></span><span></span>
-
-                    <!-- hidden data -->
-                    <input id="hdId" type="hidden" />
-                    <input id="PWCount" type="hidden" value="info" />
-                    <input id="hdUserEnroll" type="hidden" />
-                    <input id="hdtoUserEnroll" type="hidden" />
-
-                    <div style="width: 1396px; height: 100vh; display: flex; flex-direction: column;">
+  </head>
+  <body class="web">
+      <form id="form1" runat="server">
+    
+    <div id="app">
+      <div tabindex="-1" id="for_background" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
+        <span></span><span></span><span></span><span></span><span></span>
+        
+          <!-- hidden data -->
+            <input id="hdId" type="hidden" />
+                <input id="PWCount" type="hidden" value="info" />
+                <input id="hdUserEnroll" type="hidden" />
+                <input id="hdtoUserEnroll" type="hidden" />
+                
+          <div style="width:1396px; height:100vh; display:flex; flex-direction:column;">
 
 
 
 
 
-                        <div tabindex="-1" class="_3QfZd two">
+        <div tabindex="-1" class="_3QfZd two">
+          
+          <div class="_3-dtC"></div>
+          <div class="Akuo4">
+            <div class="_1Flk2 _2DPZK"></div>
+            <div class="_1Flk2 _1sFTb"><span class="_2zn9Y"></span></div>
+            <div class="_1Flk2 _3xysY"><span class="_2zn9Y"></span></div>
+          </div>
+          
+          <div class="_1Flk2 _2DPZK">
+            <div id="side" class="_3U29Q">
+              <header class="chat-list-header darkable _1R3Un">
+                  <div  class="profile-header " style="display: flex; flex-direction: row;">
+                      <div id="self_pp_sm" class="pp-sm-box" style="display: flex; justify-content: center;">
+                          <img  src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
+                      </div>
+                      
+                  </div>
+                  <div style="display:flex;height:40px;width:90%; flex-direction:row-reverse;">
+                      <div id="notification" style="display:flex; height:40px; width:40px; ">
+                          <script>
+                              function open_notices() {
+                                 
+                              }
 
-                            <div class="_3-dtC"></div>
-                            <div class="Akuo4">
-                                <div class="_1Flk2 _2DPZK"></div>
-                                <div class="_1Flk2 _1sFTb"><span class="_2zn9Y"></span></div>
-                                <div class="_1Flk2 _3xysY"><span class="_2zn9Y"></span></div>
+                          </script>
+                         <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons"><path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z"/><path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z"/><path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z"/><path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z"/><path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z"/><path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z"/></svg>
+                      </div>
+                      <div id="notification-btn-target" style="height:500px;width:500px; background-color:brown; display:none">
+                          <button type="button" onclick="close_notices()">close</button>
+                          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div id="ntf">
+                                        
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="_1Flk2 _2DPZK">
-                                <div id="side" class="_3U29Q">
-                                    <header class="chat-list-header darkable _1R3Un">
-                                        <div class="profile-header " style="display: flex; flex-direction: row;">
-                                            <div id="self_pp_sm" class="pp-sm-box" style="display: flex; justify-content: center;">
-                                                <img src="<%= UserImage %>" alt="" class="profile-image rounded-circle float-left" />
-                                            </div>
-                                            <div>
-                                                <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Enter Name " />
-                                                <script>
-                                                    function searchuser() {
-
-                                                        var input, filter, ul, li, a, i, txtValue;
-                                                        input = document.getElementById('user_search');
-                                                        filter = input.value.toUpperCase();
-                                                        ul = document.getElementById("listarea");
-                                                        li = ul.getElementsByClassName('urow');
-                                                        for (i = 0; i < li.length; i++) {
-                                                            a = li[i].getElementsByClassName('uname')[0];
-                                                            txtValue = a.textContent || a.innerText;
-                                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                                                li[i].style.display = "";
-                                                            } else {
-                                                                li[i].style.display = "none";
-                                                            }
-                                                        }
-                                                    }
-                                                </script>
-                                            </div>
-                                        </div>
-                                        <div style="display: flex; height: 40px; width: 90%; flex-direction: row-reverse;">
-                                            <div id="notification" style="display: flex; height: 40px; width: 40px;">
-                                                <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons">
-                                                    <path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z" />
-                                                    <path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z" />
-                                                    <path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                    <path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                    <path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                    <path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                    <path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z" />
-                                                    <path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z" />
-                                                    <path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z" />
-                                                    <path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z" />
-                                                </svg>
-                                            </div>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">+</button>
-                                        </div>
-                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <table class="table table-hover">
-                                                        <tbody id="ntf">
-                                                            <%--user/groups list are loaded here dyanmically--%>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button id="show-popup-btn">+</button>
-                                        <div id="popup-container">
-
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title" id="exampleModalLabel">New Notification</h1>
-
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form>
-
-                                                        <div class="form -group">
-                                                            <h3>
-                                                                <label for="to-date" class="col-form-label">ExpireDate:</label></h3>
-                                                            <input type="datetime-local" class="form-control" id="to-date" />
-                                                        </div>
+                        </div>
+                          <script>
+                              function close_notices() {
+                                  var targetdiv = document.getElementById('notification-btn-target');
+                                  targetdiv.style.display = "none";
+                              }
+                          </script>
+                      </div>
+                      <button type="button" onclick="open_add_notice()" id="notice-plus-btn" class="btn btn-primary" >+</button>
+                      <script>
+                          function open_add_notice() {
+                              var targetdiv = document.getElementById('notice-plus-btn-target');
+                              targetdiv.style.display = "block";
+                          }
 
 
-                                                        <div class="form-group">
-                                                            <h3>
-                                                                <label for="message-text" class="col-form-label">Message: </label>
-                                                            </h3>
-                                                            <textarea class="form-control" id="ntf-msg"></textarea>
-                                                        </div>
+                      </script>
+                      <div id="notice-plus-btn-target" style="height:500px;width:500px; display:none; background-color:cadetblue">
+                          <button type="button" onclick="close_add_notice()">close</button>
+                          <script>
+                              function close_add_notice() {
+                                  {
+                                      var targetdiv = document.getElementById('notice-plus-btn-target');
+                                      targetdiv.style.display = "none";
+                                  }
+                              }
+                          </script>
 
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    </br>
-                </br>
-                <button id="close-btn" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <%-- <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body1">
-                                                    ...
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>--%>
-
-
-
-
-                                        <%--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form>
+                          <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
 
                                                         <div class="form -group">
                                                             <label for="to-date" class="col-form-label">ExpireDate:</label>
@@ -996,19 +900,22 @@ lang="en">
                                                             <textarea class="form-control" id="ntf-msg"></textarea>
                                                         </div>
 
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>--%>
-                                    </header>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
+                                    </div>
+                                </div>
 
+                      </div>
+                      </div>
+                                   
 
-                                    <div class="search-in-users" style="display: flex; flex-direction: row; width: 100%; height: 50px; background-color: #e8e8e8">
+              </header>
+              
+              
+              <div class="search-in-users" style="display:flex; flex-direction:row; width:100%; height:50px; background-color:#e8e8e8">
 
                                         <div class="ddlist" style="display: flex; height: 40px; width: 40%; background-color: white; border-radius: 10px; padding-left: 20px; font-size: 20px;">
 
@@ -1019,7 +926,29 @@ lang="en">
 
                                             </select>
 
-                                        </div>
+                  </div>
+                  <div>
+                          <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Enter Name "/>
+                          <script>
+                              function searchuser() {
+
+                                  var input, filter, ul, li, a, i, txtValue;
+                                  input = document.getElementById('user_search');
+                                  filter = input.value.toUpperCase();
+                                  ul = document.getElementById("listarea");
+                                  li = ul.getElementsByClassName('urow');
+                                  for (i = 0; i < li.length; i++) {
+                                      a = li[i].getElementsByClassName('uname')[0];
+                                      txtValue = a.textContent || a.innerText;
+                                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                          li[i].style.display = "";
+                                      } else {
+                                          li[i].style.display = "none";
+                                      }
+                                  }
+                              }
+                          </script>
+                      </div>
 
                                     </div>
                                     <div class="_1C2Q3 F-0gY" id="pane-side">
