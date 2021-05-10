@@ -27,6 +27,8 @@
     <meta name="og:url" content="https://web.whatsapp.com/" />
     <meta name="og:title" content="WhatsApp Web" />
     
+
+      
     
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
@@ -201,7 +203,8 @@
      $('#notification').click(function () {
          console.log("notification clicked");
          var targetdiv = document.getElementById('notification-btn-target');
-         targetdiv.style.display = "block";
+         targetdiv.style.display = "flex";
+         targetdiv.style.flexDirection = "column";
          chatHub.server.showNotification();
      });
 
@@ -722,17 +725,18 @@ html[dir=ltr] ._3QfZd {
                           </script>
                          <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons"><path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z"/><path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z"/><path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z"/><path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z"/><path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z"/><path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z"/></svg>
                       </div>
-                      <div id="notification-btn-target" style="height:500px;width:500px; background-color:brown; display:none">
-                          <button type="button" onclick="close_notices()">close</button>
-                          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
+                      <div id="notification-btn-target" style="height:500px;width:100%; background-color:white; box-shadow:0px 2px 2px 2px rgb(136, 136, 136); border-radius:10px; display:none">
+                          <div style="width:100%; box-shadow: 0 10px 10px -5px; display:flex;flex-direction:row; justify-content:center;">
+                              <div style="font-size:30px; font-weight:bold;">Notifications</div>
+                          </div>
+                          <div style="padding:5px;">
                                     <div id="ntf">
                                         
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                              </div>
+                          <div style="display:flex;width:100%;padding:10px; padding-left:100px; ">
+                                    <button style="padding:10px; background-color:rgb(25 109 243); border-radius:10px;" type="button" onclick="close_notices()">close</button>
+                               </div> 
                           <script>
                               function close_notices() {
                                   var targetdiv = document.getElementById('notification-btn-target');
@@ -749,7 +753,8 @@ html[dir=ltr] ._3QfZd {
 
 
                       </script>
-                      <div id="notice-plus-btn-target" style="height:500px;width:500px; display:none; background-color:cadetblue">
+                      <div id="notice-plus-btn-target" style="width:100
+%; display:none; background-color:transparent;">
                           <button type="button" onclick="close_add_notice()">close</button>
                           <script>
                               function close_add_notice() {
@@ -760,32 +765,104 @@ html[dir=ltr] ._3QfZd {
                               }
                           </script>
 
-                          <div class="modal-content">
-                                    <div class="modal-header">
+                          <div class="modal-content" style="position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;">
+                                    <div class="modal-header" style="display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);
+">
                                         <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body" style="position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;">
                                         <form>
 
                                             <div class="form -group">
-                                                <label for="to-date" class="col-form-label">ExpireDate:</label>
+                                                <label for="to-date" class="col-form-label" style="display: inline-block;">ExpireDate:</label>
                                                 <input type="datetime-local" class="form-control" id="to-date" />
                                             </div>
 
 
                                             <div class="form-group">
-                                                <label for="message-text" class="col-form-label">Message:</label>
-                                                <textarea class="form-control" id="ntf-msg"></textarea>
+                                                <label for="message-text" class="col-form-label" style="display: inline-block;">Message:</label>
+                                                <textarea class="form-control" id="ntf-msg" style="display: block;
+    width: 200px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+"></textarea>
                                             </div>
 
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
+                                    <div class="modal-footer" style="font: inherit;
+    font-size: 100%;
+    vertical-align: initial;
+    outline: none;
+    margin: 0;
+    padding: 5px;
+    display:flex;
+    justify-content:space-evenly;
+    border: 0;">
+                                        <button type="button" class="btn btn-secondary" onclick="close_add_notice()" data-dismiss="modal" style="display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #acb9bf;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Close</button>
+                                        <button id="create-ntf" type="button" class="btn btn-primary" style="display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgb(9 124 222);
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Create Notification</button>
                                     </div>
                                 </div>
 
@@ -900,7 +977,7 @@ html[dir=ltr] ._3QfZd {
                         dir="auto"
                         title="Pushkar Joshi GECA"
                         class="darkable _35k-1 _1adfa _3-8er"
-                        >Pushkar Joshi GECA</span
+                        >...</span
                       >
                     </div>
                   </div>
