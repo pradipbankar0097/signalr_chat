@@ -186,6 +186,13 @@
 
 
                          chatHub.server.loadGroupChat(toGroupId, enrollno);
+                     } else if (selectedfield == 't') {
+
+                         var toEnrollNo = this.id;
+                         $('#hdtoUserEnroll').val(toEnrollNo);
+                         console.log(toEnrollNo);
+                         $('#spanUser').val = toEnrollNo;
+                         chatHub.server.loadPrivateChat1(enrollno, toEnrollNo);
                      }
 
                  });
