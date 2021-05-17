@@ -15,7 +15,7 @@ CREATE TABLE `tbl_users` (
 
 Now you're good to go. 
 here are the connection strings for deployed app
-MySqlConnection(@"Server=MYSQL5045.site4now.net;Database=db_a74404_temp;Uid=a74404_temp;Pwd=pradip1234");
+public MySqlConnection con = new MySqlConnection(@"Server=MYSQL5045.site4now.net;Database=db_a74404_temp;Uid=a74404_temp;Pwd=pradip1234");
         public MySqlConnection groups_db = new MySqlConnection(@"Server=MYSQL5045.site4now.net;Database=db_a74404_temp;Uid=a74404_temp;Pwd=pradip1234");
         public MySqlConnection ntf = new MySqlConnection(@"Server=MYSQL5045.site4now.net;Database=db_a74404_temp;Uid=a74404_temp;Pwd=pradip1234; Convert Zero Datetime=True");
 
