@@ -24,9 +24,11 @@ lang="en">
         content="Quickly send and receive WhatsApp messages right from your computer." />
     <meta name="og:url" content="https://web.whatsapp.com/" />
     <meta name="og:title" content="WhatsApp Web" />
+    
 
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+      
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -197,7 +199,8 @@ lang="en">
      $('#notification').click(function () {
          console.log("notification clicked");
          var targetdiv = document.getElementById('notification-btn-target');
-         targetdiv.style.display = "block";
+         targetdiv.style.display = "flex";
+         targetdiv.style.flexDirection = "column";
          chatHub.server.showNotification();
      });
 
@@ -758,30 +761,21 @@ lang="en">
                               }
 
                           </script>
-                                            <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons">
-                                                <path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z" />
-                                                <path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z" />
-                                                <path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                <path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                <path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                <path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
-                                                <path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z" />
-                                                <path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z" />
-                                                <path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z" />
-                                                <path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z" />
-                                            </svg>
-                                        </div>
-                                        <div id="notification-btn-target" style="height: 500px; width: 500px; background-color: brown; display: none">
-                                            <button type="button" onclick="close_notices()">close</button>
-                                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div id="ntf">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script>
+                         <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons"><path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z"/><path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z"/><path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z"/><path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z"/><path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z"/><path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z"/></svg>
+                      </div>
+                      <div id="notification-btn-target" style="height:500px;width:100%; background-color:white; box-shadow:0px 2px 2px 2px rgb(136, 136, 136); border-radius:10px; display:none">
+                          <div style="width:100%; box-shadow: 0 10px 10px -5px; display:flex;flex-direction:row; justify-content:center;">
+                              <div style="font-size:30px; font-weight:bold;">Notifications</div>
+                          </div>
+                          <div style="padding:5px;">
+                                    <div id="ntf">
+                                        
+                                    </div>
+                              </div>
+                          <div style="display:flex;width:100%;padding:10px; padding-left:100px; ">
+                                    <button style="padding:10px; background-color:rgb(25 109 243); border-radius:10px;" type="button" onclick="close_notices()">close</button>
+                               </div> 
+                          <script>
                               function close_notices() {
                                   var targetdiv = document.getElementById('notification-btn-target');
                                   targetdiv.style.display = "none";
@@ -797,9 +791,10 @@ lang="en">
 
 
                       </script>
-                                        <div id="notice-plus-btn-target" style="height: 500px; width: 500px; display: none; background-color: cadetblue">
-                                            <button type="button" onclick="close_add_notice()">close</button>
-                                            <script>
+                      <div id="notice-plus-btn-target" style="width:100
+%; display:none; background-color:transparent;">
+                          <button type="button" onclick="close_add_notice()">close</button>
+                          <script>
                               function close_add_notice() {
                                   {
                                       var targetdiv = document.getElementById('notice-plus-btn-target');
@@ -808,34 +803,106 @@ lang="en">
                               }
                           </script>
 
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form>
+                          <div class="modal-content" style="position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;">
+                                    <div class="modal-header" style="display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);
+">
+                                        <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;">
+                                        <form>
 
-                                                        <div class="form -group">
-                                                            <label for="to-date" class="col-form-label">ExpireDate:</label>
-                                                            <input type="datetime-local" class="form-control" id="to-date" />
-                                                        </div>
-
-
-                                                        <div class="form-group">
-                                                            <label for="message-text" class="col-form-label">Message:</label>
-                                                            <textarea class="form-control" id="ntf-msg"></textarea>
-                                                        </div>
-
-                                                    </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button id="create-ntf" type="button" class="btn btn-primary">Create Notification</button>
-                                                </div>
+                                            <div class="form -group">
+                                                <label for="to-date" class="col-form-label" style="display: inline-block;">ExpireDate:</label>
+                                                <input type="datetime-local" class="form-control" id="to-date" />
                                             </div>
+
+
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label" style="display: inline-block;">Message:</label>
+                                                <textarea class="form-control" id="ntf-msg" style="display: block;
+    width: 200px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+"></textarea>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer" style="font: inherit;
+    font-size: 100%;
+    vertical-align: initial;
+    outline: none;
+    margin: 0;
+    padding: 5px;
+    display:flex;
+    justify-content:space-evenly;
+    border: 0;">
+                                        <button type="button" class="btn btn-secondary" onclick="close_add_notice()" data-dismiss="modal" style="display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #acb9bf;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Close</button>
+                                        <button id="create-ntf" type="button" class="btn btn-primary" style="display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgb(9 124 222);
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Create Notification</button>
+                                    </div>
+                                </div>
 
                                         </div>
                                     </div>
@@ -879,149 +946,162 @@ lang="en">
                           </script>
                                     </div>
 
-                                </div>
-                                <div class="_1C2Q3 F-0gY" id="pane-side">
-                                    <div tabindex="-1" data-tab="4">
-                                        <div class="" style="pointer-events: auto">
-
-                                            <div id="list_area" style="width: 100%; height: 1000px; background-color: aqua; display: none;">
-
-                                                <asp:TextBox ID="TextBox8" placeholder="new username" runat="server"></asp:TextBox>
-                                                <asp:TextBox ID="TextBox9" placeholder="new password" runat="server"></asp:TextBox>
-
-                                                <asp:TextBox ID="TextBox10" placeholder="new email" runat="server"></asp:TextBox>
-                                                <asp:Button ID="UpdateDetails" runat="server" OnClick="UpdateDetails_Click" Text="Button" />
-                                                &nbsp;
-                                               
-                                            </div>
-
-                                            <div id="listarea"
-                                                class="rusers JnmQF _3QmOg" style="height: 1000px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div hidden="" style="display: none"></div>
-                                    <div class="_3q7pL"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="_1Flk2 _1sFTb">
-                            <div id="main" class="_3AUV4">
-                                <div
-                                    class="IeYBo"
-                                    data-asset-chat-background-light="true"
-                                    style="opacity: 0.06">
-                                </div>
-                                <header class="_1-qgF chat-header darkable" style="border-left-width: 2px; border-left-color: rgb(147 147 147);">
-                                    <div class="fBf_N" role="button">
-                                        <div class="-y4n1" style="height: 40px; width: 40px">
-                                            <div class="_27MZN">
-                                                <span
-                                                    data-testid="default-user"
-                                                    data-icon="default-user"
-                                                    class="">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 212 212"
-                                                        width="212"
-                                                        height="212">
-                                                        <path
-                                                            fill="#DFE5E7"
-                                                            class="background"
-                                                            d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z">
-                                                        </path>
-                                                        <path
-                                                            fill="#FFF"
-                                                            class="primary"
-                                                            d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z">
-                                                        </path></svg></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="_2uaUb" role="button">
-                                        <div class="z4t2k">
-                                            <div class="_2KQyF">
-                                                <span id="spanUser1"
-                                                    dir="auto"
-                                                    title="Pushkar Joshi GECA"
-                                                    class="darkable _35k-1 _1adfa _3-8er">Pushkar Joshi GECA</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="_1IeOz">
-                                        <div class="_1ljzS pnYZD">
-                                            <div class="_2n-zq">
-                                                <div
-                                                    aria-disabled="false"
-                                                    role="button"
-                                                    tabindex="0"
-                                                    data-tab="8"
-                                                    title="Search…"
-                                                    aria-label="Search…">
-                                                    <span
-                                                        data-testid="search-alt"
-                                                        data-icon="search-alt"
-                                                        class="">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 24 24"
-                                                            width="24"
-                                                            height="24">
-                                                            <path
-                                                                fill="currentColor"
-                                                                d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z">
-                                                            </path></svg></span>
-                                                </div>
-                                                <span></span>
-                                            </div>
-                                            <div class="_2n-zq">
-                                                <div
-                                                    aria-disabled="false"
-                                                    role="button"
-                                                    tabindex="0"
-                                                    data-tab="8"
-                                                    title="Menu"
-                                                    aria-label="Menu">
-                                                    <span data-testid="menu" data-icon="menu" class="">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 24 24"
-                                                            width="24"
-                                                            height="24">
-                                                            <path
-                                                                fill="currentColor"
-                                                                d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z">
-                                                            </path></svg></span>
-                                                </div>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </header>
-                                <span class="_1C6f8"></span>
-                                <div class="_1C6f8"><span></span></div>
-                                <div class="_2wjK5">
-                                    <div class="_3wXwX copyable-area">
-                                        <span></span><span></span>
-                                        <div class="_1gL0z chat-back-screen darkable" tabindex="0">
-                                            <div class="_2VvGi"></div>
-                                            <div class="_2hDby">
-                                                <div class="_3M4BR" title="load earlier messages…">
-                                                    <span data-testid="refresh" data-icon="refresh" class="">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            viewBox="0 0 24 24"
-                                                            width="24"
-                                                            height="24">
-                                                            <path
-                                                                fill="currentColor"
-                                                                d="M17.6 6.4C16.2 4.9 14.2 4 12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1c-.8 2.3-3 4-5.6 4-3.3 0-6-2.7-6-6s2.7-6 6-6c1.7 0 3.1.7 4.2 1.8L13 11h7V4l-2.4 2.4z">
-                                                            </path></svg></span>
-                                                </div>
-                                            </div>
-                                            <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
-                                                <!-- msg list area -->
-
+              </div>
+              <div class="_1C2Q3 F-0gY" id="pane-side">
+                <div tabindex="-1" data-tab="4">
+                  <div class="" style="pointer-events: auto">
+                      
+                      <div id="list_area" style="width:100%;height:1000px; background-color:aqua; display:none;">
+                          
+                            <asp:TextBox ID="TextBox8" placeholder="new username" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="TextBox9" placeholder="new password" runat="server"></asp:TextBox>
+                          
+                            <asp:TextBox ID="TextBox10" placeholder="new email" runat="server"></asp:TextBox>
+                          <asp:Button ID="UpdateDetails" runat="server" OnClick="UpdateDetails_Click" Text="Button" />
+                       &nbsp;
+                      </div>
+                      
+                    <div id="listarea"
+                      class="rusers JnmQF _3QmOg"   style="height: 1000px;">
+                   
+                      
+                    </div>
+                  </div>
+                </div>
+                <div hidden="" style="display: none"></div>
+                <div class="_3q7pL"></div>
+              </div>
+            </div>
+          </div>
+          <div class="_1Flk2 _1sFTb">
+            <div id="main" class="_3AUV4">
+              <div
+                class="IeYBo"
+                data-asset-chat-background-light="true"
+                style="opacity: 0.06"
+              ></div>
+              <header class="_1-qgF chat-header darkable" style="border-left-width:2px; border-left-color:rgb(147 147 147);">
+                <div class="fBf_N" role="button">
+                  <div class="-y4n1" style="height: 40px; width: 40px">
+                    <div class="_27MZN">
+                      <span
+                        data-testid="default-user"
+                        data-icon="default-user"
+                        class=""
+                        ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 212 212"
+                          width="212"
+                          height="212"
+                        >
+                          <path
+                            fill="#DFE5E7"
+                            class="background"
+                            d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"
+                          ></path>
+                          <path
+                            fill="#FFF"
+                            class="primary"
+                            d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"
+                          ></path></svg
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="_2uaUb" role="button">
+                  <div class="z4t2k">
+                    <div class="_2KQyF">
+                      <span id="spanUser1"
+                        dir="auto"
+                        title="Pushkar Joshi GECA"
+                        class="darkable _35k-1 _1adfa _3-8er"
+                        >...</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="_1IeOz">
+                  <div class="_1ljzS pnYZD">
+                    <div class="_2n-zq">
+                      <div
+                        aria-disabled="false"
+                        role="button"
+                        tabindex="0"
+                        data-tab="8"
+                        title="Search…"
+                        aria-label="Search…"
+                      >
+                        <span
+                          data-testid="search-alt"
+                          data-icon="search-alt"
+                          class=""
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"
+                            ></path></svg
+                        ></span>
+                      </div>
+                      <span></span>
+                    </div>
+                    <div class="_2n-zq">
+                      <div
+                        aria-disabled="false"
+                        role="button"
+                        tabindex="0"
+                        data-tab="8"
+                        title="Menu"
+                        aria-label="Menu"
+                      >
+                        <span data-testid="menu" data-icon="menu" class=""
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"
+                            ></path></svg
+                        ></span>
+                      </div>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </header>
+              <span class="_1C6f8"></span>
+              <div class="_1C6f8"><span></span></div>
+              <div class="_2wjK5">
+                <div class="_3wXwX copyable-area">
+                  <span></span><span></span>
+                  <div class="_1gL0z chat-back-screen darkable" tabindex="0">
+                    <div class="_2VvGi"></div>
+                    <div class="_2hDby">
+                      <div class="_3M4BR" title="load earlier messages…">
+                        <span data-testid="refresh" data-icon="refresh" class=""
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M17.6 6.4C16.2 4.9 14.2 4 12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1c-.8 2.3-3 4-5.6 4-3.3 0-6-2.7-6-6s2.7-6 6-6c1.7 0 3.1.7 4.2 1.8L13 11h7V4l-2.4 2.4z"
+                            ></path></svg
+                        ></span>
+                      </div>
+                    </div>
+                    <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
+                      <!-- msg list area -->
+                        
 
 
 

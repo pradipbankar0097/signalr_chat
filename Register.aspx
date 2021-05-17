@@ -14,20 +14,18 @@
     <script type="text/javascript">
         $(function () {
             $("#Badge").change(function () {
-              
-                
+
+
                 var value = $("#Badge option:selected").text();
                 console.log(value);
                 if (value == 'Principal') {
                     $("#Departmentc").hide();
                     $("#yearc").hide();
                 }
-                else if (value == 'HOD' || value == 'Professor')
-                {
+                else if (value == 'HOD' || value == 'Professor') {
                     $("#yearc").hide();
                 }
-                else
-                {
+                else {
                     $("#Departmentc").show();
                     $("#yearc").show();
 
@@ -71,6 +69,7 @@
               <asp:ListItem>Principal</asp:ListItem>
           </asp:DropDownList>
                     &nbsp;<span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="**Field is empty " ControlToValidate="Badge" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
                 <div class="form-group has-feedback" id="Departmentc">
                     Department :&nbsp;
@@ -86,6 +85,7 @@
                         <asp:ListItem>Mathematics</asp:ListItem>
                         <asp:ListItem>Science</asp:ListItem>
                     </asp:DropDownList>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="**Field is empty " ControlToValidate="Department" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
                 <div class="form-group has-feedback" id="yearc">
                     Year : 
@@ -96,6 +96,7 @@
                <asp:ListItem>TE</asp:ListItem>
                <asp:ListItem>BE</asp:ListItem>
            </asp:DropDownList>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="**Field is empty " ControlToValidate="year" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
                 <div class="form-group has-feedback">
                     <input id="EnrollNo" type="text" class="form-control" placeholder="Enrollment No" required="" runat="server" />
@@ -107,12 +108,13 @@
                     <asp:Label ID="lblmsg" runat="server" Text=""></asp:Label>
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     <%--code for image input--%>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="**Field is empty " ControlToValidate="FileImgsave" ForeColor="Red"></asp:RequiredFieldValidator>
                 </div>
 
                 <div class="form-group has-feedback">
-                    <input id="txtEmail" type="email" class="form-control" placeholder="Email" required="required" runat="server" />
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
+<input type="email" id="txtEmail" runat="server" class="form-control" placeholder="Email" />
+
+                   </div>
                 <div class="form-group has-feedback">
                     <input id="txtPassword" type="password" class="form-control" placeholder="Password" required="required" runat="server" />
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
@@ -128,6 +130,7 @@
                     <!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="form-submit" id="btnRegister" runat="server" onserverclick="btnRegister_ServerClick">Register</button>
+                        <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="txtPasswordR" ControlToValidate="txtPassword" ErrorMessage="**Password does not matches " ForeColor="Red"></asp:CompareValidator>
                     </div>
                     <!-- /.col -->
                 </div>
