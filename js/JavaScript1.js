@@ -65,7 +65,7 @@ function registerClientMethods(chatHub) {
         alert("You are not authorized for this operation");
      };
 
-    chatHub.client.addMessageToPrivateChat = function (msg, username, userenroll, time) { console.log(msg) };
+    //chatHub.client.addMessageToPrivateChat = function (msg, username, userenroll, time) { console.log(msg) };
 
     chatHub.client.method = function (fromusername, fromuserenroll, messasge) {
         alert("You have message from" + fromusername);
@@ -82,7 +82,7 @@ function registerClientMethods(chatHub) {
         $('#listarea').html('');
         $('#listarea').height(70 * users.length);
         for (i = 0; i < users.length; i++) {
-            add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
+            add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">ok bye</div>                            <div class="lchat-time" style="float:right;">11:00pm</div>                            <div class="uunread testing 1" style="float:right; display:hidden;">25</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
             $('#listarea').append(add + add1 + add2);
         }
     };
@@ -137,13 +137,14 @@ function registerClientMethods(chatHub) {
 
 
         console.log(Notifications);
-
+        /*Notifications = {msg,creator,notice_id,from_date,to_date}*/
         for (i = 0; i < Notifications.length; i++) {
 
+            var add1 = '<div>From: ' + Notifications[i][1] + '</div>'
+            var add2 = '<div>Expiry Date: ' + Notifications[i][4] + '</div>'
+            add = '<li>' + Notifications[i][0] + '</li><hr/>';
             
-            add = '<li>' + Notifications[i][0] + '</li>';
-          
-            $('#ntf').append(add);
+            $('#ntf').append(add1+add2+add);
         }
 
     };
@@ -217,6 +218,30 @@ function registerClientMethods(chatHub) {
         }
 
     };
+
+    chatHub.client.addMessageToPrivateChat = function (message, fromUserName, fromUserEnroll, currentDateTime) {
+        console.log('addMessageToPrivateChat called');
+
+        var divChat = '<div class="row darkable sender-msg-box">'
+            + '<div class="msg-box-row">'
+            + '<div class="sender-box darkable">'
+            + '<div class="msg darkable">' + message + '</div>'
+            + '<div class="sender-msg-time-read-rec">'
+            + '<div class="read-rec">//</div>'
+            + '<div class="msg-time">' + currentDateTime + '</div>'
+
+            + '</div>'
+            + '</div>'
+            + '</div >'
+            + '</div >';
+
+        
+            divChat = divChat.replace(/sender/g, 'receiver');
+            //divChat = divChat.replace(/darkable/g, '');
+        
+        $('#msgarea').append(divChat);
+    }
+
     chatHub.client.addMessageToGroupChat = function (message, fromusername,datetime) {
         console.log('addMessageToGroupChat called');
         console.log(message);
@@ -382,7 +407,7 @@ function registerClientMethods(chatHub) {
             targetdiv.innerHTML += toappend;
             console.log(userdata[i]);
         }
-        targetdiv.innerHTML += '<input type="submit" value="Update" id="UpdateDetails"/>';
+        targetdiv.innerHTML += '<asp:Button ID="UpdateDetail" runat="server" OnClick="UpdateDetails_Click" Text="Button" />';
         console.log('success 2');
     };
 };
