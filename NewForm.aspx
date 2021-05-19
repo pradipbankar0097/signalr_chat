@@ -716,6 +716,11 @@ html[dir=ltr] ._3QfZd {
                       
                   </div>
                   <div style="display:flex;height:40px;width:90%; flex-direction:row-reverse;">
+                      <div id="logout-btn" style="display:flex; width:40px; height:40px;">
+                          
+                          <img alt="logout" src="https://img.icons8.com/ios-filled/344/fa314a/logout-rounded-up.png" />
+                            
+                      </div>
                       <div id="notification" style="display:flex; height:40px; width:40px; ">
                           <script>
                               function open_notices() {
