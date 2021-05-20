@@ -73,10 +73,7 @@ namespace SignalRChat
         protected void UpdateDetails_Click(object sender, EventArgs e)
         {
             
-            string query = "update tbl_users set UserName='" + TextBox8.Text + "',Password='" + TextBox9.Text + "',Email='" + TextBox10.Text + "' where EnrollNo='" + UserEnrollNo + "' ";
-            //conc.ExecuteQuery(query);
-
-            conc.ExecuteQuery(query);
+            
         }
         
     }

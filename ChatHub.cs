@@ -421,9 +421,9 @@ namespace SignalRChat
             userdata = ConnC.GetRow(QueryForData);
             Clients.Caller.getUserData(userdata);
         }
-        public void UpdateData(string enroll,string username,string password,string email)
+        public void UpdateData(string enroll,string username,string email)
         {
-            string query = "update tbl_user set UserName='" + username + "',Password='" + password + "',Email='" + email + "' where EnrollNo='" + enroll + "' ";
+            string query = "update tbl_users set UserName='" + username + "',Email='" + email + "' where EnrollNo='" + enroll + "' ";
             ConnC.ExecuteQuery(query);
 
           

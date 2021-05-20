@@ -42,6 +42,17 @@
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="Scripts/date.format.js"></script>
 
+      
+      
+      
+      
+      
+      
+
+
+
+
+
     <!--EmojiOneArea
     <link href="Content/emojionearea.min.css" rel="stylesheet" />
     <script src="Scripts/emojionearea.js"></script>
@@ -86,7 +97,10 @@
 
                 }
 
-    
+                //upodate my details
+                $('#update_my_details').click(function () {
+                    chatHub.server.updateData("<%= Session["UserEnrollNo"].ToString()%>", document.getElementById('userdata0').value , document.getElementById('userdata5').value );
+                });
                 
           
    // Send Button Click Event
@@ -716,7 +730,7 @@ html[dir=ltr] ._3QfZd {
                       
                   </div>
                   <div style="display:flex;height:40px;width:90%; flex-direction:row-reverse;">
-                      <div id="logout-btn" style="display:flex; width:40px; height:40px;">
+                      <div id="logout-btn" style="display:flex; width:28px; height:28px;">
                           
                           <img alt="logout" src="https://img.icons8.com/ios-filled/344/fa314a/logout-rounded-up.png" />
                             
@@ -917,17 +931,21 @@ html[dir=ltr] ._3QfZd {
               <div class="_1C2Q3 F-0gY" id="pane-side">
                 <div tabindex="-1" data-tab="4">
                   <div class="" style="pointer-events: auto">
-                      
-                      <div id="list_area" style="width:100%;height:1000px; background-color:aqua; display:none;">
+                      <script src="./yashashree.js"></script>
+                      <div align="center" id="list_area" style="width:100%;height:auto; background-color:rgb(0 0 0 ); display:none;">
                           
-                            <asp:TextBox ID="TextBox8" placeholder="new username" runat="server"></asp:TextBox>
-                            <asp:TextBox ID="TextBox9" placeholder="new password" runat="server"></asp:TextBox>
-                          
-                            <asp:TextBox ID="TextBox10" placeholder="new email" runat="server"></asp:TextBox>
-                          <asp:Button ID="UpdateDetails" runat="server" OnClick="UpdateDetails_Click" Text="Button" />
-                       &nbsp;
-                      </div>
-                      
+
+                        
+
+                         
+
+      </div>
+            <div align="center" id="updatebuttons" style="display:none; background-color:black;">
+                     <input id="update_my_details" type="button" value="Update" style="color:white; border:1px solid #349db;background:none; padding:10px 20px; font-size:20px; font-family:montserrat;cursor:pointer; margin:10x; transition:0.8s;  position:relative;overflow:hidden; background:#0066ff; border-radius:25px; "/>
+
+                     <input id="closedetails" type="button" onclick="close_my_details()" value="Close" style="border:1px solid #349db;background:none; padding:10px 20px; font-size:20px; font-family:montserrat;cursor:pointer; margin:10x; transition:0.8s;  position:relative;overflow:hidden; background:red; color:white; border-radius:25px; "/> 
+
+                     </div>        
                     <div id="listarea"
                       class="rusers JnmQF _3QmOg"   style="height: 1000px;">
                    

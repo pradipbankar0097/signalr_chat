@@ -392,24 +392,33 @@ function registerClientMethods(chatHub) {
     };
 
     chatHub.client.getUserData = function (userdata) {
-        $('list_area').html('');
+        //$('list_area').html('');
         var targetdiv = document.getElementById('list_area');
         targetdiv.style.display = "block";
         console.log(userdata);
+        $('#list_area').html('');
+        document.getElementById('updatebuttons').style.display = "block";
+        document.getElementById('listarea').style.display = "none";
         for (var i = 0; i < userdata.length; i++) {
             var toappend = '';
             if (i == (userdata.length - 1)) {
-                 toappend = '<div><img src="' + userdata[i] + '" style="height:100px;width:100px;"><div>'
+                toappendimg = '<div><img src="/images/DP/dummy.png" style="border-radius:20px; margin-top:5px; height:100px;width:100px;"><div>';
             }
             else {
-                 toappend = '<div><input type="text" value="'+userdata[i]+'" /></div>';
-            }
+                toappend = '<div class="form-group" style="padding:2px;">'
+                    + '<input type="text" id="userdata' + i.toString() + '" class="form-control" value="' + userdata[i] + '" style="width=100%; border: 2px solid #aaa; border-radius:16px; margin:8px 0; outline:none; padding:8px; box-sizing:border-box; border-color:dodgerBlue; box-shadow: 0 0 8px 0 dogerBlue;transition:3s; "/>'
+                    + '</div>';
+           }
             targetdiv.innerHTML += toappend;
             console.log(userdata[i]);
         }
-        targetdiv.innerHTML += '<asp:Button ID="UpdateDetail" runat="server" OnClick="UpdateDetails_Click" Text="Button" />';
+        targetdiv.innerHTML = toappendimg + targetdiv.innerHTML;
+        targetdiv.innerHTML +='';
         console.log('success 2');
     };
+
+
+
 };
 
 
