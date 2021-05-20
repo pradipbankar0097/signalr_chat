@@ -401,7 +401,7 @@ function registerClientMethods(chatHub) {
         document.getElementById('listarea').style.display = "none";
         for (var i = 0; i < userdata.length; i++) {
             var toappend = '';
-            if (i == (userdata.length - 1)) {
+            if (i == (userdata.length - 2)) {
                 toappendimg = '<div><img src="/images/DP/dummy.png" style="border-radius:20px; margin-top:5px; height:100px;width:100px;"><div>';
             }
             else {
