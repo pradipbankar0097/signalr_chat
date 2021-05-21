@@ -96,7 +96,8 @@ lang="en">
 
                 //upodate my details
                 $('#update_my_details').click(function () {
-                    chatHub.server.updateData("<%= Session["UserEnrollNo"].ToString()%>", document.getElementById('userdata0').value, document.getElementById('userdata5').value, document.getElementById('userdata7').value);
+                    chatHub.server.updateData("<%# Session["UserEnrollNo"].ToString()%>", document.getElementById('userdata0').value, document.getElementById('userdata5').value, document.getElementById('userdata7').value);
+                    $('#closedetails').click();
                 });
                 
           
@@ -963,9 +964,9 @@ lang="en">
                   </div>
                   <div style="display:flex;height:40px;width:90%; flex-direction:row-reverse;">
                       <div id="logout-btn" style="display:flex; width:28px; height:28px;">
-                          
-                          <img alt="logout" src="https://img.icons8.com/ios-filled/344/fa314a/logout-rounded-up.png" />
-                            
+                          <a href="Login.aspx">
+                          <img alt="logout" style="height:40px;width:40px;" src="https://img.icons8.com/ios-filled/344/fa314a/logout-rounded-up.png" />
+                            </a>
                       </div>
                       <div id="notification" style="display:flex; height:40px; width:40px; ">
                           <script>
