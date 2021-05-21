@@ -316,6 +316,7 @@
     <Content Include="login\scss\layouts\main.scss" />
     <Content Include="login\scss\layouts\responsive.scss" />
     <Content Include="login\scss\style.scss" />
+    <Content Include="yashashree.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\abc.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
