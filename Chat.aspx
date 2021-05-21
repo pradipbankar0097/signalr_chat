@@ -502,7 +502,9 @@
                         '</div>' +
                         '</div>' +
                         '<a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
-                        '<button type="button" id="ShowModelImg"  value="' + imgDisplay.src + '"  class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</button>' +
+                        '<a href="' + imgDisplay.src + '"id="ShowModelImg"  class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</a>' +
+
+                        //'<button type="button" id="ShowModelImg"  value="' + imgDisplay.src + '"  class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</button>' +
                         '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
                         '</div>';
                 }

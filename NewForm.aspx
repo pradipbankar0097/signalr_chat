@@ -12,7 +12,7 @@ lang="en">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title><%=Session["UserName"] %></title>
+    <title><%# Session["UserName"] %></title>
     <meta name="viewport" content="width=device-width" />
     <meta name="google" content="notranslate" />
     <meta name="format-detection" content="telephone=no" />
@@ -24,11 +24,11 @@ lang="en">
         content="Quickly send and receive WhatsApp messages right from your computer." />
     <meta name="og:url" content="https://web.whatsapp.com/" />
     <meta name="og:title" content="WhatsApp Web" />
-    
 
-      
-    
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
 
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -55,16 +55,17 @@ lang="en">
    <script type="text/javascript" src="js\registerevents"></script>--%>
 
 
-     <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" />--%>
+    <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" />--%>
 
 
 
     <script type="text/javascript" src="js/JavaScript1.js"></script>
     <script type="text/javascript">
-     
+
+
         function registerEvents(chatHub) {
 
-           
+
 
 
             $(document).ready(function () {
@@ -82,170 +83,167 @@ lang="en">
 
                 }
 
-    
-                
-          
-   // Send Button Click Event
-            $('#btnSendMsg').click(  function () {
+                // Send Button Click Event
+                $('#btnSendMsg').click(function () {
 
-                var msg = $("#txtMessage").html();
-                $("#txtMessage").html('');
+                    var msg = $("#txtMessage").html();
+                    $("#txtMessage").html('');
 
-                if (msg.length > 0) {
-                    var fromUserName = name;
-                    var fromuserEnroll = $('#hdUserEnroll').val();
-                    var toUserEnroll = $('#hdtoUserEnroll').val();
-                
-                    
-                    switch (selectedfield) {
-                        case 'c':
-                            chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                            console.log('server request sent');
-                            break;
-                        case 't':
-                            chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
-                            break;
-                        case 'g':
-                            chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId , msg);
-                            break;
-                        
-                        default:
-                            alert('Select a field');
-                    };
-                 
-                  //  chatHub.server.sendMessageToAll(userName, msg);
-                    
-                }
-            });
-     
-            $('#classmates').click( function () {
-                selectedfield = 'c';
-               
-                chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
+                    if (msg.length > 0) {
+                        var fromUserName = name;
+                        var fromuserEnroll = $('#hdUserEnroll').val();
+                        var toUserEnroll = $('#hdtoUserEnroll').val();
+
+
+                        switch (selectedfield) {
+                            case 'c':
+                                chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                                console.log('server request sent', fromuserEnroll);//just for checking whether it's working or not
+                                break;
+                            case 't':
+                                chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                                break;
+                            case 'g':
+                                chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId, msg);
+                                break;
+
+                            default:
+                                alert('Select a field');
+                        };
+
+                        //  chatHub.server.sendMessageToAll(userName, msg);
+
+                    }
+                });
+
+                $('#classmates').click(function () {
+                    selectedfield = 'c';
+
+                    chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
 
 
                 });
-                $('#teachers').click(  function () {
+                $('#teachers').click(function () {
                     selectedfield = 't';
                     chatHub.server.loadRegisteredTeachers();
 
 
                 });
 
-           /*$('#groups').onchange(function () {
-             */   
-               var selectBox = document.getElementById("select_user_type");
-               selectBox.addEventListener('change', changeFunc);
-               async  function changeFunc() {
+                /*$('#groups').onchange(function () {
+                  */
+                var selectBox = document.getElementById("select_user_type");
+                selectBox.addEventListener('change', changeFunc);
+                async function changeFunc() {
 
                     if (this.value == 'Groups') {
-                    /*alert(this.value);*/
-                   selectedfield = 'g';
+                        /*alert(this.value);*/
+                        selectedfield = 'g';
                         chatHub.server.loadRegisteredGroups(enrollno);
                     }
                     if (this.value == 'Classmates') {
-                    /*alert(this.value);*/
+                        /*alert(this.value);*/
                         selectedfield = 'c';
                         chatHub.server.loadRegisteredUsers("<%# this.UserEnrollNo %>");
                     }
                     if (this.value == 'Teachers') {
-                    /*alert(this.value);*/
+                        /*alert(this.value);*/
                         selectedfield = 't';
                         chatHub.server.loadRegisteredTeachers();
                     }
-               }
-           //});
+                }
+                //});
 
 
-     $('.rusers').mouseenter(  function () {
-         var i;
+                $('.rusers').mouseenter(function () {
+                    var i;
 
-         var ide = this.children;
-         if (true) {
-             for (i = 0; i < ide.length; i++) {
-                 var num = ide.item(i).addEventListener('mouseup', function () {
-                     console.log('event occured');
-
-
-
-
-                     if (selectedfield == 'c') {
-
-                         var toEnrollNo = this.id;
-                         $('#hdtoUserEnroll').val(toEnrollNo);
-                         console.log(toEnrollNo);
-                         $('#spanUser').val = toEnrollNo;
-                         chatHub.server.loadPrivateChat1(enrollno, toEnrollNo);
-                         //loaded.push(toEnrollNo);
-                     }
-                     else if (selectedfield == 'g') {
-                         toGroupId = this.id;
+                    var ide = this.children;
+                    if (true) {
+                        for (i = 0; i < ide.length; i++) {
+                            var num = ide.item(i).addEventListener('mouseup', function () {
+                                console.log('event occured');
 
 
 
-                         chatHub.server.loadGroupChat(toGroupId, enrollno);
-                     }
 
-                 });
+                                if (selectedfield == 'c') {
 
-             }
-
-         }
-
-
-     });
-
-     //NOTIFICAIONS
-     $('#notification').click(function () {
-         console.log("notification clicked");
-         var targetdiv = document.getElementById('notification-btn-target');
-         targetdiv.style.display = "flex";
-         targetdiv.style.flexDirection = "column";
-         chatHub.server.showNotification();
-     });
+                                    var toEnrollNo = this.id;
+                                    $('#hdtoUserEnroll').val(toEnrollNo);
+                                    console.log(toEnrollNo);
+                                    $('#spanUser').val = toEnrollNo;
+                                    chatHub.server.loadPrivateChat1(enrollno, toEnrollNo);
+                                    //loaded.push(toEnrollNo);
+                                }
+                                else if (selectedfield == 'g') {
+                                    toGroupId = this.id;
 
 
-     $('#create-ntf').click( function () {
 
-         var msg = $("#ntf-msg").val();
-         $("#ntf-msg").val('');
+                                    chatHub.server.loadGroupChat(toGroupId, enrollno);
+                                }
 
-         if (msg.length > 0) {
-             var creator = name;
-             var creatorEnrollNo = enrollno;
-             var toDate = $('#to-date').val();
-             console.log('creating notification');
-             function sleep(milliseconds) {
-                 const date = Date.now();
-                 let currentDate = null;
-                 do {
-                     currentDate = Date.now();
-                     console.log(currentDate.toString());
-                 } while (currentDate - date < milliseconds);
-             }
-             sleep(10000);
-             console.log('notification created');
+                            });
+
+                        }
+
+                    }
 
 
-             chatHub.server.createNotification(msg, creator, creatorEnrollNo, toDate);
+                });
 
-         }
-     });
+                //NOTIFICAIONS
+                $('#notification').click(function () {
+                    console.log("notification clicked");
+                    var targetdiv = document.getElementById('notification-btn-target');
+                    targetdiv.style.display = "flex";
+                    targetdiv.style.flexDirection = "column";
+                    chatHub.server.showNotification();
+                });
+
+
+                $('#create-ntf').click(function () {
+
+                    var msg = $("#ntf-msg").val();
+                    $("#ntf-msg").val('');
+
+                    if (msg.length > 0) {
+                        var creator = name;
+                        var creatorEnrollNo = enrollno;
+                        var toDate = $('#to-date').val();
+                        console.log('creating notification');
+                        function sleep(milliseconds) {
+                            const date = Date.now();
+                            let currentDate = null;
+                            do {
+                                currentDate = Date.now();
+                                console.log(currentDate.toString());
+                            } while (currentDate - date < milliseconds);
+                        }
+                        sleep(10000);
+                        console.log('notification created');
+
+
+                        chatHub.server.createNotification(msg, creator, creatorEnrollNo, toDate);
+
+                    }
+                });
 
                 $('#self_pp_sm').click(function () {
 
                     console.log('success');
-                    chatHub.server.getUserData("<%=Session["UserEnrollNo"].ToString()%>");
+                    chatHub.server.getUserData("<%# Session["UserEnrollNo"].ToString()%>");
                 });
 
 
-                
-     // Send Message on Enter Button
-     $("#txtMessage").keypress(function (e) {
-         if (e.which == 13) {
-             $('#btnSendMsg').click();
-         }
-     });
+
+                // Send Message on Enter Button
+                $("#txtMessage").keypress(function (e) {
+                    if (e.which == 13) {
+                        $('#btnSendMsg').click();
+                    }
+                });
 
 
                 $('#exampleModal').on('show.bs.modal', function (event) {
@@ -258,19 +256,174 @@ lang="en">
                     //modal.find('.modal-body input').val(recipient)
                 });
 
-     
+                $(document).ready(function () {
+                    $('#show').click(function () {
+                        $('._3BZyX').toggle("slide");
+                    });
+                });
+
+                $('#fileInput').change(function (event) {
+                    var x = URL.createObjectURL(event.target.files[0]);
+                    console.log(x);
+                    //var file = event.files[0];
+
+                    alert("image send");
+
+                });
+
+                $(function () {
+                    my_jquery_function = function (msg1) {
+                        var fromUserName = name;
+                        var fromuserEnroll = $('#hdUserEnroll').val();
+                        var toUserEnroll = $('#hdtoUserEnroll').val();
+                        switch (selectedfield) {
+                            case 'c':
+                                chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg1);
+                                console.log('server request sent for file upload', fromUserName, fromuserEnroll, toUserEnroll);
+                                break;
+                            case 't':
+                                chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg1);
+                                break;
+                            case 'g':
+                                chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId, msg1);
+                                break;
+
+                            default:
+                                alert('Select a field');
+                        };
+
+                    }
+                })
+                //$(document).on('click', '#ShowModelImg', function () {
+                //    $get("ImgModal").src = this.value;
+                //    $('#ShowPictureModal').modal('show');
+                //});
 
 
- });
 
+            });
+        }
+        function uploadStarted() {
 
+            $get("imgDisplay").style.display = "none";
 
         };
+        function IsValidateFile(fileF) {
+            var allowedFiles = [".doc", ".docx", ".pdf", ".txt", ".xlsx", ".xls"];
+            var regex = new RegExp("([a-zA-Z0-9\s_\\.\-:])+(" + allowedFiles.join('|') + ")$");
+            
+            if (regex.test(fileF.toLowerCase())) {
+                alert("Please upload files having extensions: " + allowedFiles.join(', ') + " only.");
+                return false;
+            }
+            return true;
+        };
+        function IsImageFile(fileF) {
+            var ImageFiles = [".png", ".jpg", ".gif"];
+            var regex = new RegExp("(" + ImageFiles.join('|') + ")$");
+            if (!regex.test(fileF.toLowerCase())) {
+                return false;
+            }
+            return true;
+        };
+        function GetCurrentDateTime(now) {
 
-        
+            var localdate = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
+            return localdate;
+        };
+
+
+        //uploadComplete method
+        function uploadComplete(sender, args) {
+
+            var name = '<%# this.UserName %>';
+            var imgDisplay = $get("imgDisplay");
+            imgDisplay.src = "profile/loading.gif";
+            imgDisplay.style.cssText = "";
+            var img = new Image();
+            img.onload = function () {
+                imgDisplay.style.cssText = "Display:none;";
+                imgDisplay.src = img.src;
+            };
+
+            imgDisplay.src = "<%# ResolveUrl(UploadFolderPath) %>" + args.get_fileName().toString();
+
+            var date = GetCurrentDateTime(new Date());
+            var sizeKB = (args.get_length() / 1024).toFixed(2);
+
+            var msg1;
+
+
+            if (IsValidateFile(args.get_fileName())) {
+                if (IsImageFile(args.get_fileName())) {
+                    msg1 =
+                        '<div class="box-body">' +
+                        '<div class="attachment-block clearfix">' +
+                        '<a><img id="imgC" style="width:100px;" class="attachment-img" src="' + imgDisplay.src + '" alt="Attachment Image"></a>' +
+                        '<div class="attachment-pushed"> ' +
+                        '<h4 class="attachment-heading"><i class="fa fa-image">  ' + args.get_fileName() + ' </i></h4> <br />' +
+                        '<div id="at" class="attachment-text"> Dimensions : ' + imgDisplay.width + 'x' + imgDisplay.height + ', Type: ' + args.get_contentType() +
+
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<br/><a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" style="color:#ffdb58" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
+                        '<a href="' + imgDisplay.src + '"id="ShowModelImg"  class="btn btn-default btn-xs " style="color:#ffdb58"><i class="fa fa-camera"></i> View</a><br/><br/>' +
+                        //'<button type="button" id="ShowModelImg"  value="' + imgDisplay.src + '"  class="btn btn-default btn-xs"><i class="fa fa-camera"></i> View</button>' +
+                        '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
+                        '</div>';
+                }
+                else {
+
+                    msg1 =
+                        '<div class="box-body">' +
+                        '<div class="attachment-block clearfix">' +
+                        '<a><img id="imgC" style="width:100px;" class="attachment-img" src="images/file-icon.png" alt="Attachment Image"></a>' +
+                        '<div class="attachment-pushed"> ' +
+                        '<h4 class="attachment-heading"><i class="fa fa-file-o">  ' + args.get_fileName() + ' </i></h4> <br />' +
+                        '<div id="at" class="attachment-text"> Type: ' + args.get_contentType() +
+
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<br/><a id="btnDownload" href="' + imgDisplay.src + '" class="btn btn-default btn-xs" style="color:#ffdb58" download="' + args.get_fileName() + '"><i class="fa fa fa-download"></i> Download</a>' +
+                        '<a href="' + imgDisplay.src + '" target="_blank" class="btn btn-default btn-xs" style="color:#ffdb58"><i class="fa fa-camera"></i> View</a><br/><br/>' +
+                        '<span class="pull-right text-muted">File Size : ' + sizeKB + ' Kb</span>' +
+                        '</div>';
+                }
+
+                my_jquery_function(msg1);
+                //switch (selectedfield) {
+                //    case 'c':
+                //        chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg1);
+                //        console.log('server request sent for file upload', fromUserName, fromuserEnroll, toUserEnroll);
+                //        break;
+                //    case 't':
+                //        chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg1);
+                //        break;
+                //    case 'g':
+                //        chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId, msg1);
+                //        break;
+
+                //    default:
+                //        alert('Select a field');
+                //};
+
+
+            }
+
+
+            imgDisplay.src = '';
+        };
+
+        //function uploadStarted() {
+
+        //    $get("imgDisplay").style.display = "none";
+
+        //};
+
     </script>
-
-
 
 
     <style>
@@ -616,7 +769,7 @@ lang="en">
 
         .msg-time {
             font-size: 14px;
-            font-weight: 20;
+            font-weight: "20";
         }
 
         .receiver-box {
@@ -633,7 +786,7 @@ lang="en">
         }
 
         #attachment {
-            opacity: 0;
+            /* opacity: 0;*/
         }
 
 
@@ -656,7 +809,7 @@ lang="en">
             background-color:black;
             color:white;
         }
-*/
+        */
 
         #popup-container {
             position: absolute;
@@ -686,6 +839,41 @@ lang="en">
             width:500px;
             margin: 120px auto 0;
         } */
+        .FileUploadClass {
+            font-size: 5px;
+            z-index: 500;
+            position: relative;
+            z-index: 10;
+        }
+
+            .FileUploadClass input[type=file] {
+                background: transparent;
+                border: Dashed 2px #000000;
+                opacity: 0;
+                filter: alpha(opacity = 0);
+            }
+
+        .FakeFileUpload {
+            position: relative;
+            border: Solid 1px #000000;
+            width: 400px;
+            z-index: 1;
+        }
+
+        .FakeFileUploadDiv {
+            position: absolute;
+            opacity: .5;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+            filter: alpha(opacity=50);
+            z-index: 5;
+        }
+
+
+
+
+        .dropdown-toggle::after {
+            display: none !important;
+        }
     </style>
     <link
         href="./WhatsApp_files/bootstrap_qr-e892ca30934b9f1b9db6.css"
@@ -717,7 +905,10 @@ lang="en">
 
 </head>
 <body class="web">
+
+
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
         <div id="app">
             <div tabindex="-1" id="for_background" class="_3h3LX _34ybp app-wrapper-web font-fix os-win">
@@ -754,155 +945,96 @@ lang="en">
 
                                     </div>
                                     <div style="display: flex; height: 40px; width: 90%; flex-direction: row-reverse;">
+                                        <div id="logout-btn" style="display: flex; width: 28px; height: 28px;">
+
+                                            <img alt="logout" src="https://img.icons8.com/ios-filled/344/fa314a/logout-rounded-up.png" />
+
+                                        </div>
                                         <div id="notification" style="display: flex; height: 40px; width: 40px;">
                                             <script>
-                              function open_notices() {
-                                 
-                              }
+                                                function open_notices() {
 
-                          </script>
-                         <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons"><path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z"/><path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z"/><path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z"/><path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z"/><path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z"/><path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z"/><path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z"/></svg>
-                      </div>
-                      <div id="notification-btn-target" style="height:500px;width:100%; background-color:white; box-shadow:0px 2px 2px 2px rgb(136, 136, 136); border-radius:10px; display:none">
-                          <div style="width:100%; box-shadow: 0 10px 10px -5px; display:flex;flex-direction:row; justify-content:center;">
-                              <div style="font-size:30px; font-weight:bold;">Notifications</div>
-                          </div>
-                          <div style="padding:5px;">
-                                    <div id="ntf">
-                                        
-                                    </div>
-                              </div>
-                          <div style="display:flex;width:100%;padding:10px; padding-left:100px; ">
-                                    <button style="padding:10px; background-color:rgb(25 109 243); border-radius:10px;" type="button" onclick="close_notices()">close</button>
-                               </div> 
-                          <script>
-                              function close_notices() {
-                                  var targetdiv = document.getElementById('notification-btn-target');
-                                  targetdiv.style.display = "none";
-                              }
-                          </script>
+                                                }
+                                            </script>
+                                            <svg id="line_icons" height="40px" viewBox="0 0 74 74" width="40px" xmlns="http://www.w3.org/2000/svg" data-name="line icons">
+                                                <path d="m60.661 25.336h-12.342a1 1 0 0 1 -1-1v-12.336a1 1 0 0 1 1.707-.707l12.342 12.336a1 1 0 0 1 -.707 1.707zm-11.342-2h8.928l-8.928-8.927z" />
+                                                <path d="m60.659 72h-47.32a1 1 0 0 1 -1-1l.02-59.01a1 1 0 0 1 1-1h5.85a1 1 0 0 1 0 2h-4.85l-.02 57.01h45.32v-45.253l-11.754-11.754h-20.856a1 1 0 0 1 0-2h21.27a1 1 0 0 1 .707.293l12.34 12.339a1 1 0 0 1 .293.708v46.667a1 1 0 0 1 -1 1z" />
+                                                <path d="m54.49 39.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
+                                                <path d="m54.49 47.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
+                                                <path d="m54.49 55.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
+                                                <path d="m54.49 63.683h-34.982a1 1 0 0 1 0-2h34.982a1 1 0 0 1 0 2z" />
+                                                <path d="m19.1 23.6a1 1 0 0 1 -.986-.83 8.752 8.752 0 0 1 5.59-9.357 8.752 8.752 0 0 1 10.53 2.815 1 1 0 0 1 -.449 1.492l-14.308 5.81a1.006 1.006 0 0 1 -.377.07zm8.17-8.887a7.477 7.477 0 0 0 -2.814.554 6.942 6.942 0 0 0 -4.445 5.884l11.735-4.762a6.578 6.578 0 0 0 -4.475-1.673z" />
+                                                <path d="m21.021 17.461a1 1 0 0 1 -.926-.624l-2.606-6.42a1 1 0 0 1 .551-1.3l6.727-2.73a1 1 0 0 1 1.3.551l2.6 6.413a1 1 0 0 1 -1.854.752l-2.221-5.49-4.873 1.978 2.229 5.494a1 1 0 0 1 -.927 1.376z" />
+                                                <path d="m30.768 31.817a1 1 0 0 1 -.8-.395l-7.518-9.9a1 1 0 0 1 .42-1.532l6.011-2.439a1 1 0 0 1 1.368.8l1.511 12.349a1 1 0 0 1 -.616 1.048 1.014 1.014 0 0 1 -.376.069zm-5.932-10.463 4.49 5.913-.9-7.37z" />
+                                                <path d="m18.418 11.04a.994.994 0 0 1 -.446-.1l-4.088-2.046a1 1 0 0 1 .07-1.822l12.324-5a1 1 0 0 1 1.322 1.256l-1.51 4.313a1 1 0 0 1 -.567.6l-6.727 2.73a1 1 0 0 1 -.378.069zm-1.66-2.947 1.7.85 5.889-2.39.629-1.8z" />
+                                            </svg>
+                                        </div>
+                                        <div id="notification-btn-target" style="height: 500px; width: 100%; overflow: scroll; background-color: white; box-shadow: 0px 2px 2px 2px rgb(136, 136, 136); border-radius: 10px; display: none">
+                                            <div style="width: 100%; box-shadow: 0 10px 10px -5px; display: flex; flex-direction: row; justify-content: center;">
+                                                <div style="font-size: 30px; font-weight: bold;">Notifications</div>
+                                            </div>
+                                            <div style="padding: 5px;">
+                                                <div id="ntf">
+                                                </div>
+                                            </div>
+                                            <div style="display: flex; width: 100%; padding: 10px; padding-left: 100px;">
+                                                <button style="padding: 10px; background-color: rgb(25 109 243); border-radius: 10px;" type="button" onclick="close_notices()">close</button>
+                                            </div>
+                                            <script>
+                                                function close_notices() {
+                                                    var targetdiv = document.getElementById('notification-btn-target');
+                                                    targetdiv.style.display = "none";
+                                                }
+                                            </script>
                                         </div>
                                         <button type="button" onclick="open_add_notice()" id="notice-plus-btn" class="btn btn-primary">+</button>
                                         <script>
-                          function open_add_notice() {
-                              var targetdiv = document.getElementById('notice-plus-btn-target');
-                              targetdiv.style.display = "block";
-                          }
+                                            function open_add_notice() {
+                                                var targetdiv = document.getElementById('notice-plus-btn-target');
+                                                targetdiv.style.display = "block";
+                                            }
+                                        </script>
+                                        <div id="notice-plus-btn-target" style="width: 100%; display: none; background-color: transparent;">
+                                            <button type="button" onclick="close_add_notice()">close</button>
+                                            <script>
+                                                function close_add_notice() {
+                                                    {
+                                                        var targetdiv = document.getElementById('notice-plus-btn-target');
+                                                        targetdiv.style.display = "none";
+                                                    }
+                                                }
+                                            </script>
+
+                                            <div class="modal-content" style="position: relative; display: flex; flex-direction: column; width: 100%; pointer-events: auto; background-color: #fff; background-clip: padding-box; border: 1px solid rgba(0,0,0,.2); border-radius: .3rem; outline: 0;">
+                                                <div class="modal-header" style="display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; padding: 1rem 1rem; border-bottom: 1px solid #dee2e6; border-top-left-radius: calc(.3rem - 1px); border-top-right-radius: calc(.3rem - 1px);">
+                                                    <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="position: relative; flex: 1 1 auto; padding: 1rem;">
+                                                    <form>
+
+                                                        <div class="form -group">
+                                                            <label for="to-date" class="col-form-label" style="display: inline-block;">ExpireDate:</label>
+                                                            <input type="datetime-local" class="form-control" id="to-date" />
+                                                        </div>
 
 
-                      </script>
-                      <div id="notice-plus-btn-target" style="width:100
-%; display:none; background-color:transparent;">
-                          <button type="button" onclick="close_add_notice()">close</button>
-                          <script>
-                              function close_add_notice() {
-                                  {
-                                      var targetdiv = document.getElementById('notice-plus-btn-target');
-                                      targetdiv.style.display = "none";
-                                  }
-                              }
-                          </script>
+                                                        <div class="form-group">
+                                                            <label for="message-text" class="col-form-label" style="display: inline-block;">Message:</label>
+                                                            <textarea class="form-control" id="ntf-msg" style="display: block; width: 200px; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; border-radius: .25rem; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;"></textarea>
+                                                        </div>
 
-                          <div class="modal-content" style="position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    pointer-events: auto;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: .3rem;
-    outline: 0;">
-                                    <div class="modal-header" style="display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1rem;
-    border-bottom: 1px solid #dee2e6;
-    border-top-left-radius: calc(.3rem - 1px);
-    border-top-right-radius: calc(.3rem - 1px);
-">
-                                        <h5 class="modal-title" id="exampleModalLabel">New Notification</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" style="position: relative;
-    flex: 1 1 auto;
-    padding: 1rem;">
-                                        <form>
-
-                                            <div class="form -group">
-                                                <label for="to-date" class="col-form-label" style="display: inline-block;">ExpireDate:</label>
-                                                <input type="datetime-local" class="form-control" id="to-date" />
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer" style="font: inherit; font-size: 100%; vertical-align: initial; outline: none; margin: 0; padding: 5px; display: flex; justify-content: space-evenly; border: 0;">
+                                                    <button type="button" class="btn btn-secondary" onclick="close_add_notice()" data-dismiss="modal" style="display: inline-block; font-weight: 400; line-height: 1.5; color: #212529; text-align: center; text-decoration: none; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-color: #acb9bf; border: 1px solid transparent; padding: .375rem .75rem; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                                        Close</button>
+                                                    <button id="create-ntf" type="button" class="btn btn-primary" style="display: inline-block; font-weight: 400; line-height: 1.5; color: #212529; text-align: center; text-decoration: none; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-color: rgb(9 124 222); border: 1px solid transparent; padding: .375rem .75rem; font-size: 1rem; border-radius: .25rem; transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                                                        Create Notification</button>
+                                                </div>
                                             </div>
-
-
-                                            <div class="form-group">
-                                                <label for="message-text" class="col-form-label" style="display: inline-block;">Message:</label>
-                                                <textarea class="form-control" id="ntf-msg" style="display: block;
-    width: 200px;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-"></textarea>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer" style="font: inherit;
-    font-size: 100%;
-    vertical-align: initial;
-    outline: none;
-    margin: 0;
-    padding: 5px;
-    display:flex;
-    justify-content:space-evenly;
-    border: 0;">
-                                        <button type="button" class="btn btn-secondary" onclick="close_add_notice()" data-dismiss="modal" style="display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: #acb9bf;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Close</button>
-                                        <button id="create-ntf" type="button" class="btn btn-primary" style="display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: rgb(9 124 222);
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Create Notification</button>
-                                    </div>
-                                </div>
 
                                         </div>
                                     </div>
@@ -926,182 +1058,165 @@ lang="en">
                                     <div>
                                         <input type="text" id="user_search" onkeyup="searchuser()" placeholder="Enter Name " />
                                         <script>
-                              function searchuser() {
-
-                                  var input, filter, ul, li, a, i, txtValue;
-                                  input = document.getElementById('user_search');
-                                  filter = input.value.toUpperCase();
-                                  ul = document.getElementById("listarea");
-                                  li = ul.getElementsByClassName('urow');
-                                  for (i = 0; i < li.length; i++) {
-                                      a = li[i].getElementsByClassName('uname')[0];
-                                      txtValue = a.textContent || a.innerText;
-                                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                          li[i].style.display = "";
-                                      } else {
-                                          li[i].style.display = "none";
-                                      }
-                                  }
-                              }
-                          </script>
+                                            function searchuser() {
+                                                var input, filter, ul, li, a, i, txtValue;
+                                                input = document.getElementById('user_search');
+                                                filter = input.value.toUpperCase();
+                                                ul = document.getElementById("listarea");
+                                                li = ul.getElementsByClassName('urow');
+                                                for (i = 0; i < li.length; i++) {
+                                                    a = li[i].getElementsByClassName('uname')[0];
+                                                    txtValue = a.textContent || a.innerText;
+                                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                        li[i].style.display = "";
+                                                    } else {
+                                                        li[i].style.display = "none";
+                                                    }
+                                                }
+                                            }
+                                        </script>
                                     </div>
 
-              </div>
-              <div class="_1C2Q3 F-0gY" id="pane-side">
-                <div tabindex="-1" data-tab="4">
-                  <div class="" style="pointer-events: auto">
-                      
-                      <div id="list_area" style="width:100%;height:1000px; background-color:aqua; display:none;">
-                          
-                            <asp:TextBox ID="TextBox8" placeholder="new username" runat="server"></asp:TextBox>
-                            <asp:TextBox ID="TextBox9" placeholder="new password" runat="server"></asp:TextBox>
-                          
-                            <asp:TextBox ID="TextBox10" placeholder="new email" runat="server"></asp:TextBox>
-                          <asp:Button ID="UpdateDetails" runat="server" OnClick="UpdateDetails_Click" Text="Button" />
-                       &nbsp;
-                      </div>
-                      
-                    <div id="listarea"
-                      class="rusers JnmQF _3QmOg"   style="height: 1000px;">
-                   
-                      
-                    </div>
-                  </div>
-                </div>
-                <div hidden="" style="display: none"></div>
-                <div class="_3q7pL"></div>
-              </div>
-            </div>
-          </div>
-          <div class="_1Flk2 _1sFTb">
-            <div id="main" class="_3AUV4">
-              <div
-                class="IeYBo"
-                data-asset-chat-background-light="true"
-                style="opacity: 0.06"
-              ></div>
-              <header class="_1-qgF chat-header darkable" style="border-left-width:2px; border-left-color:rgb(147 147 147);">
-                <div class="fBf_N" role="button">
-                  <div class="-y4n1" style="height: 40px; width: 40px">
-                    <div class="_27MZN">
-                      <span
-                        data-testid="default-user"
-                        data-icon="default-user"
-                        class=""
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 212 212"
-                          width="212"
-                          height="212"
-                        >
-                          <path
-                            fill="#DFE5E7"
-                            class="background"
-                            d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z"
-                          ></path>
-                          <path
-                            fill="#FFF"
-                            class="primary"
-                            d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z"
-                          ></path></svg
-                      ></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="_2uaUb" role="button">
-                  <div class="z4t2k">
-                    <div class="_2KQyF">
-                      <span id="spanUser1"
-                        dir="auto"
-                        title="Pushkar Joshi GECA"
-                        class="darkable _35k-1 _1adfa _3-8er"
-                        >...</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="_1IeOz">
-                  <div class="_1ljzS pnYZD">
-                    <div class="_2n-zq">
-                      <div
-                        aria-disabled="false"
-                        role="button"
-                        tabindex="0"
-                        data-tab="8"
-                        title="Search…"
-                        aria-label="Search…"
-                      >
-                        <span
-                          data-testid="search-alt"
-                          data-icon="search-alt"
-                          class=""
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                      <span></span>
-                    </div>
-                    <div class="_2n-zq">
-                      <div
-                        aria-disabled="false"
-                        role="button"
-                        tabindex="0"
-                        data-tab="8"
-                        title="Menu"
-                        aria-label="Menu"
-                      >
-                        <span data-testid="menu" data-icon="menu" class=""
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                      <span></span>
-                    </div>
-                  </div>
-                </div>
-              </header>
-              <span class="_1C6f8"></span>
-              <div class="_1C6f8"><span></span></div>
-              <div class="_2wjK5">
-                <div class="_3wXwX copyable-area">
-                  <span></span><span></span>
-                  <div class="_1gL0z chat-back-screen darkable" tabindex="0">
-                    <div class="_2VvGi"></div>
-                    <div class="_2hDby">
-                      <div class="_3M4BR" title="load earlier messages…">
-                        <span data-testid="refresh" data-icon="refresh" class=""
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="24"
-                            height="24"
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M17.6 6.4C16.2 4.9 14.2 4 12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1c-.8 2.3-3 4-5.6 4-3.3 0-6-2.7-6-6s2.7-6 6-6c1.7 0 3.1.7 4.2 1.8L13 11h7V4l-2.4 2.4z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                    </div>
-                    <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
-                      <!-- msg list area -->
-                        
+                                </div>
+                                <div class="_1C2Q3 F-0gY" id="pane-side">
+                                    <div tabindex="-1" data-tab="4">
+                                        <div class="" style="pointer-events: auto">
+                                            <script src="./yashashree.js"></script>
+                                            <div align="center" id="list_area" style="width: 100%; height: auto; background-color: rgb(0 0 0 ); display: none;">
+                                            </div>
+                                            <div align="center" id="updatebuttons" style="display: none; background-color: black;">
+                                                <input id="update_my_details" type="button" value="Update" style="color: white; border: 1px solid #349db; background: none; padding: 10px 20px; font-size: 20px; font-family: montserrat; cursor: pointer; margin: 10x; transition: 0.8s; position: relative; overflow: hidden; background: #0066ff; border-radius: 25px;" />
+
+                                                <input id="closedetails" type="button" onclick="close_my_details()" value="Close" style="border: 1px solid #349db; background: none; padding: 10px 20px; font-size: 20px; font-family: montserrat; cursor: pointer; margin: 10x; transition: 0.8s; position: relative; overflow: hidden; background: red; color: white; border-radius: 25px;" />
+
+                                            </div>
+                                            <div id="listarea"
+                                                class="rusers JnmQF _3QmOg" style="height: 1000px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div hidden="" style="display: none"></div>
+                                    <div class="_3q7pL"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="_1Flk2 _1sFTb">
+                            <div id="main" class="_3AUV4">
+                                <div
+                                    class="IeYBo"
+                                    data-asset-chat-background-light="true"
+                                    style="opacity: 0.06">
+                                </div>
+                                <header class="_1-qgF chat-header darkable" style="border-left-width: 2px; border-left-color: rgb(147 147 147);">
+                                    <div class="fBf_N" role="button">
+                                        <div class="-y4n1" style="height: 40px; width: 40px">
+                                            <div class="_27MZN">
+                                                <span
+                                                    data-testid="default-user"
+                                                    data-icon="default-user"
+                                                    class="">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 212 212"
+                                                        width="212"
+                                                        height="212">
+                                                        <path
+                                                            fill="#DFE5E7"
+                                                            class="background"
+                                                            d="M106.251.5C164.653.5 212 47.846 212 106.25S164.653 212 106.25 212C47.846 212 .5 164.654.5 106.25S47.846.5 106.251.5z">
+                                                        </path>
+                                                        <path
+                                                            fill="#FFF"
+                                                            class="primary"
+                                                            d="M173.561 171.615a62.767 62.767 0 0 0-2.065-2.955 67.7 67.7 0 0 0-2.608-3.299 70.112 70.112 0 0 0-3.184-3.527 71.097 71.097 0 0 0-5.924-5.47 72.458 72.458 0 0 0-10.204-7.026 75.2 75.2 0 0 0-5.98-3.055c-.062-.028-.118-.059-.18-.087-9.792-4.44-22.106-7.529-37.416-7.529s-27.624 3.089-37.416 7.529c-.338.153-.653.318-.985.474a75.37 75.37 0 0 0-6.229 3.298 72.589 72.589 0 0 0-9.15 6.395 71.243 71.243 0 0 0-5.924 5.47 70.064 70.064 0 0 0-3.184 3.527 67.142 67.142 0 0 0-2.609 3.299 63.292 63.292 0 0 0-2.065 2.955 56.33 56.33 0 0 0-1.447 2.324c-.033.056-.073.119-.104.174a47.92 47.92 0 0 0-1.07 1.926c-.559 1.068-.818 1.678-.818 1.678v.398c18.285 17.927 43.322 28.985 70.945 28.985 27.678 0 52.761-11.103 71.055-29.095v-.289s-.619-1.45-1.992-3.778a58.346 58.346 0 0 0-1.446-2.322zM106.002 125.5c2.645 0 5.212-.253 7.68-.737a38.272 38.272 0 0 0 3.624-.896 37.124 37.124 0 0 0 5.12-1.958 36.307 36.307 0 0 0 6.15-3.67 35.923 35.923 0 0 0 9.489-10.48 36.558 36.558 0 0 0 2.422-4.84 37.051 37.051 0 0 0 1.716-5.25c.299-1.208.542-2.443.725-3.701.275-1.887.417-3.827.417-5.811s-.142-3.925-.417-5.811a38.734 38.734 0 0 0-1.215-5.494 36.68 36.68 0 0 0-3.648-8.298 35.923 35.923 0 0 0-9.489-10.48 36.347 36.347 0 0 0-6.15-3.67 37.124 37.124 0 0 0-5.12-1.958 37.67 37.67 0 0 0-3.624-.896 39.875 39.875 0 0 0-7.68-.737c-21.162 0-37.345 16.183-37.345 37.345 0 21.159 16.183 37.342 37.345 37.342z">
+                                                        </path></svg></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="_2uaUb" role="button">
+                                        <div class="z4t2k">
+                                            <div class="_2KQyF">
+                                                <span id="spanUser1"
+                                                    dir="auto"
+                                                    title="Pushkar Joshi GECA"
+                                                    class="darkable _35k-1 _1adfa _3-8er">...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="_1IeOz">
+                                        <div class="_1ljzS pnYZD">
+                                            <div class="_2n-zq">
+                                                <div
+                                                    aria-disabled="false"
+                                                    role="button"
+                                                    tabindex="0"
+                                                    data-tab="8"
+                                                    title="Search…"
+                                                    aria-label="Search…">
+                                                    <span
+                                                        data-testid="search-alt"
+                                                        data-icon="search-alt"
+                                                        class="">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            width="24"
+                                                            height="24">
+                                                            <path
+                                                                fill="currentColor"
+                                                                d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z">
+                                                            </path></svg></span>
+                                                </div>
+                                                <span></span>
+                                            </div>
+                                            <div class="_2n-zq">
+                                                <div
+                                                    aria-disabled="false"
+                                                    role="button"
+                                                    tabindex="0"
+                                                    data-tab="8"
+                                                    title="Menu"
+                                                    aria-label="Menu">
+                                                    <span data-testid="menu" data-icon="menu" class="">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            width="24"
+                                                            height="24">
+                                                            <path
+                                                                fill="currentColor"
+                                                                d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z">
+                                                            </path></svg></span>
+                                                </div>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header>
+                                <span class="_1C6f8"></span>
+                                <div class="_1C6f8"><span></span></div>
+                                <div class="_2wjK5">
+                                    <div class="_3wXwX copyable-area">
+                                        <span></span><span></span>
+                                        <div class="_1gL0z chat-back-screen darkable" tabindex="0">
+                                            <div class="_2VvGi"></div>
+                                            <div class="_2hDby">
+                                                <div class="_3M4BR" title="load earlier messages…">
+                                                    <span data-testid="refresh" data-icon="refresh" class="">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            width="24"
+                                                            height="24">
+                                                            <path
+                                                                fill="currentColor"
+                                                                d="M17.6 6.4C16.2 4.9 14.2 4 12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8c3.7 0 6.8-2.6 7.7-6h-2.1c-.8 2.3-3 4-5.6 4-3.3 0-6-2.7-6-6s2.7-6 6-6c1.7 0 3.1.7 4.2 1.8L13 11h7V4l-2.4 2.4z">
+                                                            </path></svg></span>
+                                                </div>
+                                            </div>
+                                            <div id="msgarea" tabindex="-1" class="_11liR darkablecaht">
+                                                <!-- msg list area -->
+
 
 
 
@@ -1174,43 +1289,171 @@ lang="en">
                                                             </path></svg></span>
                                                 </button>
                                             </div>
-
                                             <div class="_2C9f1">
-                                                <div class="_2n-zq">
-                                                    <div
-                                                        aria-disabled="false"
-                                                        role="button"
-                                                        tabindex="0"
-                                                        title="Attach"
-                                                        aria-label="Attach">
+                                                <div class="_2n-zq ">
+                                                    <div aria-disabled="false" role="button" tabindex="0" class="_1XaX-" title="Attach" aria-label="Attach">
+                                                        <span data-testid="clip" id="show" data-icon="clip" class="">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 24 24" width="24" height="24">
+                                                                <path fill="currentColor"
+                                                                    d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z">
+                                                                </path>
 
-                                                        <label for="attachFile">
-                                                            <span data-testid="clip" data-icon="clip" class="">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
 
-                                                                    <path fill="currentColor"
-                                                                        d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z">
-                                                                    </path>
-                                                                </svg>
-
-                                                            </span>
-                                                        </label>
-                                                        <%--<input type="file" id="attachFile" runat="server" style="display: none" />
-                                                        <asp:FileUpload ID="FileUpload1" runat="server" class="btn btn-default" />--%>
-                                                        <%-- <asp:FileUpload ID="attachFile" runat="server" />--%>
+                                                            </svg></span>
                                                     </div>
-                                                    <%--<button id="btnUpload" runat="server" OnClientClick="return false;" onserverclick="btnUpload_Click" AutoPostBack="false">
-                                                    <i class="fas fa-upload"></i>
-                                                </button>--%>
-                                                    <span></span>
+                                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
 
+                                                        <ContentTemplate>
+                                                            <div class="_1ld-u">
+                                                                <div tabindex="-1" class="_3BZyX" id="atch-btn-target" style="display: none;" style="transform-origin: left top;">
+                                                                    <ul class="_19rjv" id="test">
+                                                                        <li tabindex="-1" class="_2iavx _2CDB7 _3pa6w" data-animate-dropdown-item="true">
+                                                                            <button class="_1pLAS" onclick="open_browse_img()" data-animate-menu-icons-item="true"
+                                                                                style="opacity: 1; transform: translateY(0%) scaleX(1) scaleY(1);">
+                                                                                <span
+                                                                                    data-testid="attach-image" data-icon="attach-image" class="_1SWzr">
+                                                                                    <svg
+                                                                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                        viewBox="0 0 53 53" width="53" height="53">
+                                                                                        <defs>
+                                                                                            <circle id="image-SVGID_1_" cx="26.5" cy="26.5" r="25.5"></circle>
+                                                                                        </defs>
+                                                                                        <clipPath id="image-SVGID_2_">
+                                                                                            <use xlink:href="#image-SVGID_1_" overflow="visible"></use>
+                                                                                        </clipPath>
+                                                                                        <g clip-path="url(#image-SVGID_2_)">
+                                                                                            <path fill="#AC44CF"
+                                                                                                d="M26.5-1.1C11.9-1.1-1.1 5.6-1.1 27.6h55.2c-.1-19-13-28.7-27.6-28.7z">
+                                                                                            </path>
+                                                                                            <path fill="#BF59CF"
+                                                                                                d="M53 26.5H-1.1c0 14.6 13 27.6 27.6 27.6s27.6-13 27.6-27.6H53z">
+                                                                                            </path>
+                                                                                            <path fill="#AC44CF" d="M17 24.5h18v9H17z"></path>
+                                                                                        </g>
+                                                                                        <g fill="#F5F5F5">
+                                                                                            <path id="svg-image"
+                                                                                                d="M18.318 18.25h16.364c.863 0 1.727.827 1.811 1.696l.007.137v12.834c0 .871-.82 1.741-1.682 1.826l-.136.007H18.318a1.83 1.83 0 0 1-1.812-1.684l-.006-.149V20.083c0-.87.82-1.741 1.682-1.826l.136-.007h16.364zm5.081 8.22l-3.781 5.044c-.269.355-.052.736.39.736h12.955c.442-.011.701-.402.421-.758l-2.682-3.449a.54.54 0 0 0-.841-.011l-2.262 2.727-3.339-4.3a.54.54 0 0 0-.861.011zm8.351-5.22a1.75 1.75 0 1 0 .001 3.501 1.75 1.75 0 0 0-.001-3.501z">
+                                                                                            </path>
+                                                                                        </g>
+
+
+                                                                                    </svg></span>
+                                                                                <input accept="image/*,video/mp4,video/3gpp,video/quicktime" id="fileInput" type="file" multiple="" style="display: none;">
+                                                                                <%-- <input id="fileInput" type="file" style="display: none;" />--%>
+
+
+
+                                                                                <%-- <asp:FileUpload ID="FileUpload1" runat="server" accept="image/*"  style="display: none;"/>
+                                                                                --%>
+                                                                            </button>
+
+                                                                            <img id="imgDisplay" src="" class="user-image" style="height: 100px;" />
+                                                                            <ajaxToolkit:AsyncFileUpload OnClientUploadComplete="uploadComplete" runat="server" ID="AsyncFileUpload1" ThrobberID="imgLoader" OnUploadedComplete="FileUploadComplete" OnClientUploadStarted="uploadStarted" />
+
+                                                                            <script>
+                                                                                function open_browse_img() {
+                                                                                    console.log("calling");
+                                                                                    document.getElementById('fileInput').click();
+
+                                                                                }
+                                                                                //function SendImg(event) {
+                                                                                //    var file = event.files[0];
+                                                                                //    if (!file.type.match("image.*")) {
+                                                                                //        alert("plz select img only.");
+                                                                                //    }
+                                                                                //    else {
+                                                                                //        alert("image send");
+                                                                                //        var reader = new FileReader();
+                                                                                //        reader.addEventListener("load", function () {
+                                                                                //            var msg = reader.result;
+
+
+                                                                                //            if (msg.length > 0) {
+                                                                                //                selectedfield = 'c';
+                                                                                //                var chatHub = $.connection.chatHub;
+                                                                                //                var fromUserName = name;
+                                                                                //                var fromuserEnroll = $('#hdUserEnroll').val();
+                                                                                //                var toUserEnroll = $('#hdtoUserEnroll').val();
+
+
+                                                                                //                switch (selectedfield) {
+                                                                                //                    case 'c':
+                                                                                //                        chatHub.server.sendPrivateMessage(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                                                                                //                        console.log('server request sent', fromuserEnroll);//just for checking whether it's working or not
+                                                                                //                        break;
+                                                                                //                    case 't':
+                                                                                //                        chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                                                                                //                        break;
+                                                                                //                    case 'g':
+                                                                                //                        chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId, msg);
+                                                                                //                        break;
+
+                                                                                //                    default:
+                                                                                //                        alert('Select a field');
+                                                                                //                };
+
+                                                                                //                //  chatHub.server.sendMessageToAll(userName, msg);
+
+                                                                                //            }
+                                                                                //        }, false);
+                                                                                //        if (file) {
+                                                                                //            reader.readAsDataURL(file);
+                                                                                //        }
+                                                                                //    }
+                                                                                //}
+
+                                                                            </script>
+                                                                            <div></div>
+                                                                        </li>
+
+                                                                        <li tabindex="-1" class="_2iavx _2CDB7 _3pa6w" data-animate-dropdown-item="true">
+                                                                            <button
+                                                                                class="_1pLAS" data-animate-menu-icons-item="true" onclick="open_browse_file()"
+                                                                                style="opacity: 1; transform: translateY(0%) scaleX(1) scaleY(1);">
+                                                                                <span
+                                                                                    data-testid="attach-document" data-icon="attach-document" class="_1SWzr">
+                                                                                    <svg
+                                                                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                                                        viewBox="0 0 53 53" width="53" height="53">
+                                                                                        <defs>
+                                                                                            <circle id="document-SVGID_1_" cx="26.5" cy="26.5" r="25.5"></circle>
+                                                                                        </defs>
+                                                                                        <clipPath id="document-SVGID_2_">
+                                                                                            <use xlink:href="#document-SVGID_1_" overflow="visible"></use>
+                                                                                        </clipPath>
+                                                                                        <g clip-path="url(#document-SVGID_2_)">
+                                                                                            <path fill="#5157AE"
+                                                                                                d="M26.5-1.1C11.9-1.1-1.1 5.6-1.1 27.6h55.2c-.1-19-13-28.7-27.6-28.7z">
+                                                                                            </path>
+                                                                                            <path fill="#5F66CD"
+                                                                                                d="M53 26.5H-1.1c0 14.6 13 27.6 27.6 27.6s27.6-13 27.6-27.6H53z">
+                                                                                            </path>
+                                                                                        </g>
+                                                                                        <g fill="#F5F5F5">
+                                                                                            <path id="svg-document"
+                                                                                                d="M29.09 17.09c-.38-.38-.89-.59-1.42-.59H20.5c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H32.5c1.1 0 2-.9 2-2V23.33c0-.53-.21-1.04-.59-1.41l-4.82-4.83zM27.5 22.5V18l5.5 5.5h-4.5c-.55 0-1-.45-1-1z">
+                                                                                            </path>
+                                                                                        </g>
+
+
+                                                                                    </svg></span><input accept="*" id="fileInput2" type="file" multiple="" style="display: none;">
+                                                                            </button>
+                                                                            <script>
+                                                                                function open_browse_file() {
+                                                                                    document.getElementById('fileInput2').click();
+                                                                                }
+                                                                            </script>
+                                                                            <div></div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
                                                 </div>
                                             </div>
-
-
-
                                         </div>
-
                                         <div tabindex="-1" class="_2A8P4 darkable">
                                             <div tabindex="-1" class="_1JAUF _2x4bz">
                                                 <div class="OTBsx" style="visibility: hidden">Type a message</div>
@@ -1218,15 +1461,21 @@ lang="en">
                                             </div>
 
                                         </div>
-                                       <%-- <asp:button runat="server" text="Button" onclientclick="return false;" onclick="btnSendMsg_Click" autopostback="false" xmlns:asp="#unknown" />--%>
-                                        <div  id="btnSendMsg" style="display: flex; height: 40px; width: 40px;">
+
+
+                                        <div id="btnSendMsg" style="display: flex; height: 40px; width: 40px;">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                                 <path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path></svg>
+
                                         </div>
 
 
 
-
+                                        <%--<script>
+                                            function sendMsg() {
+                                                document.getElementById('btnSendMsg').click();
+                                            }
+                                        </script>--%>
                                     </div>
                                     <div class="_1gNA1">
                                         <div class="-fxbk">
@@ -1266,8 +1515,8 @@ lang="en">
             </div>
             <div hidden="" style="display: none"></div>
         </div>
-
     </form>
+
 
 </body>
 </html>

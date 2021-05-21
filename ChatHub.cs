@@ -173,7 +173,7 @@ namespace SignalRChat
         public void CreateTableFor(string table_name, string fromUserEN, string toUserEN)
         {
 
-            string CreateTableQuery = "CREATE TABLE " + table_name + "(time varchar(30), message varchar(20),c" + fromUserEN + " boolean,c" + toUserEN + " boolean)";
+            string CreateTableQuery = "CREATE TABLE " + table_name + "(time varchar(30), message text,c" + fromUserEN + " boolean,c" + toUserEN + " boolean)";
 
             ConnC.ExecuteQuery(CreateTableQuery);
 

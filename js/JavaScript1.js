@@ -8,6 +8,7 @@
 
         console.log("connection succeded");
         registerEvents(chatHub);
+        
 
 
     });
@@ -223,7 +224,7 @@ function registerClientMethods(chatHub) {
 
     chatHub.client.addMessageToPrivateChat = function (message, fromUserName, fromUserEnroll, currentDateTime) {
         console.log('addMessageToPrivateChat called');
-
+        
         var divChat = '<div class="row darkable sender-msg-box">'
             + '<div class="msg-box-row">'
             + '<div class="sender-box darkable">'
