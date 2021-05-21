@@ -96,7 +96,7 @@ lang="en">
 
                 //upodate my details
                 $('#update_my_details').click(function () {
-                    chatHub.server.updateData("<%= Session["UserEnrollNo"].ToString()%>", document.getElementById('userdata0').value, document.getElementById('userdata5').value, document.getElementById('userdata7').value);
+                    chatHub.server.updateData("<%# Session["UserEnrollNo"].ToString()%>", document.getElementById('userdata0').value, document.getElementById('userdata5').value, document.getElementById('userdata7').value);
                 });
                 
           
