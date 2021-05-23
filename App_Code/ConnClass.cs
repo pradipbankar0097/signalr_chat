@@ -26,22 +26,40 @@ namespace SignalRChat
             string dt = DateTime.Now.ToString().Replace('-', '_').Replace(':', '_').Replace(' ', '_');
             string GroupID = CreatorEnrollNo + dt;
             string Query = "insert into groupsof_" + CreatorEnrollNo + "(GroupID) values(" + GroupID + ")";
-            con.Open();
-            cmd = new MySqlCommand(Query, con);
-            cmd.ExecuteNonQuery();
-            con.Close();
-            groups_db.Open();
-            Query = @"insert into tbl_groups(GroupID,GroupName,CreatedBy,CreatedOn) values('{GroupID}','{GroupName}','{CreatorEnrollNo}','{DateTime.Now.ToString()}')";
-            cmd = new MySqlCommand(Query,groups_db);
-            cmd.ExecuteNonQuery();
-            Query = @"create table {GroupID}(MemberEnrollNo varchar(20))";
-            cmd = new MySqlCommand(Query, groups_db);
-            cmd.ExecuteNonQuery();
-            Query = @"insert into {GroupID}(MemberEnrollNo) values('{CreatorEnrollNo}')";
-            cmd = new MySqlCommand(Query, groups_db);
-            cmd.ExecuteNonQuery();
 
-            groups_db.Close();
+            try
+            {
+                con.Open();
+                cmd = new MySqlCommand(Query, con);
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                con.Close();
+
+            }
+            try
+            {
+                groups_db.Open();
+                Query = @"insert into tbl_groups(GroupID,GroupName,CreatedBy,CreatedOn) values('{GroupID}','{GroupName}','{CreatorEnrollNo}','{DateTime.Now.ToString()}')";
+                cmd = new MySqlCommand(Query, groups_db);
+                cmd.ExecuteNonQuery();
+                Query = @"create table {GroupID}(MemberEnrollNo varchar(20))";
+                cmd = new MySqlCommand(Query, groups_db);
+                cmd.ExecuteNonQuery();
+                Query = @"insert into {GroupID}(MemberEnrollNo) values('{CreatorEnrollNo}')";
+                cmd = new MySqlCommand(Query, groups_db);
+                cmd.ExecuteNonQuery();
+
+            }
+            finally
+            {
+                groups_db.Close();
+
+            }
+           
+
+           
             done = true;
             return done;
         }
@@ -60,10 +78,20 @@ namespace SignalRChat
             string NoticeID = CreatorEnrollNo.ToLower() + Fromd;
             string Query = "insert into notify(Message,Creator,NoticeID,FromDate,ToDate) values('" + Msg + "','" + Creator + "','" + NoticeID + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss tt") + "','" + ToDate + "')";
             //string Query = "insert into notify(Message,Creator,NoticeID,FromDate,ToDate) values('{Msg}','{Creator}','{NoticeID}','{FromDate}','{ToDate}')";
-            ntf.Open();
-            cmd = new MySqlCommand(Query, ntf);
-            cmd.ExecuteNonQuery();
-            ntf.Close();
+            try
+            {
+                ntf.Open();
+
+                cmd = new MySqlCommand(Query, ntf);
+                cmd.ExecuteNonQuery();
+
+            }
+            finally
+            {
+                ntf.Close();
+            }
+
+          
             check = true;
             return check;
         }
@@ -71,16 +99,24 @@ namespace SignalRChat
         public bool IsExist(string Query)
         {
             bool check = false;
-            using (cmd = new MySqlCommand(Query, con))
+            try
             {
+                using (cmd = new MySqlCommand(Query, con))
+                {
 
-                con.Open();
-                sdr = cmd.ExecuteReader();
-                if (sdr.HasRows)
-                    check = true;
+                    con.Open();
+                    sdr = cmd.ExecuteReader();
+                    if (sdr.HasRows)
+                        check = true;
+                }
             }
-            sdr.Close();
-            con.Close();
+            finally
+            {
+                sdr.Close();
+                con.Close();
+
+            }
+            
             return check;
 
         }
@@ -94,12 +130,16 @@ namespace SignalRChat
                 cmd.ExecuteNonQuery();
                 
                 done = true;
-                groups_db.Close();
+               
             
             }
             catch (Exception ee)
             {
 
+            }
+            finally
+            {
+                groups_db.Close();
             }
             return done;
         }
@@ -108,18 +148,28 @@ namespace SignalRChat
 
         public List<string> GetRow(string Query)
         {
-            con.Open();
             List<string> RetVal = new List<string>();
-            cmd = new MySqlCommand(Query, con);
-            sdr = cmd.ExecuteReader();
-            if (sdr.Read())
+            try
             {
-                for (int i = 0; i < sdr.FieldCount; i++)
+                con.Open();
+                
+                cmd = new MySqlCommand(Query, con);
+                sdr = cmd.ExecuteReader();
+                if (sdr.Read())
                 {
-                    RetVal.Add(sdr[i].ToString());
+                    for (int i = 0; i < sdr.FieldCount; i++)
+                    {
+                        RetVal.Add(sdr[i].ToString());
+                    }
+
                 }
 
             }
+            finally
+            {
+                con.Close();
+            }
+           
             return RetVal;
         }
 
@@ -142,28 +192,38 @@ namespace SignalRChat
         public List<List<string>> GetAllData(string Query)
         {
             List<List<string>> RetVal = new List<List<string>>();
-            using (cmd = new MySqlCommand(Query, con))
+            try
             {
-                con.Open();
-                sdr = cmd.ExecuteReader();
-                while (sdr.Read())
+                using (cmd = new MySqlCommand(Query, con))
                 {
-                    List<string> temp = new List<string>();
-                    for (int i = 0; i < sdr.FieldCount; i++)
+                    con.Open();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
                     {
-                        temp.Add(sdr[i].ToString());
+                        List<string> temp = new List<string>();
+                        for (int i = 0; i < sdr.FieldCount; i++)
+                        {
+                            temp.Add(sdr[i].ToString());
+                        }
+                        RetVal.Add(temp);
                     }
-                    RetVal.Add(temp);
                 }
+
             }
-            sdr.Close();
-            con.Close();
+            finally
+            {
+                sdr.Close();
+                con.Close();
+            }
+            
+           
             return RetVal;
         }
         public List<List<string>> GetAllDataFromDB(string Query,MySqlConnection conn)
         {
             List<List<string>> RetVal = new List<List<string>>();
-            
+            try
+            {
                 using (cmd = new MySqlCommand(Query, conn))
                 {
 
@@ -179,9 +239,18 @@ namespace SignalRChat
                         RetVal.Add(temp);
                     }
                 }
+
+            }
+            finally
+            {
                 sdr.Close();
                 conn.Close();
-            
+
+
+            }
+
+
+
             return RetVal;
         }
         public List<List<string>> GetAllGroups(string Query)
@@ -221,12 +290,13 @@ namespace SignalRChat
         public List<List<string>> GetAllMessage(string Query) 
         {
             List<List<string>> RetVal = new List<List<string>>();
-
-            using (cmd = new MySqlCommand(Query, con))
+            try
             {
-                con.Open();
-                
-                
+                using (cmd = new MySqlCommand(Query, con))
+                {
+                    con.Open();
+
+
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
@@ -241,33 +311,50 @@ namespace SignalRChat
 
                         RetVal.Add(ls);
                     }
-                
-               
+                    sdr.Close();
+
+                }
             }
-            sdr.Close();
-            con.Close();
+            finally
+            {
+
+              
+                con.Close();
+
+            }
+          
             return RetVal;
         }
         public List<List<string>> GetAllFromColumn(string Query, params string[] ColumnName)
         {
             List<List<string>> RetVal = new List<List<string>>();
 
-
-            using (cmd = new MySqlCommand(Query, con))
+            try
             {
-                con.Open();
-                sdr = cmd.ExecuteReader();
-                while (sdr.Read())
+                using (cmd = new MySqlCommand(Query, con))
                 {
+                    con.Open();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
 
-                    List<string> temp = new List<string>();
-                    temp.Add(sdr[ColumnName[0]].ToString());
-                    //temp.Add(sdr[ColumnName[ColumnName.Length-1]].ToString());
-                    RetVal.Add(temp);
+                        List<string> temp = new List<string>();
+                        temp.Add(sdr[ColumnName[0]].ToString());
+                        //temp.Add(sdr[ColumnName[ColumnName.Length-1]].ToString());
+                        RetVal.Add(temp);
+                    }
+                    sdr.Close();
+
                 }
-                sdr.Close();
+
+
+            }
+            finally
+            {
+               
                 con.Close();
             }
+
 
             return RetVal;
         }
@@ -275,12 +362,22 @@ namespace SignalRChat
         public bool ExecuteQuery(string Query)
         {
             int j = 0;
-            using (cmd = new MySqlCommand(Query, con))
+            try
             {
-                con.Open();
-                j = cmd.ExecuteNonQuery();
-                con.Close();
+                using (cmd = new MySqlCommand(Query, con))
+                {
+                    con.Open();
+                    j = cmd.ExecuteNonQuery();
+                  
+                }
+
             }
+            finally
+            {
+                con.Close();
+
+            }
+            
 
             if (j > 0)
                 return true;
@@ -291,12 +388,23 @@ namespace SignalRChat
         public bool ExecuteQuery(string Query,MySqlConnection conn)
         {
             int j = 0;
-            using (cmd = new MySqlCommand(Query, conn))
+            try
             {
-                conn.Open();
-                j = cmd.ExecuteNonQuery();
-                conn.Close();
+                using (cmd = new MySqlCommand(Query, conn))
+                {
+                    conn.Open();
+                    j = cmd.ExecuteNonQuery();
+                  
+                }
+
+
             }
+            finally
+            {
+                conn.Close();
+
+            }
+
 
             if (j > 0)
                 return true;
@@ -308,35 +416,54 @@ namespace SignalRChat
         public List<string> GetFullColumn(string Query,MySqlConnection con1)
         {
             List<string> RetVal = new List<string>();
-            using (cmd = new MySqlCommand(Query, con1))
+            try
             {
-                con1.Open();
-                sdr = cmd.ExecuteReader();
-                while (sdr.Read())
+                using (cmd = new MySqlCommand(Query, con1))
                 {
-                    RetVal.Add(sdr[0].ToString());
+                    con1.Open();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        RetVal.Add(sdr[0].ToString());
+                    }
+                    sdr.Close();
                 }
             }
-            sdr.Close();
-            con1.Close();
+            finally
+            {
+
+              
+                con1.Close();
+
+            }
+        
             return RetVal;
         }
 
         public string GetColumnVal(string Query, string ColumnName)
         {
             string RetVal = "";
-            using (cmd = new MySqlCommand(Query, con))
+            try
             {
-                con.Open();
-                sdr = cmd.ExecuteReader();
-                while (sdr.Read())
+                using (cmd = new MySqlCommand(Query, con))
                 {
-                    RetVal = sdr[ColumnName].ToString();
-                    break;
+                    con.Open();
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        RetVal = sdr[ColumnName].ToString();
+                        break;
+                    }
+                    sdr.Close();
+
                 }
-                sdr.Close();
+            }
+            finally
+            {
+               
                 con.Close();
             }
+          
 
             return RetVal;
 
