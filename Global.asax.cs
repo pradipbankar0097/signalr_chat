@@ -12,5 +12,9 @@ namespace SignalRChat
         protected void Application_Start(object sender, EventArgs e)
         {
         }
+        void Session_Start(object sender, EventArgs e)
+        {
+            Session.Timeout = 1800;
+        }
     }
 }

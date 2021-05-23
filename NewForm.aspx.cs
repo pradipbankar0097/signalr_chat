@@ -22,20 +22,23 @@ namespace SignalRChat
         public string UserEnrollNo = "admin";
         public string UserDepartment = "admin";
         public string UserImage = "/images/DP/dummy.png";
-        protected string UploadFolderPath = "~/Uploads/";
-        
+        protected string UploadFolderPath = "/Uploads/";
+        string guid = Guid.NewGuid().ToString();
+
         private string fromUser = "";
         public string UserEmail = "";
         public string UserPassword;
         public List<List<string>> RegisteredUsers = new List<List<string>>();
+       
         ConnClass conc = new ConnClass();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             UserPassword = Session["Pass"].ToString();
-        string GetRegisteredUsersQuery = "select UserName from tbl_users where EnrollNo <> '" + UserEnrollNo + "' and Badge='Student'";
+            string GetRegisteredUsersQuery = "select UserName from tbl_users where EnrollNo <> '" + UserEnrollNo + "' and Badge='Student'";
             string[] ColumnName = { "UserName", "EnrollNo" };
             RegisteredUsers = conc.GetAllFromColumn(GetRegisteredUsersQuery, ColumnName);
+            
 
             if (Session["UserName"] != null)
             {
@@ -44,6 +47,7 @@ namespace SignalRChat
                 UserEnrollNo = Session["UserEnrollNo"].ToString();
                 UserDepartment = Session["UserDepartment"].ToString();
                 UserEmail = Session["UserEmail"].ToString();
+               
                 fromUser += UserName;
                 GetUserImage(UserName);
                 
@@ -52,7 +56,7 @@ namespace SignalRChat
             //else
             //    // Response.Redirect("Login.aspx");
             //    ;
-
+            //Page.Header.DataBind();
             this.Header.DataBind();
             
         }
@@ -70,14 +74,62 @@ namespace SignalRChat
 
 
         }
-        protected void UpdateDetails_Click(object sender, EventArgs e)
-        {
-            
-            string query = "update tbl_users set UserName='" + TextBox8.Text + "',Password='" + TextBox9.Text + "',Email='" + TextBox10.Text + "' where EnrollNo='" + UserEnrollNo + "' ";
-            //conc.ExecuteQuery(query);
+        //protected void UpdateDetails_Click(object sender, EventArgs e)
+        //{
 
-            conc.ExecuteQuery(query);
+        //   // string query = "update tbl_users set UserName='" + TextBox8.Text + "',Password='" + TextBox9.Text + "',Email='" + TextBox10.Text + "' where EnrollNo='" + UserEnrollNo + "' ";
+        //    //conc.ExecuteQuery(query);
+
+        //    conc.ExecuteQuery(query);
+        //}
+
+        //protected void btnSendMsg_Click(object sender, EventArgs e)
+        //{
+
+        //    //HttpPostedFile postedFile = Request.Files["attachFile"];
+        //    //if(postedFile != null && postedFile.ContentLength > 0)
+        //    //{
+        //    //    string filePath = Server.MapPath("~/uploads/") + Path.GetFileName(postedFile.FileName);
+        //    //    postedFile.SaveAs(filePath);
+        //    //    int fileSize = postedFile.ContentLength;
+        //    //    if(fileSize > 2097152)
+        //    //    {
+
+        //    //    }
+        //    //    else
+        //    //    {
+
+        //    //    }
+
+        //    //}
+        //    if (FileUpload1.HasFile)
+        //    {
+        //        string filePath = Server.MapPath("~/uploads/") + Path.GetFileName(FileUpload1.FileName);
+        //         FileUpload1.SaveAs(filePath);
+        //    }
+
+
+
+        //}
+
+
+        protected void FileUploadComplete(object sender, EventArgs e)
+        {
+            System.Threading.Thread.Sleep(1000);
+            string filename =  System.IO.Path.GetFileName(AsyncFileUpload1.FileName);
+            //var extension = Path.GetExtension(filename);
+            //string fileName = string.Format("{0}-{1:ddMMMyyyy-HHmm}" + extension, this.UploadFolderPath, DateTime.Now);
+            //var extension = Path.GetExtension(filename);
+            //var newName = filename.Replace(filename, extension) + DateTime.Now.ToString("yyyy-MM-dd HH:mm:dd") + extension;
+
+            // filename = filename + DateTime.Now.ToString("hh:mm tt");
+
+
+            AsyncFileUpload1.SaveAs(Server.MapPath(this.UploadFolderPath) + filename);
         }
-        
+
+
+
+
     }
 }
