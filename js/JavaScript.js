@@ -220,6 +220,8 @@ function registerClientMethods(chatHub) {
                     // ' <img class="direct-chat-img" src="' + userimg + '" alt="Message User Image">' +
                     ' <div class="direct-chat-text float"' + Side + '" style="display:inline">' + messages[i][1] + '</div> </div>';
                 $('#msgarea').append(divChat);
+                $('#msgarea').scrollTop($('#msgarea').height());
+                console.log("ran");
             }
 
 
