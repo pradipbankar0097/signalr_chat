@@ -120,6 +120,7 @@ lang="en">
                                 break;
                             case 't':
                                 chatHub.server.sendMessageToTeacher(fromUserName, fromuserEnroll, toUserEnroll, msg);
+                                console.log('called ');
                                 break;
                             case 'g':
                                 chatHub.server.sendMessageToGroup(fromUserName, fromuserEnroll, toGroupId, msg);
@@ -186,6 +187,15 @@ lang="en">
 
 
                                 if (selectedfield == 'c') {
+
+                                    var toEnrollNo = this.id;
+                                    $('#hdtoUserEnroll').val(toEnrollNo);
+                                    console.log(toEnrollNo);
+                                    $('#spanUser').val = toEnrollNo;
+                                    chatHub.server.loadPrivateChat1(enrollno, toEnrollNo);
+                                    //loaded.push(toEnrollNo);
+                                }
+                                if (selectedfield == 't') {
 
                                     var toEnrollNo = this.id;
                                     $('#hdtoUserEnroll').val(toEnrollNo);
