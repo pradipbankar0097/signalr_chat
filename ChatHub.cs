@@ -44,7 +44,7 @@ namespace SignalRChat
         }
         public void loadRegisteredUsers(string enrollno)
         {
-            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge FROM tbl_users where EnrollNo <> '"+enrollno+"' and Badge='Student'";
+            string GetRegisteredUsersQuery = "SELECT UserName,EnrollNo,Badge,Photo FROM tbl_users where EnrollNo <> '"+enrollno+"' and Badge='Student'";
             RegisteredUsers = ConnC.GetAllData(GetRegisteredUsersQuery);
             Clients.Caller.loadRegisteredUsers(RegisteredUsers);
 

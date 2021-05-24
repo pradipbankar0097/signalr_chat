@@ -79,13 +79,14 @@ function registerClientMethods(chatHub) {
         var i;
         var add;
         var add1='';
-        var add2='';
+        var add2 = '';
+        console.log("this are regisetred users:");
         console.log(users);
 
         $('#listarea').html('');
         $('#listarea').height(70 * users.length);
         for (i = 0; i < users.length; i++) {
-            add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="images/dummy.png" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">click to view messages</div>                            <div class="lchat-time" style="float:right;"></div>                            <div class="uunread testing 1" style="display:none;float:right; display:hidden;">&nbsp;</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
+            add = '<div id="' + users[i][1] + '" class="row testing urow darkable">                <div class="pp-sm testing4">                    <img class="img-pp-sm" src="' + users[i][3] +'" alt="">                      </div>                    <div class="testing3 udetails-sm">                        <div class="testing2 name-row" >                            <div class="uname testing3" style="float: left;">' + users[i][0]+'</div>                        </div>                        <div class="testing1 row ulast-chat">                            <div class="lchat-msg" style="width:70%">click to view messages</div>                            <div class="lchat-time" style="float:right;"></div>                            <div class="uunread testing 1" style="display:none;float:right; display:hidden;">&nbsp;</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>';
             $('#listarea').append(add + add1 + add2);
         }
     };
@@ -212,6 +213,8 @@ function registerClientMethods(chatHub) {
                     //divChat = divChat.replace(/darkable/g, '');
                 }
                 $('#msgarea').append(divChat);
+                $('#msgarea').scrollTop($('#msgarea').scrollHeight);
+                console.log('ran');
             }
 
 
@@ -405,7 +408,7 @@ function registerClientMethods(chatHub) {
         for (var i = 0; i < userdata.length; i++) {
             var toappend = '';
             if (i == (userdata.length - 2)) {
-                toappendimg = '<div><img src="/images/DP/dummy.png" style="border-radius:20px; margin-top:5px; height:100px;width:100px;"><div>';
+                toappendimg = '<div><img src="'+userdata[6]+'" style="border-radius:20px; margin-top:5px; height:100px;width:100px;"><div>';
             }
             else {
                 toappend = '<div class="form-group" style="padding:2px;">'
