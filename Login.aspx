@@ -57,7 +57,5 @@
 
     
     <script src="plugins/jquery-1.9.1.min"></script>
-    <script src="plugins/bootstrap.min.js"></script>
-    
-</body>
+    <script src="plugins/bootstrap.min.js"></script>     </body>
 </html>
