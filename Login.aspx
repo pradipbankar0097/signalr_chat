@@ -10,6 +10,70 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="login/css/style.css"/>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCK1OUGRatm0pV_oOoR9k65CPyoWbl_gyo",
+            authDomain: "gecachat.firebaseapp.com",
+            projectId: "gecachat",
+            storageBucket: "gecachat.appspot.com",
+            messagingSenderId: "428955385455",
+            appId: "1:428955385455:web:431f86a1bffd93dc0ed79a",
+            measurementId: "G-Q3TT004DXB"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script type="text/javascript">
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+
+                document.getElementById("user_div").style.display = "block";
+                document.getElementById("login_div").style.display = "none";
+
+                var user = firebase.auth().currentUser;
+
+                if (user != null) {
+
+                    var email_id = user.email;
+                    document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
+
+                }
+
+            } else {
+                // No user is signed in.
+
+                document.getElementById("user_div").style.display = "none";
+                document.getElementById("login_div").style.display = "block";
+
+            }
+        });
+
+        function login() {
+
+            var userEmail = document.getElementById("txtEmail").value;
+            var userPass = document.getElementById("txtPassword").value;
+
+            firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+                window.alert("Error : " + errorMessage);
+
+                // ...
+            });
+
+        }
+
+        function logout() {
+            firebase.auth().signOut();
+        }
+
+    </script>
 </head>
 <body class="hold-transition login-page darkable" style="background-color:rgb(255 251 210)">
 -
@@ -43,6 +107,19 @@
                                 <asp:Button ID="btnSignIn" runat="server" OnClick="btnSignIn_Click" Text="Login" CssClass="form-submit" />
                             </div>
                         </form>
+                        <div id="login_div" class="main-div">
+        <h3>Firebase Web login Example</h3>
+        <input type="email" placeholder="Email..." id="email_field" />
+        <input type="password" placeholder="Password..." id="password_field" />
+
+        <button onclick="login()">Login to Account</button>
+    </div>
+
+    <div id="user_div" class="loggedin-div">
+        <h3>Welcome User</h3>
+        <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+        <button onclick="logout()">Logout</button>
+    </div>
                         
                     </div>
                 </div>
@@ -57,5 +134,12 @@
 
     
     <script src="plugins/jquery-1.9.1.min"></script>
-    <script src="plugins/bootstrap.min.js"></script>     </body>
+    <script src="plugins/bootstrap.min.js"></script>
+
+
+
+
+
+
+</body>
 </html>

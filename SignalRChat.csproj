@@ -189,6 +189,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\StyleSheet1.css" />
     <Content Include="css\temp.css" />
+    <Content Include="index.js" />
     <Content Include="js\bootstrap.bundle.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
@@ -196,6 +197,7 @@
     <Content Include="js\JavaScript.js" />
     <Content Include="js\JavaScript1.js" />
     <Content Include="js\temp.js" />
+    <Content Include="loginfire.html" />
     <Content Include="login\css\style.css" />
     <Content Include="login\fonts\material-icon\css\material-design-iconic-font.css" />
     <Content Include="login\fonts\material-icon\css\material-design-iconic-font.min.css" />
