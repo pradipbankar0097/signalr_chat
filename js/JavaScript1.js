@@ -127,7 +127,7 @@ function registerClientMethods(chatHub) {
             */
 
             var list_area_row_html = '<div id="id_placeholder" class="row testing urow darkable"> <div class="pp-sm testing4"> <img class="img-pp-sm" src="images/dummy.png" alt=""> </div> <div class="testing3 udetails-sm">  <div class="testing2 name-row" >  <div class="uname testing3" style="float: left;"> uname_placeholder </div> </div> <div class="testing1 row ulast-chat"> <div class="lchat-msg" style="width:70%">click to view messages</div> <div class="lchat-time" style="float:right;"></div>                            <div class="uunread testing 1" style="display:none;float:right;">&nbsp;</div>                        </div>                        <div class="row hr"></div>                    </div>                </div>'; 
-            add = list_area_row_html.replace('id_placeholder', teachers[i][1]).replace('uname_placeholder', teachers[i][0]);
+            add = list_area_row_html.replace('id_placeholder', teachers[i][2]).replace('uname_placeholder', teachers[i][0]);
             $('#listarea').append(add);
         }
     };
