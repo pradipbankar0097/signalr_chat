@@ -13,7 +13,7 @@ namespace SignalRChat
     public partial class Register : System.Web.UI.Page
     {
         ConnClass ConnC = new ConnClass();
-     
+        FireClass FC = new FireClass();
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -60,7 +60,11 @@ namespace SignalRChat
                                 ConnC.AddToGroup(year.Text + Department.Text, EnrollNo.Value);
                             }
                             ScriptManager.RegisterStartupScript(this, GetType(), "Message", "alert('Congratulations!! You have successfully registered..');", true);
-                            
+                            FC.FireRegister(new SignalRChat.User()
+                            {
+                                name = txtName.Value,
+                                enrollno = EnrollNo.Value
+                            });
                             Response.Redirect("Login.aspx");
                         }
                     }

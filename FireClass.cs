@@ -5,7 +5,7 @@ using System.Web;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
-
+using SignalRChat;
 namespace SignalRChat
 {
     public class FireClass
@@ -17,5 +17,9 @@ namespace SignalRChat
         };
         public IFirebaseClient client = new FireSharp.FirebaseClient(config);
 
+        public void FireRegister(User u)
+        {
+            client.PushAsync("users", u);
+        }
     }
 }
